@@ -1,55 +1,156 @@
 <template>
-  <div>
-    <nuxt/>
+  <div class="c-layout">
+    <header class="header">
+      <div class="fixed">
+
+        <div class="brand">
+          <img
+            class="logo"
+            src="@/assets/images/logo.png"
+          >
+          <img
+            class="title"
+            src="@/assets/images/title.png"
+          >
+        </div>
+
+        <nav class="nav">
+          <ul>
+            <li
+              v-for="item in nav"
+              :key="item.path"
+            >{{ item.name }}</li>
+          </ul>
+        </nav>
+
+        <div class="search">
+          <input
+            class="input"
+            type="text"
+            placeholder="请输入标题关键字"
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="login">登录</div>
+      </div>
+    </header>
+
+    <main>
+      <nuxt/>
+    </main>
+
+    <footer>
+      <p>Copyright © 2018 HYH's Blog. All rights reserved.</p>
+    </footer>
   </div>
 </template>
 
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
+<script>
+export default {
+  data() {
+    return {
+      nav: [
+        {
+          name: '全部',
+          path: '/articles'
+        },
+        {
+          name: '前端开发',
+          path: '/articles/frontend'
+        },
+        {
+          name: 'Node.js开发',
+          path: '/articles/node'
+        },
+        {
+          name: '其他开发',
+          path: '/articles/other'
+        },
+        {
+          name: '工作生活',
+          path: '/articles/life'
+        }
+      ]
+    };
+  }
+};
+</script>
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
+<style lang="scss" scoped>
+.c-layout {
+  background: #f8f8f8;
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
+  .header {
+    height: 60px;
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
+    .fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      line-height: 60px;
+      padding: 0 30px;
+      background: #fff;
+      box-sizing: border-box;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
 
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
+    .brand {
+      display: inline-block;
 
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+      .logo {
+        height: 40px;
+        margin-right: 10px;
+      }
+
+      .title {
+        height: 40px;
+      }
+    }
+
+    .nav,
+    .search {
+      margin-left: 40px;
+    }
+
+    .nav {
+      height: 100%;
+      display: inline-block;
+
+      ul {
+        height: 100%;
+
+        li {
+          height: 100%;
+          display: inline-block;
+          padding: 0 15px;
+        }
+      }
+    }
+
+    .search {
+      position: relative;
+      height: 100%;
+      display: inline-block;
+
+      .input {
+        width: 180px;
+        height: 30px;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        background: #fff;
+        box-sizing: border-box;
+        padding: 0 26px 0 10px;
+        outline: none;
+      }
+    }
+
+    .login {
+      float: right;
+    }
+  }
 }
 </style>

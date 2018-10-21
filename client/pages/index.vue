@@ -23,17 +23,16 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Logo from '~/components/Logo.vue';
 
 export default {
   components: {
     Logo
   }
-}
+};
 </script>
 
-<style>
-
+<style lang="scss" scoped>
 .container {
   min-height: 100vh;
   display: flex;
@@ -43,8 +42,6 @@ export default {
 }
 
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;

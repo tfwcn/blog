@@ -1,4 +1,4 @@
-const pkg = require('./package')
+const pkg = require('./package');
 
 module.exports = {
   mode: 'universal',
@@ -7,35 +7,63 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: 'HYH\'s Blog', // eslint-disable-line
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      {
+        charset: 'utf-8'
+      },
+      {
+        name: 'render',
+        content: 'webkit'
+      },
+      {
+        'http-equiv': 'X-UA-Compatible',
+        content: 'IE=edge,chrome=1'
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: pkg.description
+      }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/favicon.ico'
+      }
     ]
   },
 
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: {
+    color: '#fff'
+  },
 
   /*
   ** Global CSS
   */
   css: [
-    'element-ui/lib/theme-chalk/index.css'
+    {
+      src: '~assets/scss/reset.scss',
+      lang: 'scss'
+    },
+    {
+      src: '~assets/scss/preset.scss',
+      lang: 'scss'
+    }
   ],
 
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-    '@/plugins/element-ui'
-  ],
+  plugins: ['@/plugins/element-ui'],
 
   /*
   ** Nuxt.js modules
@@ -66,8 +94,8 @@ module.exports = {
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/
-        })
+        });
       }
     }
   }
-}
+};
