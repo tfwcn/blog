@@ -16,10 +16,12 @@
 
         <nav class="nav">
           <ul>
-            <li
+            <nuxt-link
               v-for="item in nav"
               :key="item.path"
-            >{{ item.name }}</li>
+              :to="item.path"
+              tag="li"
+            >{{ item.name }}</nuxt-link>
           </ul>
         </nav>
 
@@ -53,7 +55,7 @@ export default {
       nav: [
         {
           name: '全部',
-          path: '/articles'
+          path: '/'
         },
         {
           name: '前端开发',
@@ -102,18 +104,18 @@ export default {
       display: inline-block;
 
       .logo {
-        height: 40px;
-        margin-right: 10px;
+        height: 30px;
+        margin-right: 5px;
       }
 
       .title {
-        height: 40px;
+        height: 26px;
       }
     }
 
     .nav,
     .search {
-      margin-left: 40px;
+      margin-left: 30px;
     }
 
     .nav {
@@ -127,6 +129,17 @@ export default {
           height: 100%;
           display: inline-block;
           padding: 0 15px;
+          color: #ccc;
+          cursor: pointer;
+
+          &.nuxt-link-active {
+            color: #000;
+            font-weight: bold;
+          }
+
+          &:hover {
+            background: #f3f3f3;
+          }
         }
       }
     }
