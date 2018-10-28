@@ -4,8 +4,8 @@
       <div class="fixed">
 
         <nuxt-link tag="div" class="brand" to="/">
-          <img class="logo" src="@/assets/images/logo.png" />
-          <img class="title" src="@/assets/images/title.png" />
+          <img class="logo" src="@/assets/images/logo.png" alt="HYH" />
+          <img class="title" src="@/assets/images/title.png" alt="个人博客" />
         </nuxt-link>
 
         <nav class="nav">
@@ -58,22 +58,7 @@ export default {
   data() {
     return {
       year: new Date().getFullYear(),
-      navList: [{
-        name: '全部',
-        path: '/articles'
-      }, {
-        name: '前端开发',
-        path: '/articles/frontend'
-      }, {
-        name: 'Node.js开发',
-        path: '/articles/node'
-      }, {
-        name: '其他开发',
-        path: '/articles/other'
-      }, {
-        name: '工作生活',
-        path: '/articles/life'
-      }],
+      navList: [],
       currentNavItem: {
         index: 0,
         width: 0,
@@ -117,6 +102,10 @@ export default {
 
   mounted() {
     this.updateNavItem();
+  },
+
+  created() {
+    this.$store.dispatch('getNavList').then(res => this.navList = res);
   }
 };
 </script>

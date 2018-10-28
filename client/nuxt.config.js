@@ -1,4 +1,5 @@
 const pkg = require('./package');
+// const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
   mode: 'universal',
@@ -55,7 +56,10 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/element-ui'],
+  plugins: [
+    '@/plugins/element-ui',
+    '@/plugins/axios'
+  ],
 
   /*
   ** Nuxt.js modules
@@ -69,6 +73,11 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    proxy: true // Can be also an object with default options
+  },
+
+  proxy: {
+    '/api/': 'http://192.168.1.192:8080'
   },
 
   /*
