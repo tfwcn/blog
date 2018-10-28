@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="Postgresql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <!--<plugin type="tk.mybatis.mapper.generator.MapperPlugin">-->
+        <!--<property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>-->
+        <!--&lt;!&ndash; caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true &ndash;&gt;-->
+        <!--<property name="caseSensitive" value="true"/>-->
+        <!--</plugin>-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="org.postgresql.Driver"
+                        connectionURL="jdbc:postgresql://localhost:5432/blog"
+                        userId=""
+                        password="">
+        </jdbcConnection>
+        <!--自动生成的实体的存放包路径 -->
+        <!-- targetPackage为包路径，targetPackage为包相对于项目根目录的路径 -->
+        <javaModelGenerator targetPackage="com.tfwcn.blog.models" targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--自动生成的*Mapper.xml文件存放路径 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!--自动生成的*Mapper.java存放路径 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tfwcn.blog.dao" targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!-- 要生成的表 -->
+        <!-- 这里的百分号代表对该数据库中所有的表进行生成 -->
+        <table tableName="users">
+            <!--数据库schema-->
+            <!--<property name="runtimeSchema" value="blog"/>-->
+            <!--主键-->
+            <!--<generatedKey column="id" sqlStatement="Postgresql" identity="true"/>-->
+        </table>
+    </context>
+</generatorConfiguration>
