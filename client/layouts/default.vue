@@ -1,55 +1,240 @@
 <template>
-  <div>
-    <nuxt/>
+  <div class="c-layout">
+    <header class="header">
+      <div class="fixed">
+
+        <nuxt-link tag="div" class="brand" to="/">
+          <img class="logo" src="@/assets/images/logo.png" />
+          <img class="title" src="@/assets/images/title.png" />
+        </nuxt-link>
+
+        <nav class="nav">
+          <ul>
+            <nuxt-link
+              v-for="(item, index) in navList"
+              :key="item.path"
+              :to="item.path"
+              :class="{ active: currentNavItem.index === index }"
+              tag="li"
+              ref="navItem"
+            >{{ item.name }}</nuxt-link>
+          </ul>
+
+          <div class="underline" :style="{
+            width: currentNavItem.width + 'px',
+            left: currentNavItem.left + 'px'
+          }" />
+        </nav>
+
+        <form @submit.prevent="search" class="search">
+          <input
+            class="input"
+            type="text"
+            placeholder="请输入标题关键字"
+            autocomplete="off"
+            v-model="keyword"
+          />
+          <button type="submit" class="icon">
+            <i class="g-icon icon-search" />
+          </button>
+        </form>
+
+        <nuxt-link to="/admin/login" class="login">登录</nuxt-link>
+      </div>
+    </header>
+
+    <main>
+      <nuxt/>
+    </main>
+
+    <footer>
+      <p>Copyright © {{ year }} HYH's Blog. All rights reserved.</p>
+    </footer>
   </div>
 </template>
 
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
+<script>
+export default {
+  data() {
+    return {
+      year: new Date().getFullYear(),
+      navList: [{
+        name: '全部',
+        path: '/articles'
+      }, {
+        name: '前端开发',
+        path: '/articles/frontend'
+      }, {
+        name: 'Node.js开发',
+        path: '/articles/node'
+      }, {
+        name: '其他开发',
+        path: '/articles/other'
+      }, {
+        name: '工作生活',
+        path: '/articles/life'
+      }],
+      currentNavItem: {
+        index: 0,
+        width: 0,
+        left: 0
+      },
+      keyword: ''
+    };
+  },
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
+  watch: {
+    $route() {
+      this.updateNavItem();
+    }
+  },
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
+  methods: {
+    search() {
+      console.log(this.keyword);
+    },
+    updateNavItem() {
+      let result = {};
+      let path = this.$route.path;
+      let current = this.navList.find(item => {
+        return item.path >= path && new RegExp(`^${ item.path }`).test(path);
+      });
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
+      if (current) {
+        let index = this.navList.indexOf(current);
+        let $navItem = (this.$refs.navItem || [])[index];
 
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
+        result = {
+          index,
+          width: $navItem ? $navItem.$el.clientWidth : 0,
+          left: $navItem ? $navItem.$el.offsetLeft : 0
+        };
+      }
 
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+      return this.currentNavItem = result;
+    }
+  },
+
+  mounted() {
+    this.updateNavItem();
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.c-layout {
+  background: #f8f8f8;
+
+  .header {
+    height: 60px;
+
+    .fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      box-sizing: border-box;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .brand,
+    .nav {
+      line-height: 60px;
+    }
+
+    .brand {
+      cursor: pointer;
+      transition: filter 300ms linear;
+
+      &:hover {
+        filter: drop-shadow(1px 1px 3px #ccc);
+      }
+
+      .logo {
+        height: 30px;
+        margin-right: 5px;
+      }
+
+      .title {
+        height: 26px;
+      }
+    }
+
+    .nav {
+      position: relative;
+      height: 100%;
+      margin-left: 30px;
+      flex: 1;
+
+      ul {
+        height: 100%;
+
+        li {
+          height: 100%;
+          display: inline-block;
+          padding: 0 15px;
+          margin: 0 5px;
+          transition: all 100ms linear;
+          color: #999;
+          cursor: pointer;
+
+          &.active {
+            color: #000;
+          }
+
+          &:hover {
+            background: #f3f3f3;
+          }
+        }
+      }
+
+      .underline {
+        position: absolute;
+        bottom: 0;
+        height: 2px;
+        background: #000;
+        transition: all 100ms linear;
+      }
+    }
+
+    .search {
+      position: relative;
+      margin: 0 15px;
+
+      .input {
+        width: 180px;
+        height: 30px;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        background: #efefef;
+        box-sizing: border-box;
+        padding: 0 30px 0 10px;
+        outline: none;
+        transition: background 100ms linear;
+
+        &:focus {
+          background: #fff;
+        }
+      }
+
+      .icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 30px;
+        background: transparent;
+        border: 0;
+        line-height: 30px;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+  }
 }
 </style>

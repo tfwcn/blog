@@ -28,21 +28,11 @@ import Logo from '~/components/Logo.vue';
 export default {
   head() {
     return {
-      title: '首页'
+      title: '全部'
     };
   },
-
-  layout: 'index',
-
   components: {
     Logo
-  },
-
-  mounted() {
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start();
-      setTimeout(() => this.$nuxt.$loading.finish(), 500);
-    });
   }
 };
 </script>
