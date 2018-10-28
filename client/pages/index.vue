@@ -18,6 +18,10 @@
         <span>GITHUB</span>
       </a>
     </div>
+
+    <footer class="footer">
+      <p>Copyright © {{ year }} HYH's Blog. All rights reserved.</p>
+    </footer>
   </div>
 </template>
 
@@ -42,12 +46,15 @@ export default {
 
 <style lang="scss" scoped>
 .p-home {
-  height: 100vh;
+  position: relative;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background: #f8f8f8;
+  padding-bottom: 30px;
+  box-sizing: border-box;
 
   .logo {
     width: 176px;
@@ -133,6 +140,17 @@ export default {
         font-size: 28px;
       }
     }
+  }
+
+  .footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    line-height: 30px;
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
   }
 
   @keyframes logo {
