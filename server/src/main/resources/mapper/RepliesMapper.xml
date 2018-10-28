@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfwcn.blog.dao.RepliesMapper">
+  <resultMap id="BaseResultMap" type="com.tfwcn.blog.models.Replies">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="num" jdbcType="BIGINT" property="num" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="note_id" jdbcType="VARCHAR" property="noteId" />
+    <result column="reply_id" jdbcType="VARCHAR" property="replyId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="score" jdbcType="BIGINT" property="score" />
+    <result column="create_time" jdbcType="TIME" property="createTime" />
+    <result column="update_time" jdbcType="TIME" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from replies
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tfwcn.blog.models.Replies">
+    insert into replies (id, num, user_id, 
+      note_id, reply_id, content, 
+      score, create_time, update_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{num,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, 
+      #{noteId,jdbcType=VARCHAR}, #{replyId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{score,jdbcType=BIGINT}, #{createTime,jdbcType=TIME}, #{updateTime,jdbcType=TIME}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfwcn.blog.models.Replies">
+    update replies
+    set num = #{num,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=VARCHAR},
+      note_id = #{noteId,jdbcType=VARCHAR},
+      reply_id = #{replyId,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      score = #{score,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIME},
+      update_time = #{updateTime,jdbcType=TIME}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, num, user_id, note_id, reply_id, content, score, create_time, update_time
+    from replies
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, num, user_id, note_id, reply_id, content, score, create_time, update_time
+    from replies
+  </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfwcn.blog.dao.NotesMapper">
+  <resultMap id="BaseResultMap" type="com.tfwcn.blog.models.Notes">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="num" jdbcType="BIGINT" property="num" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="create_time" jdbcType="TIME" property="createTime" />
+    <result column="update_time" jdbcType="TIME" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from notes
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tfwcn.blog.models.Notes">
+    insert into notes (id, num, title, 
+      content, type_id, create_time, 
+      update_time)
+    values (#{id,jdbcType=VARCHAR}, #{num,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIME}, 
+      #{updateTime,jdbcType=TIME})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfwcn.blog.models.Notes">
+    update notes
+    set num = #{num,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIME},
+      update_time = #{updateTime,jdbcType=TIME}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, num, title, content, type_id, create_time, update_time
+    from notes
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, num, title, content, type_id, create_time, update_time
+    from notes
+  </select>
+</mapper>

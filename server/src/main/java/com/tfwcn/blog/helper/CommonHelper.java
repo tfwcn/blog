@@ -1,5 +1,8 @@
 package com.tfwcn.blog.helper;
 
+import com.tfwcn.blog.dao.ErrorsMapper;
+import com.tfwcn.blog.models.Errors;
+import com.tfwcn.blog.models.api.ResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -15,6 +18,13 @@ public class CommonHelper {
     @Autowired
     public void setStringRedisTemplateObj(StringRedisTemplate tmpStringRedisTemplateObj) {
         StringRedisTemplateObj = tmpStringRedisTemplateObj;
+    }
+
+    private static ErrorsMapper errorDao;
+
+    @Autowired
+    public void setErrorDao(ErrorsMapper errorDao) {
+        this.errorDao = errorDao;
     }
 
     /**
@@ -58,5 +68,21 @@ public class CommonHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 记录错误日志
+     * @param ex 错误
+     */
+    public static ResponseInfo SaveErrorLog(Exception ex){
+        //记录错误
+        Errors errorInfo = new Errors();
+        CommonHelper.getId(errorInfo);
+        errorInfo.setMessage(ex.getMessage());
+        errorInfo.setDetail(CommonHelper.getExceptionDetail(ex));
+        errorDao.insert(errorInfo);
+        //返回值
+        ResponseInfo responseInfo = new ResponseInfo(500, "错误代码：" + errorInfo.getNum());
+        return responseInfo;
     }
 }

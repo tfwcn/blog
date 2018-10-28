@@ -1,10 +1,8 @@
 package com.tfwcn.blog.controller;
 
-import com.tfwcn.blog.dao.ErrorDao;
-import com.tfwcn.blog.dao.NoteDao;
+import com.tfwcn.blog.dao.NotesMapper;
 import com.tfwcn.blog.helper.CommonHelper;
-import com.tfwcn.blog.models.ErrorInfo;
-import com.tfwcn.blog.models.NoteInfo;
+import com.tfwcn.blog.models.Notes;
 import com.tfwcn.blog.models.api.ResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/note")
 public class NoteController {
     @Autowired
-    private NoteDao noteDao;
-    @Autowired
-    private ErrorDao errorDao;
+    private NotesMapper noteDao;
 
     /**
      * 新增 贴子信息 /api/note/add
@@ -31,22 +27,16 @@ public class NoteController {
      * @return 返回状态码，1：成功
      */
     @RequestMapping(method = RequestMethod.POST, path = "/add")
-    public ResponseEntity<?> add(@RequestBody NoteInfo noteInfo) {
+    public ResponseEntity<?> add(@RequestBody Notes noteInfo) {
         try {
             CommonHelper.getId(noteInfo);
-            noteDao.save(noteInfo);
+            noteDao.insert(noteInfo);
             //返回值
             ResponseInfo responseInfo = new ResponseInfo(1, null);
             return ResponseEntity.ok(responseInfo);
         } catch (Exception ex) {
-            //记录错误
-            ErrorInfo errorInfo = new ErrorInfo();
-            CommonHelper.getId(errorInfo);
-            errorInfo.setMessage(ex.getMessage());
-            errorInfo.setDetail(CommonHelper.getExceptionDetail(ex));
-            errorDao.save(errorInfo);
             //返回值
-            ResponseInfo responseInfo = new ResponseInfo(500, "错误代码：" + errorInfo.getNum());
+            ResponseInfo responseInfo = CommonHelper.SaveErrorLog(ex);
             return ResponseEntity.ok(responseInfo);
         }
     }

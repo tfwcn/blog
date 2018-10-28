@@ -1,11 +1,9 @@
 package com.tfwcn.blog.controller;
 
-import com.tfwcn.blog.dao.ErrorDao;
-import com.tfwcn.blog.dao.UserDao;
+import com.tfwcn.blog.dao.UsersMapper;
 import com.tfwcn.blog.helper.CommonHelper;
 import com.tfwcn.blog.helper.ImageHelper;
-import com.tfwcn.blog.models.ErrorInfo;
-import com.tfwcn.blog.models.UserInfo;
+import com.tfwcn.blog.models.Users;
 import com.tfwcn.blog.models.api.ResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -28,9 +26,7 @@ import java.util.Map;
 @RequestMapping("/api/user")
 public class UserController {
     @Autowired
-    private UserDao userDao;
-    @Autowired
-    private ErrorDao errorDao;
+    private UsersMapper userDao;
 
     private final ResourceLoader resourceLoader;
 
@@ -50,12 +46,12 @@ public class UserController {
      * @param reqMap loginName 登录账号
      * @return 返回状态码，1：成功
      */
-    @RequestMapping(method = RequestMethod.POST, path = "/checkUser")
+    @RequestMapping(method = RequestMethod.POST, path = "/check_user")
     public ResponseEntity<?> checkUser(@RequestBody Map<String, Object> reqMap) {
         try {
             //获取参数
             String loginName = (String) reqMap.get("loginName");
-            UserInfo tmpUserInfo = userDao.findByLoginName(loginName);
+            Users tmpUserInfo = userDao.selectByLoginName(loginName);
             if (tmpUserInfo == null) {
                 //返回值，用户名不存在
                 ResponseInfo responseInfo = new ResponseInfo(2, loginName + "用户名不存在！");
@@ -66,7 +62,7 @@ public class UserController {
             return ResponseEntity.ok(responseInfo);
         } catch (Exception ex) {
             //返回值
-            ResponseInfo responseInfo = SaveErrorLog(ex);
+            ResponseInfo responseInfo = CommonHelper.SaveErrorLog(ex);
             return ResponseEntity.ok(responseInfo);
         }
     }
@@ -106,25 +102,25 @@ public class UserController {
                 ResponseInfo responseInfo = new ResponseInfo(5, "用户名不能为空！");
                 return ResponseEntity.ok(responseInfo);
             }
-            UserInfo tmpUserInfo = userDao.findByLoginName(loginName);
+            Users tmpUserInfo = userDao.selectByLoginName(loginName);
             if (tmpUserInfo != null) {
                 //返回值，登录账号已存在
                 ResponseInfo responseInfo = new ResponseInfo(6, loginName + "登录账号已存在！");
                 return ResponseEntity.ok(responseInfo);
             }
             //插入数据
-            UserInfo userInfo = new UserInfo();
+            Users userInfo = new Users();
             CommonHelper.getId(userInfo);
             userInfo.setLoginName(loginName);
             userInfo.setPassword(password);
             userInfo.setUserName(userName);
-            userDao.save(userInfo);
+            userDao.insert(userInfo);
             //返回值，成功
             ResponseInfo responseInfo = new ResponseInfo(1, "注册成功！");
             return ResponseEntity.ok(responseInfo);
         } catch (Exception ex) {
             //返回值
-            ResponseInfo responseInfo = SaveErrorLog(ex);
+            ResponseInfo responseInfo = CommonHelper.SaveErrorLog(ex);
             return ResponseEntity.ok(responseInfo);
         }
     }
@@ -146,7 +142,7 @@ public class UserController {
             String password = (String) reqMap.get("password");
             String verificationCode = (String) reqMap.get("verificationCode");
             //获取用户数据
-            UserInfo tmpUserInfo = userDao.findByLoginName(loginName);
+            Users tmpUserInfo = userDao.selectByLoginName(loginName);
             //获取验证码
             HttpSession session = request.getSession();
             Object vCode = session.getAttribute("verificationCode");
@@ -165,7 +161,7 @@ public class UserController {
             }
         } catch (Exception ex) {
             //返回值
-            ResponseInfo responseInfo = SaveErrorLog(ex);
+            ResponseInfo responseInfo = CommonHelper.SaveErrorLog(ex);
             return ResponseEntity.ok(responseInfo);
         }
     }
@@ -196,20 +192,8 @@ public class UserController {
 //            stream.close();
         } catch (Exception ex) {
             //返回值
-            ResponseInfo responseInfo = SaveErrorLog(ex);
+            ResponseInfo responseInfo = CommonHelper.SaveErrorLog(ex);
             return ResponseEntity.ok(responseInfo);
         }
-    }
-
-    private ResponseInfo SaveErrorLog(Exception ex){
-        //记录错误
-        ErrorInfo errorInfo = new ErrorInfo();
-        CommonHelper.getId(errorInfo);
-        errorInfo.setMessage(ex.getMessage());
-        errorInfo.setDetail(CommonHelper.getExceptionDetail(ex));
-        errorDao.save(errorInfo);
-        //返回值
-        ResponseInfo responseInfo = new ResponseInfo(500, "错误代码：" + errorInfo.getNum());
-        return responseInfo;
     }
 }

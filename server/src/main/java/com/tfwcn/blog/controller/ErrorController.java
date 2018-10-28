@@ -1,8 +1,8 @@
 package com.tfwcn.blog.controller;
 
-import com.tfwcn.blog.dao.ErrorDao;
+import com.tfwcn.blog.dao.ErrorsMapper;
 import com.tfwcn.blog.helper.CommonHelper;
-import com.tfwcn.blog.models.ErrorInfo;
+import com.tfwcn.blog.models.Errors;
 import com.tfwcn.blog.models.api.ResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import java.util.Map;
 @RequestMapping("/api/error")
 public class ErrorController {
     @Autowired
-    private ErrorDao errorDao;
+    private ErrorsMapper errorDao;
 
     /**
      * 新增错误 /api/error/add
@@ -34,11 +34,11 @@ public class ErrorController {
             //获取参数
             String message = (String) reqMap.get("message");
             String detail = (String) reqMap.get("detail");
-            ErrorInfo errorInfo = new ErrorInfo();
+            Errors errorInfo = new Errors();
             CommonHelper.getId(errorInfo);
             errorInfo.setMessage(message);
             errorInfo.setDetail(detail);
-            errorDao.save(errorInfo);
+            errorDao.insert(errorInfo);
             //返回值
             ResponseInfo responseInfo = new ResponseInfo(500, "错误代码：" + errorInfo.getNum());
             return ResponseEntity.ok(responseInfo);

@@ -1,17 +1,14 @@
 package com.tfwcn.blog.controller;
 
-import com.tfwcn.blog.dao.ErrorDao;
-import com.tfwcn.blog.dao.NoteTypeDao;
+import com.tfwcn.blog.dao.NotesTypeMapper;
 import com.tfwcn.blog.helper.CommonHelper;
-import com.tfwcn.blog.models.ErrorInfo;
-import com.tfwcn.blog.models.NoteTypeInfo;
+import com.tfwcn.blog.models.NotesType;
 import com.tfwcn.blog.models.api.ResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 /**
  * 贴子类型 操作类
@@ -20,33 +17,45 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/note_type")
 public class NoteTypeController {
     @Autowired
-    private NoteTypeDao noteTypeDao;
-    @Autowired
-    private ErrorDao errorDao;
+    private NotesTypeMapper noteTypeDao;
 
     /**
      * 新增 贴子类型 /api/note_type/add
      *
-     * @param noteTypeInfo 贴子类型 id,num,name,detail,createTime,updateTime,
-     * @return 返回状态码，1：成功
+     * @param noteTypeInfo 贴子类型 id,num,name,path,detail,createTime,updateTime,
+     * @return 返回状态码，0：成功
      */
     @RequestMapping(method = RequestMethod.POST, path = "/add")
-    public ResponseEntity<?> add(@RequestBody NoteTypeInfo noteTypeInfo) {
+    public ResponseEntity<?> add(@RequestBody NotesType noteTypeInfo) {
         try {
             CommonHelper.getId(noteTypeInfo);
-            noteTypeDao.save(noteTypeInfo);
+            noteTypeDao.insert(noteTypeInfo);
             //返回值
             ResponseInfo responseInfo = new ResponseInfo(1, null);
             return ResponseEntity.ok(responseInfo);
         } catch (Exception ex) {
-            //记录错误
-            ErrorInfo errorInfo = new ErrorInfo();
-            CommonHelper.getId(errorInfo);
-            errorInfo.setMessage(ex.getMessage());
-            errorInfo.setDetail(CommonHelper.getExceptionDetail(ex));
-            errorDao.save(errorInfo);
             //返回值
-            ResponseInfo responseInfo = new ResponseInfo(500, "错误代码：" + errorInfo.getNum());
+            ResponseInfo responseInfo = CommonHelper.SaveErrorLog(ex);
+            return ResponseEntity.ok(responseInfo);
+        }
+    }
+
+    /**
+     * 新增 贴子类型 /api/note_type/get_list
+     *
+     * @param id 贴子类型 id
+     * @return 返回状态码，0：成功
+     */
+    @RequestMapping(method = RequestMethod.GET, path = "/get_list")
+    public ResponseEntity<?> getList(@RequestParam(required = false) String id) {
+        try {
+            Collection<NotesType> tmpListNoteTypeInfo = noteTypeDao.selectAll();
+            //返回值
+            ResponseInfo responseInfo = new ResponseInfo(1, tmpListNoteTypeInfo);
+            return ResponseEntity.ok(responseInfo);
+        } catch (Exception ex) {
+            //返回值
+            ResponseInfo responseInfo = CommonHelper.SaveErrorLog(ex);
             return ResponseEntity.ok(responseInfo);
         }
     }

@@ -41,5 +41,10 @@
             <!--主键-->
             <!--<generatedKey column="id" sqlStatement="Postgresql" identity="true"/>-->
         </table>
+        <table tableName="error"></table>
+        <table tableName="note"></table>
+        <table tableName="note_type"></table>
+        <table tableName="reply"></table>
+        <table tableName="reply_score"></table>
     </context>
 </generatorConfiguration>
