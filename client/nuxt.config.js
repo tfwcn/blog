@@ -7,58 +7,50 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'HYH\'s Blog', // eslint-disable-line
-    meta: [
-      {
-        charset: 'utf-8'
-      },
-      {
-        name: 'render',
-        content: 'webkit'
-      },
-      {
-        'http-equiv': 'X-UA-Compatible',
-        content: 'IE=edge,chrome=1'
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no'
-      },
-      {
-        hid: 'description',
-        name: 'description',
-        content: pkg.description
-      }
-    ],
-    link: [
-      {
-        rel: 'icon',
-        type: 'image/x-icon',
-        href: '/favicon.ico'
-      }
-    ]
+    titleTemplate: '%s | HYH\'s Blog',
+    meta: [{
+      charset: 'utf-8'
+    }, {
+      name: 'render',
+      content: 'webkit'
+    }, {
+      'http-equiv': 'X-UA-Compatible',
+      content: 'IE=edge,chrome=1'
+    }, {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no'
+    }, {
+      hid: 'description',
+      name: 'description',
+      content: pkg.description
+    }],
+    link: [{
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/favicon.ico'
+    }]
   },
 
   /*
   ** Customize the progress-bar color
   */
   loading: {
-    color: '#fff'
+    color: '#41b883'
   },
 
   /*
   ** Global CSS
   */
-  css: [
-    {
-      src: '~assets/scss/reset.scss',
-      lang: 'scss'
-    },
-    {
-      src: '~assets/scss/preset.scss',
-      lang: 'scss'
-    }
-  ],
+  css: [{
+    src: '@/assets/scss/reset.scss',
+    lang: 'scss'
+  }, {
+    src: '@/assets/scss/preset.scss',
+    lang: 'scss'
+  }, {
+    src: '@/assets/font/iconfont.scss',
+    lang: 'scss'
+  }],
 
   /*
   ** Plugins to load before mounting the App
@@ -97,5 +89,10 @@ module.exports = {
         });
       }
     }
+  },
+
+  server: {
+    port: 3000,
+    host: '0.0.0.0'
   }
 };

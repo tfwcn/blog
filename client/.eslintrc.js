@@ -9,13 +9,11 @@ module.exports = {
     parser: 'babel-eslint'
   },
   extends: [
-    'plugin:vue/recommended',
-    'plugin:prettier/recommended'
+    'plugin:vue/base'
   ],
   // required to lint *.vue files
   plugins: [
-    'vue',
-    'prettier'
+    'vue'
   ],
   // add your custom rules here
   rules: {
@@ -54,7 +52,7 @@ module.exports = {
 		'comma-spacing': 'error',
 		'comma-style': 'error',
 		'computed-property-spacing': 'error',
-		'eol-last': ['error', 'always'],
+		'eol-last': ['error', 'never'],
 		'func-call-spacing': 'error',
 		'func-name-matching': 'error',
 		'indent': ['error', 2, {

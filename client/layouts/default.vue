@@ -3,38 +3,43 @@
     <header class="header">
       <div class="fixed">
 
-        <div class="brand">
-          <img
-            class="logo"
-            src="@/assets/images/logo.png"
-          >
-          <img
-            class="title"
-            src="@/assets/images/title.png"
-          >
-        </div>
+        <nuxt-link tag="div" class="brand" to="/">
+          <img class="logo" src="@/assets/images/logo.png" />
+          <img class="title" src="@/assets/images/title.png" />
+        </nuxt-link>
 
         <nav class="nav">
           <ul>
             <nuxt-link
-              v-for="item in nav"
+              v-for="(item, index) in navList"
               :key="item.path"
               :to="item.path"
+              :class="{ active: currentNavItem.index === index }"
               tag="li"
+              ref="navItem"
             >{{ item.name }}</nuxt-link>
           </ul>
+
+          <div class="underline" :style="{
+            width: currentNavItem.width + 'px',
+            left: currentNavItem.left + 'px'
+          }" />
         </nav>
 
-        <div class="search">
+        <form @submit.prevent="search" class="search">
           <input
             class="input"
             type="text"
             placeholder="请输入标题关键字"
             autocomplete="off"
-          >
-        </div>
+            v-model="keyword"
+          />
+          <button type="submit" class="icon">
+            <i class="g-icon icon-search" />
+          </button>
+        </form>
 
-        <div class="login">登录</div>
+        <nuxt-link to="/admin/login" class="login">登录</nuxt-link>
       </div>
     </header>
 
@@ -43,7 +48,7 @@
     </main>
 
     <footer>
-      <p>Copyright © 2018 HYH's Blog. All rights reserved.</p>
+      <p>Copyright © {{ year }} HYH's Blog. All rights reserved.</p>
     </footer>
   </div>
 </template>
@@ -52,29 +57,66 @@
 export default {
   data() {
     return {
-      nav: [
-        {
-          name: '全部',
-          path: '/'
-        },
-        {
-          name: '前端开发',
-          path: '/articles/frontend'
-        },
-        {
-          name: 'Node.js开发',
-          path: '/articles/node'
-        },
-        {
-          name: '其他开发',
-          path: '/articles/other'
-        },
-        {
-          name: '工作生活',
-          path: '/articles/life'
-        }
-      ]
+      year: new Date().getFullYear(),
+      navList: [{
+        name: '全部',
+        path: '/articles'
+      }, {
+        name: '前端开发',
+        path: '/articles/frontend'
+      }, {
+        name: 'Node.js开发',
+        path: '/articles/node'
+      }, {
+        name: '其他开发',
+        path: '/articles/other'
+      }, {
+        name: '工作生活',
+        path: '/articles/life'
+      }],
+      currentNavItem: {
+        index: 0,
+        width: 0,
+        left: 0
+      },
+      keyword: ''
     };
+  },
+
+  watch: {
+    $route() {
+      this.updateNavItem();
+    }
+  },
+
+  methods: {
+    search() {
+      console.log(this.keyword);
+    },
+    updateNavItem() {
+      let result = {};
+      let path = this.$route.path;
+      let current = this.navList.find(item => {
+        return item.path >= path && new RegExp(`^${ item.path }`).test(path);
+      });
+
+      if (current) {
+        let index = this.navList.indexOf(current);
+        let $navItem = (this.$refs.navItem || [])[index];
+
+        result = {
+          index,
+          width: $navItem ? $navItem.$el.clientWidth : 0,
+          left: $navItem ? $navItem.$el.offsetLeft : 0
+        };
+      }
+
+      return this.currentNavItem = result;
+    }
+  },
+
+  mounted() {
+    this.updateNavItem();
   }
 };
 </script>
@@ -92,16 +134,27 @@ export default {
       left: 0;
       width: 100%;
       height: 60px;
-      line-height: 60px;
       padding: 0 30px;
+      display: flex;
+      align-items: center;
       background: #fff;
       box-sizing: border-box;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
+    .brand,
+    .nav {
+      line-height: 60px;
+    }
+
     .brand {
-      display: inline-block;
+      cursor: pointer;
+      transition: filter 300ms linear;
+
+      &:hover {
+        filter: drop-shadow(1px 1px 3px #ccc);
+      }
 
       .logo {
         height: 30px;
@@ -113,14 +166,11 @@ export default {
       }
     }
 
-    .nav,
-    .search {
-      margin-left: 30px;
-    }
-
     .nav {
+      position: relative;
       height: 100%;
-      display: inline-block;
+      margin-left: 30px;
+      flex: 1;
 
       ul {
         height: 100%;
@@ -129,12 +179,13 @@ export default {
           height: 100%;
           display: inline-block;
           padding: 0 15px;
-          color: #ccc;
+          margin: 0 5px;
+          transition: all 100ms linear;
+          color: #999;
           cursor: pointer;
 
-          &.nuxt-link-active {
+          &.active {
             color: #000;
-            font-weight: bold;
           }
 
           &:hover {
@@ -142,27 +193,47 @@ export default {
           }
         }
       }
+
+      .underline {
+        position: absolute;
+        bottom: 0;
+        height: 2px;
+        background: #000;
+        transition: all 100ms linear;
+      }
     }
 
     .search {
       position: relative;
-      height: 100%;
-      display: inline-block;
+      margin: 0 15px;
 
       .input {
         width: 180px;
         height: 30px;
         border: 1px solid #ddd;
         border-radius: 15px;
-        background: #fff;
+        background: #efefef;
         box-sizing: border-box;
-        padding: 0 26px 0 10px;
+        padding: 0 30px 0 10px;
         outline: none;
-      }
-    }
+        transition: background 100ms linear;
 
-    .login {
-      float: right;
+        &:focus {
+          background: #fff;
+        }
+      }
+
+      .icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 30px;
+        background: transparent;
+        border: 0;
+        line-height: 30px;
+        text-align: center;
+        cursor: pointer;
+      }
     }
   }
 }
