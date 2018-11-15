@@ -35,16 +35,16 @@
         </javaClientGenerator>
         <!-- 要生成的表 -->
         <!-- 这里的百分号代表对该数据库中所有的表进行生成 -->
-        <table tableName="users">
-            <!--数据库schema-->
-            <!--<property name="runtimeSchema" value="blog"/>-->
-            <!--主键-->
-            <!--<generatedKey column="id" sqlStatement="Postgresql" identity="true"/>-->
-        </table>
-        <table tableName="error"></table>
-        <table tableName="note"></table>
-        <table tableName="note_type"></table>
-        <table tableName="reply"></table>
-        <table tableName="reply_score"></table>
+        <!--<table tableName="users">-->
+        <!--数据库schema-->
+        <!--<property name="runtimeSchema" value="blog"/>-->
+        <!--主键-->
+        <!--<generatedKey column="id" sqlStatement="Postgresql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="errors"></table>
+        <!--<table tableName="notes"></table>-->
+        <!--<table tableName="notes_type"></table>-->
+        <!--<table tableName="replies"></table>-->
+        <!--<table tableName="replies_score"></table>-->
     </context>
 </generatorConfiguration>
