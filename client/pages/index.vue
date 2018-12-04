@@ -38,7 +38,8 @@ export default {
 
   data() {
     return {
-      navList: []
+      navList: [],
+      year: new Date().getFullYear()
     };
   }
 };
