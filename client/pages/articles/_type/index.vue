@@ -28,12 +28,12 @@ import Logo from '~/components/Logo.vue';
 export default {
   head() {
     return {
-      title: ({
+      title: `${ ({
         frontend: '前端开发',
         node: 'Node.js开发',
         other: '其他开发',
         life: '工作生活'
-      })[this.$route.params.type]
+      })[this.$route.params.type] } | HYH\'s Blog`
     };
   },
 

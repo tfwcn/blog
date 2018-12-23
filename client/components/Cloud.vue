@@ -16,7 +16,10 @@ import {
   WebGLRenderer,
   CameraHelper,
   BoxGeometry,
-  MeshBasicMaterial
+  MeshBasicMaterial,
+  MeshLambertMaterial,
+  AmbientLight,
+  ImageUtils
 } from 'three';
 
 export default {
@@ -25,10 +28,6 @@ export default {
       window: {
         width: 0,
         heigth: 0
-      },
-      canvas: {
-        camera: null,
-        scene: null
       },
       mouse: {
         x: 0,
@@ -43,11 +42,14 @@ export default {
 
   methods: {
     init() {
-
       return this.loadImage().then(texture => {
-        console.log(texture);
 
-        let camera = new PerspectiveCamera(30, this.window.width / this.window.heigth, 1, 3000);
+        let camera = new PerspectiveCamera(
+          30,
+          this.window.width / this.window.heigth,
+          1,
+          3000
+        );
 
         camera.position.z = 6000;
 
@@ -56,7 +58,8 @@ export default {
         let geometry = new Geometry();
         let textureLoader = new TextureLoader();
 
-        texture.magFilter = texture.minFilter = LinearMipMapLinearFilter;
+        texture.magFilter = LinearMipMapLinearFilter;
+        texture.minFilter = LinearMipMapLinearFilter;
 
         let fog = new Fog(0x4584b4, -100, 3000);
 
@@ -64,8 +67,7 @@ export default {
           uniforms: {
             'map': {
               type: 't',
-              value: 2,
-              texture
+              value: texture
             },
             'fogColor': {
               type: 'c',
@@ -81,37 +83,52 @@ export default {
             }
           },
           depthTest: false,
+          transparent: true,
           vertexShader: `
+
             varying vec2 vUv;
+
             void main() {
-              vUv = uv;
-              gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+            	vUv = uv;
+            	gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
             }
+
           `,
           fragmentShader: `
+
             uniform sampler2D map;
+
             uniform vec3 fogColor;
             uniform float fogNear;
             uniform float fogFar;
+
             varying vec2 vUv;
+
             void main() {
-              float depth = gl_FragCoord.z / gl_FragCoord.w;
-              float fogFactor = smoothstep( fogNear, fogFar, depth );
-              gl_FragColor = texture2D( map, vUv );
-              gl_FragColor.w *= pow( gl_FragCoord.z, 20.0 );
-              gl_FragColor = mix( gl_FragColor, vec4( fogColor, gl_FragColor.w ), fogFactor );
+
+            	float depth = gl_FragCoord.z / gl_FragCoord.w;
+            	float fogFactor = smoothstep( fogNear, fogFar, depth );
+
+            	gl_FragColor = texture2D( map, vUv );
+            	gl_FragColor.w *= pow( gl_FragCoord.z, 20.0 );
+            	gl_FragColor = mix( gl_FragColor, vec4( fogColor, gl_FragColor.w ), fogFactor );
+
             }
+
           `
         });
 
         let plane = new Mesh(new PlaneGeometry(64, 64));
 
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 8000; i++) {
           plane.position.x = Math.random() * 1000 - 500;
           plane.position.y = -Math.random() * Math.random() * 200 - 15;
           plane.position.z = i;
           plane.rotation.z = Math.random() * Math.PI;
-          plane.scale.x = plane.scale.y = Math.random() * Math.random() * 1.5 + 0.5;
+          plane.scale.x = plane.scale.y =
+            Math.random() * Math.random() * 1.5 + 0.5;
 
           geometry.mergeMesh(plane);
         }
@@ -130,14 +147,14 @@ export default {
           alpha: true
         });
         renderer.setSize(this.window.width, this.window.heigth);
-        renderer.setClearColor(0x000000, 0);
+        renderer.setClearColor(0x000000, 0.0);
 
         this.scene = scene;
         this.camera = camera;
         this.renderer = renderer;
-        this.$refs.$canvas.appendChild(renderer.domElement);
-      });
 
+        return renderer.domElement;
+      });
     },
 
     loadImage() {
@@ -171,17 +188,21 @@ export default {
     render() {
       let position = ((new Date().getTime() - this.nowTime) * 0.03) % 8000;
 
-      // this.camera.position.x += (this.mouse.x - this.camera.target.position.x) * 0.01;
-      // this.camera.position.y += (-this.mouse.y - this.camera.target.position.y) * 0.01;
-      this.camera.position.z = -position + 8000;
+      if (this.camera && this.renderer) {
+        this.camera.position.z = -position + 8000;
+        this.renderer.render(this.scene, this.camera);
+      }
+    },
 
-      console.log(this.camera.position.z);
+    resize() {
+      this.window.width = window.innerWidth;
+      this.window.heigth = window.innerHeight;
 
-      // this.camera.target.position.x = this.camera.position.x;
-      // this.camera.target.position.y = this.camera.position.y;
-      // this.camera.target.position.z = this.camera.position.z - 1000;
-
-      this.renderer.render(this.scene, this.camera);
+      if (this.camera && this.render) {
+        this.camera.aspect = this.window.width / this.window.heigth;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(this.window.width, this.window.heigth);
+      }
     }
   },
 
@@ -189,7 +210,17 @@ export default {
     this.window.width = window.innerWidth;
     this.window.heigth = window.innerHeight;
 
-    this.init().then(() => this.start());
+    window.addEventListener('resize', this.resize.bind(this));
+
+    this.init().then(domElement => {
+      this.$refs.$canvas.appendChild(domElement);
+      this.$emit('ready');
+      this.start();
+    });
+  },
+
+  destroyed() {
+    window.removeEventListener('resize', this.resize.bind(this));
   }
 };
 </script>

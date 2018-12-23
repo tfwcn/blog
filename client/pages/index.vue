@@ -40,7 +40,7 @@ export default {
 
   head() {
     return {
-      title: '首页'
+      title: 'HYH\'s Blog'
     };
   },
 
