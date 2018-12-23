@@ -13,13 +13,7 @@ import {
   ShaderMaterial,
   Mesh,
   PlaneGeometry,
-  WebGLRenderer,
-  CameraHelper,
-  BoxGeometry,
-  MeshBasicMaterial,
-  MeshLambertMaterial,
-  AmbientLight,
-  ImageUtils
+  WebGLRenderer
 } from 'three';
 
 export default {
