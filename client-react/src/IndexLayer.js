@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import './styles/IndexLayer.scss';
+import React from 'react';
+import styles from './styles/IndexLayer.module.scss';
 
-class IndexLayer extends Component {
-  render() {
-    return <div className="IndexLayer" />;
-  }
-}
+const IndexLayer = function () {
+  return <div className={styles.IndexLayer} />;
+};
 
 export default IndexLayer;
