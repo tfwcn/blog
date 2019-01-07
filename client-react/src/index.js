@@ -4,7 +4,7 @@ import './index.scss';
 import IndexLayer from './IndexLayer';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<IndexLayer />, document.getElementById('root'));
+ReactDOM.render(<IndexLayer name="hello" />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

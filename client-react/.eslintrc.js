@@ -1,11 +1,10 @@
 module.exports = {
-  parser: 'babel-eslint',
   env: {
     browser: true,
     commonjs: true,
     es6: true
   },
-  extends: ['airbnb', 'eslint:recommended', 'plugin:react/recommended'],
+  extends: 'eslint:recommended',
   globals: {
     process: true
   },
@@ -18,7 +17,6 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    "react/jsx-filename-extension": ['error', { "extensions": [".js", ".jsx"] }],
     indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
