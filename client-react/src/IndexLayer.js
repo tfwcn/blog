@@ -3,10 +3,10 @@ import styles from './styles/IndexLayer.module.scss';
 
 class IndexLayer extends React.Component {
   //构造函数
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      value: 0
+      value: props.value
     };
     this.test = this.test.bind(this);
   }
@@ -36,9 +36,13 @@ class IndexLayer extends React.Component {
   render() {
     return (
       <div className={styles.IndexLayer} onClick={this.test}>
-        {this.state.value}
+        <div className={styles.header}>
+          <div className={styles.content}>
+            {this.state.value}
 
-        {this.test2()}
+            {/* {this.test2()} */}
+          </div>
+        </div>
       </div>
     );
   }
