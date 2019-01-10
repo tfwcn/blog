@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles/IndexLayer.module.scss';
+import MenuComponent from './MenuComponent';
 
 class IndexLayer extends React.Component {
   //构造函数
@@ -37,10 +38,14 @@ class IndexLayer extends React.Component {
     return (
       <div className={styles.IndexLayer} onClick={this.test}>
         <div className={styles.header}>
+          <div className={styles.content}>{this.state.value}</div>
+        </div>
+        <div className={styles.main}>
           <div className={styles.content}>
-            {this.state.value}
-
-            {/* {this.test2()} */}
+            <div className={styles.left}>
+              <MenuComponent />
+            </div>
+            <div className={styles.right}>{this.state.value}</div>
           </div>
         </div>
       </div>

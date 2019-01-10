@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'amfe-flexible/index.js';
 import './index.scss';
 import IndexLayer from './IndexLayer';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <IndexLayer name="hello" value="50" />,
+  <IndexLayer name="hello" value={50} />,
   document.getElementById('root')
 );
 

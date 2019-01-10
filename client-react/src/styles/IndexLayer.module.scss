@@ -1,14 +1,30 @@
 .IndexLayer {
   width: 100%;
   .header {
-    background-color: green;
     height: 30px;
+    border-bottom: 1px solid #008cff;
     .content {
+      line-height: 30px;
       max-width: 1260px;
       margin: auto;
     }
   }
-  .content {
+  .main {
+    background-color: #f5f6f7;
+    .content {
+      max-width: 1260px;
+      margin: auto;
+      .left {
+        background-color: white;
+        width: 260px;
+        float: left;
+      }
+      .right {
+        background-color: white;
+        width: 100%;
+        margin: 270px;
+      }
+    }
   }
   .footer {
   }
