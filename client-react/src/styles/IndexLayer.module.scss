@@ -1,9 +1,10 @@
 .IndexLayer {
   width: 100%;
   .header {
-    height: 30px;
     border-bottom: 1px solid #008cff;
+    background-color: white;
     .content {
+      height: 30px;
       line-height: 30px;
       max-width: 1260px;
       margin: auto;
@@ -12,17 +13,21 @@
   .main {
     background-color: #f5f6f7;
     .content {
+      display: flex;
+      flex-flow: row;
       max-width: 1260px;
       margin: auto;
       .left {
         background-color: white;
         width: 260px;
-        float: left;
+        height: 100px;
+        box-shadow: 5px black;
       }
       .right {
+        flex: 1;
+        margin-left: 10px;
         background-color: white;
-        width: 100%;
-        margin: 270px;
+        box-shadow: 5px black;
       }
     }
   }

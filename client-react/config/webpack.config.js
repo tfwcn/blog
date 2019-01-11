@@ -99,13 +99,14 @@ module.exports = function(webpackEnv) {
           ],
           sourceMap: isEnvProduction && shouldUseSourceMap
         }
-      },
-      {
-        loader: require.resolve('px2rem-loader'),
-        options: {
-          remUnit: 192 // 设计稿的1/10
-        }
       }
+      //移动端适配方案
+      // {
+      //   loader: require.resolve('px2rem-loader'),
+      //   options: {
+      //     remUnit: 98 // 设计稿的1/10
+      //   }
+      // }
     ].filter(Boolean);
     if (preProcessor) {
       loaders.push({
@@ -349,7 +350,8 @@ module.exports = function(webpackEnv) {
                         }
                       }
                     }
-                  ]
+                  ],
+                  ['import', { libraryName: 'antd', style: 'css' }]
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/

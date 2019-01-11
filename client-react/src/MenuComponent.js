@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
-import 'antd/dist/antd.css';
+
+const SubMenu = Menu.SubMenu;
 
 class MenuComponent extends React.Component {
   //构造函数
@@ -45,7 +46,7 @@ class MenuComponent extends React.Component {
             <Icon type="inbox" />
             <span>Option 3</span>
           </Menu.Item>
-          <Menu.SubMenu
+          <SubMenu
             key="sub1"
             title={
               <span>
@@ -58,8 +59,8 @@ class MenuComponent extends React.Component {
             <Menu.Item key="6">Option 6</Menu.Item>
             <Menu.Item key="7">Option 7</Menu.Item>
             <Menu.Item key="8">Option 8</Menu.Item>
-          </Menu.SubMenu>
-          <Menu.SubMenu
+          </SubMenu>
+          <SubMenu
             key="sub2"
             title={
               <span>
@@ -70,11 +71,11 @@ class MenuComponent extends React.Component {
           >
             <Menu.Item key="9">Option 9</Menu.Item>
             <Menu.Item key="10">Option 10</Menu.Item>
-            <Menu.SubMenu key="sub3" title="Submenu">
+            <SubMenu key="sub3" title="Submenu">
               <Menu.Item key="11">Option 11</Menu.Item>
               <Menu.Item key="12">Option 12</Menu.Item>
-            </Menu.SubMenu>
-          </Menu.SubMenu>
+            </SubMenu>
+          </SubMenu>
         </Menu>
       </div>
     );

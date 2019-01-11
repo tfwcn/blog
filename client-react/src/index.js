@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'amfe-flexible/index.js';
+// import 'amfe-flexible/index.js';//移动端适配方案
 import './index.scss';
 import IndexLayer from './IndexLayer';
 import * as serviceWorker from './serviceWorker';
