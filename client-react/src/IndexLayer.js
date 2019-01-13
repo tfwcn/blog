@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Layout } from 'antd';
+import { Icon } from 'antd';
 // import MenuComponent from './MenuComponent';
 import styles from './styles/IndexLayer.module.scss';
 
@@ -44,11 +44,36 @@ class IndexLayer extends React.Component {
     return (
       <div className={styles.IndexLayer} onClick={this.test}>
         <div className={styles.header}>
-          <div className={styles.content}>登录 | 注册</div>
+          <div className={styles.empty} />
+          <div className={styles.content}>
+            <span className={styles.logo} />
+            {/* 菜单 */}
+            <span className={styles.menu}>
+              <ul>
+                <li className={styles.select}>.Net</li>
+                <li>Java</li>
+                <li>Python</li>
+              </ul>
+            </span>
+            {/* 右边按钮 */}
+            <span className={styles.right}>
+              <span className={styles.triangle} />
+              <Icon className={styles.icon} type="form" />
+              写博客
+            </span>
+          </div>
+          <div className={styles.emptyRight} />
         </div>
         <div className={styles.main}>
+          <div className={styles.empty} />
           <div className={styles.content}>
-            <div className={styles.left}>{/* <MenuComponent /> */}</div>
+            {/* <div className={styles.left}>
+              <ul>
+                <li className={styles.select}>.Net</li>
+                <li>Java</li>
+                <li>Python</li>
+              </ul>
+            </div> */}
             <div className={styles.right}>
               {this.state.value}
               <form>
@@ -64,7 +89,9 @@ class IndexLayer extends React.Component {
               </form>
             </div>
           </div>
+          <div className={styles.empty} />
         </div>
+        <div className={styles.footer}>footer</div>
       </div>
     );
   }

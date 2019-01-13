@@ -1,0 +1,1 @@
+export const HOME_TOPMENU_INIT = 'HOME_TOPMENU_INIT';

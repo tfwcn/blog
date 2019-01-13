@@ -1,0 +1,1 @@
+export { homeTopMenuInit } from './homeTopMenuInit';
