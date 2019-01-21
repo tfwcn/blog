@@ -11,7 +11,13 @@ export function reducer(state, action) {
     case HOME_TOPMENU_INIT:
       return {
         ...state,
-        topMenuList: ['.Net', 'Java', 'Python', '其它'],
+        topMenuList: {
+          '': '首页',
+          dotnet: '.Net',
+          java: 'Java',
+          python: 'Python',
+          other: '其它',
+        },
       };
 
     default:

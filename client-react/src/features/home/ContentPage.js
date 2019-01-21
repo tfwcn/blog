@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import * as actions from './redux/actions';
 // import styles from './HomePage.module.scss';
 
-export class HomePage extends Component {
+export class ContentPage extends Component {
   static get propTypes() {
     return {
       home: PropTypes.object.isRequired,
@@ -18,7 +18,7 @@ export class HomePage extends Component {
   }
 
   render() {
-    return <h1>首页</h1>;
+    return <h1>{this.props.match.item}</h1>;
   }
 }
 
@@ -40,5 +40,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(HomePage)
+  )(ContentPage)
 );

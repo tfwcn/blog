@@ -8,7 +8,7 @@ const loggerMiddleware = createLogger();
 
 export const history = createBrowserHistory();
 
-export default function configureStore(preloadedState) {
+function configureStore(preloadedState) {
   const store = createStore(
     createRootReducer(history), // root reducer with router state
     preloadedState,
@@ -16,11 +16,13 @@ export default function configureStore(preloadedState) {
       applyMiddleware(
         //中间件
         routerMiddleware(history), // for dispatching history actions
-        loggerMiddleware, // 一个很便捷的 middleware，用来打印 action 日志
+        loggerMiddleware // 一个很便捷的 middleware，用来打印 action 日志
         // ... other middlewares ...
-      ),
-    ),
+      )
+    )
   );
 
   return store;
 }
+
+export const store = configureStore();

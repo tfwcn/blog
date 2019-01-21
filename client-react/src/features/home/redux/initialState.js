@@ -1,6 +1,6 @@
 // 初始化State
 const initialState = {
-  topMenuList: [],
+  topMenuList: {},
 };
 
 export default initialState;
