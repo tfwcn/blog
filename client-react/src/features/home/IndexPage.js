@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Icon } from 'antd';
-import { Route, Switch, Redirect, withRouter } from 'react-router';
+import { Route, Switch } from 'react-router';
 import * as actions from './redux/actions';
 import TopMenu from './TopMenu';
+import HomePage from './HomePage';
 import styles from './IndexPage.module.scss';
-import { HomePage } from './HomePage';
-import { ContentPage } from './ContentPage';
 
 export class IndexPage extends Component {
   static get propTypes() {
     return {
       home: PropTypes.object.isRequired,
       actions: PropTypes.object.isRequired,
-      topMenuList: PropTypes.object.isRequired,
     };
   }
   constructor(props) {
@@ -24,7 +22,7 @@ export class IndexPage extends Component {
 
   render() {
     return (
-      <div className={styles.homePage} onClick={this.test}>
+      <div className={styles.indexPage} onClick={this.test}>
         <div className={styles.header}>
           <div className={styles.empty} />
           <div className={styles.content}>
@@ -50,13 +48,9 @@ export class IndexPage extends Component {
                 <li>Python</li>
               </ul>
             </div> */}
-            <div className={styles.right}>
-              <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route path="/:item" component={ContentPage} />
-                <Redirect to="/" />
-              </Switch>
-            </div>
+            <Switch>
+              <Route path={'/'} component={HomePage} />
+            </Switch>
           </div>
           <div className={styles.empty} />
         </div>
@@ -80,9 +74,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(IndexPage)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IndexPage);

@@ -1,11 +1,18 @@
-.homePage {
+.indexPage {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  min-height: 100%;
   background-color: #f5f6f7;
+  background: url('../../static/bg.jpg');
+  background-attachment: fixed;
   .header {
     display: flex;
+    flex: 1;
     border-top: 2px solid #008cff;
     background-color: white;
     box-shadow: 0 0 1px rgb(161, 161, 161);
+    opacity: 0.9;
     .empty {
       flex: 1;
     }
@@ -45,31 +52,14 @@
     }
   }
   .main {
+    flex: 100000;
     display: flex;
     .empty {
       flex: 1;
     }
     .content {
       flex: 100000;
-      display: flex;
-      flex-flow: row;
       max-width: 1260px;
-      // margin: 0 auto;
-      padding: 10px 0;
-      .left {
-        background-color: white;
-        width: 260px;
-        height: 100px;
-        box-shadow: 0 0 1px rgb(161, 161, 161);
-        // border-radius: 5px;
-        margin-right: 10px;
-      }
-      .right {
-        flex: 1;
-        background-color: white;
-        box-shadow: 0 0 1px rgb(161, 161, 161);
-        // border-radius: 5px;
-      }
     }
   }
   .footer {
@@ -77,5 +67,7 @@
     background-color: white;
     padding: 3px 0;
     text-align: center;
+    opacity: 0.9;
+    flex: 1;
   }
 }

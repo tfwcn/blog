@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
 import * as actions from './redux/actions';
 import styles from './TopMenu.module.scss';
 
@@ -12,6 +11,7 @@ export class TopMenu extends Component {
     return {
       topMenuList: PropTypes.object.isRequired,
       actions: PropTypes.object.isRequired,
+      pathname: PropTypes.string,
     };
   }
   constructor(props) {
@@ -27,7 +27,7 @@ export class TopMenu extends Component {
       <span className={styles.menu}>
         <ul>
           {Object.entries(this.props.topMenuList).map(([key, value]) => {
-            let isSelect = this.props.location.pathname == '/' + key;
+            let isSelect = this.props.pathname == '/' + key;
             return (
               <li key={key} className={isSelect ? styles.select : ''}>
                 <Link to={'/' + key}>{value}</Link>
@@ -44,6 +44,7 @@ export class TopMenu extends Component {
 function mapStateToProps(state) {
   return {
     topMenuList: state.home.topMenuList,
+    pathname: state.router.location.pathname,
   };
 }
 
@@ -54,9 +55,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(TopMenu)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TopMenu);

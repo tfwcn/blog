@@ -1,0 +1,89 @@
+.homePage {
+  display: flex;
+  flex-flow: column;
+  min-height: 100%;
+  // 地址导航
+  .breadcrumb {
+    background-color: white;
+    box-shadow: 0 0 1px rgb(161, 161, 161);
+    opacity: 0.9;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #a0a0a0;
+    padding: 10px;
+  }
+  .typeList {
+    flex: 1;
+    background-color: white;
+    box-shadow: 0 0 1px rgb(161, 161, 161);
+    opacity: 0.9;
+    margin-top: 5px;
+    .typeListTitle {
+      border-bottom: 1px solid #94cfff;
+      font-size: 16px;
+      color: #008cff;
+      padding: 10px 0;
+      .icon {
+        margin: 0 5px 0 10px;
+      }
+    }
+    .typeListContent {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 10px {
+        right: 0;
+      }
+      .item {
+        position: relative;
+        width: 160px;
+        height: 60px;
+        line-height: 60px;
+        color: #94cfff;
+        border-top: 1px solid #94cfff;
+        border-bottom: 2px solid #94cfff;
+        text-align: center;
+        margin-right: 25px;
+        .triangleLeft {
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-top: 10px solid #94cfff;
+          border-right: 10px solid transparent;
+          top: 0;
+          left: 0;
+        }
+        .triangleRight {
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-top: 10px solid #94cfff;
+          border-left: 10px solid transparent;
+          top: 0;
+          right: 0;
+        }
+      }
+    }
+  }
+  .blogList {
+    flex: 100000;
+    background-color: white;
+    box-shadow: 0 0 1px rgb(161, 161, 161);
+    opacity: 0.9;
+    margin: 5px 0;
+    .blogListTitle {
+      border-bottom: 1px solid #94cfff;
+      font-size: 16px;
+      color: #008cff;
+      padding: 10px 0;
+      .icon {
+        margin: 0 5px 0 10px;
+      }
+    }
+    .blogListContent {
+      flex-wrap: wrap;
+      padding: 10px {
+        right: 0;
+      }
+    }
+  }
+}

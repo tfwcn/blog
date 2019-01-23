@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import * as actions from './redux/actions';
 // import styles from './HomePage.module.scss';
 
@@ -15,10 +14,11 @@ export class ContentPage extends Component {
   }
   constructor(props) {
     super(props);
+    console.log(props);
   }
 
   render() {
-    return <h1>{this.props.match.item}</h1>;
+    return <h1>{this.props.match.params.item}</h1>;
   }
 }
 
@@ -36,9 +36,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ContentPage)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ContentPage);
