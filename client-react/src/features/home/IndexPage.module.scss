@@ -1,0 +1,76 @@
+@import '../../common/common.scss';
+
+.indexPage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  // background-color: #f5f6f7;
+  // background: url('../../static/bg.jpg');
+  // background-attachment: fixed;
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // background-position: top center;
+  .header {
+    display: flex;
+    flex: 1;
+    border-top: 2px solid $background-color2;
+    background-color: $background-color;
+    box-shadow: 0 0 1px rgb(161, 161, 161);
+    .empty {
+      flex: 1;
+    }
+    .emptyRight {
+      flex: 1;
+      background-color: $background-color2;
+    }
+    .content {
+      flex: 100000;
+      height: 30px;
+      max-width: 1260px;
+      overflow: hidden;
+      .logo {
+        display: inline-block;
+      }
+      .right {
+        position: relative;
+        float: right;
+        background-color: $background-color2;
+        padding: 0 20px;
+        color: white;
+        font-size: 14px;
+        height: 30px;
+        line-height: 30px;
+        .triangle {
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-top: 30px solid $background-color2;
+          border-left: 30px solid transparent;
+          left: -30px;
+        }
+        .icon {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  .main {
+    flex: 100000;
+    display: flex;
+    .empty {
+      flex: 1;
+    }
+    .content {
+      flex: 100000;
+      max-width: 1260px;
+    }
+  }
+  .footer {
+    box-shadow: 0 0 1px rgb(161, 161, 161);
+    background-color: $background-color;
+    padding: 3px 0;
+    text-align: center;
+    flex: 1;
+  }
+}

@@ -1,0 +1,25 @@
+.menu {
+  display: inline-block;
+  ul {
+    display: inline-block;
+    margin: 0;
+    li {
+      display: inline-block;
+      margin: 0;
+      padding: 0 10px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 14px;
+      background-color: white;
+      a {
+        color: #8eccff;
+      }
+    }
+    .select {
+      background-color: #8eccff;
+      a {
+        color: white;
+      }
+    }
+  }
+}
