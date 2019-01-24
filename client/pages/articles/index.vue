@@ -28,7 +28,7 @@ import Logo from '~/components/Logo.vue';
 export default {
   head() {
     return {
-      title: '全部'
+      title: '全部 | HYH\'s Blog'
     };
   },
   components: {

@@ -8,7 +8,6 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    titleTemplate: '%s | HYH\'s Blog',
     meta: [{
       charset: 'utf-8'
     }, {
