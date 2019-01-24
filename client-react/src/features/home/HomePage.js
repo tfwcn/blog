@@ -18,17 +18,20 @@ export class HomePage extends Component {
   }
   constructor(props) {
     super(props);
-    this.props.history.listen(location => {
-      let nowKey = location.pathname.substring(0, location.pathname.length - 1);
-      nowKey = nowKey.substring(nowKey.lastIndexOf('/') + 1);
-      this.props.actions.homeTypeListInit(nowKey);
-    });
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount');
     let nowKey = this.props.location.pathname.substring(
       0,
       this.props.location.pathname.length - 1
     );
     nowKey = nowKey.substring(nowKey.lastIndexOf('/') + 1);
     this.props.actions.homeTypeListInit(nowKey);
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
   }
 
   render() {
@@ -38,14 +41,21 @@ export class HomePage extends Component {
     return (
       <div className={styles.homePage}>
         <div className={styles.breadcrumb}>
-          当前位置：首页
+          当前位置：<Link to={'/'}>首页</Link>
           {breadcrumbList.map(item => {
-            return (
-              <span key={item.key}>
-                {' '}
-                > <Link to={item.key + '/'}>{item.value}</Link>
-              </span>
-            );
+            let nowPath = this.props.location.pathname;
+            nowPath = nowPath.substring(0, nowPath.indexOf(item.key));
+            nowPath = nowPath + item.key + '/';
+            if (this.props.location.pathname == nowPath) {
+              return <span key={item.key}> > {item.value}</span>;
+            } else {
+              return (
+                <span key={item.key}>
+                  {' '}
+                  > <Link to={nowPath}>{item.value}</Link>
+                </span>
+              );
+            }
           })}
         </div>
         <div className={styles.typeList}>
@@ -66,21 +76,6 @@ export class HomePage extends Component {
                 </div>
               );
             })}
-            {/* <div className={styles.item}>
-              <div className={styles.triangleLeft} />
-              人工智能
-              <div className={styles.triangleRight} />
-            </div>
-            <div className={styles.item}>
-              <div className={styles.triangleLeft} />
-              WPF
-              <div className={styles.triangleRight} />
-            </div>
-            <div className={styles.item}>
-              <div className={styles.triangleLeft} />
-              WinForm
-              <div className={styles.triangleRight} />
-            </div> */}
           </div>
         </div>
         <div className={styles.blogList}>

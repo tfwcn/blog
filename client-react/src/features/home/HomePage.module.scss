@@ -1,12 +1,13 @@
+@import '../../common/common.scss';
+
 .homePage {
   display: flex;
   flex-flow: column;
   min-height: 100%;
   // 地址导航
   .breadcrumb {
-    background-color: white;
+    background-color: $background-color;
     box-shadow: 0 0 1px rgb(161, 161, 161);
-    opacity: 0.9;
     margin-top: 5px;
     font-size: 12px;
     color: #a0a0a0;
@@ -14,9 +15,8 @@
   }
   .typeList {
     flex: 1;
-    background-color: white;
+    background-color: $background-color;
     box-shadow: 0 0 1px rgb(161, 161, 161);
-    opacity: 0.9;
     margin-top: 5px;
     .typeListTitle {
       border-bottom: 1px solid #94cfff;
@@ -66,9 +66,8 @@
   }
   .blogList {
     flex: 100000;
-    background-color: white;
+    background-color: $background-color;
     box-shadow: 0 0 1px rgb(161, 161, 161);
-    opacity: 0.9;
     margin: 5px 0;
     .blogListTitle {
       border-bottom: 1px solid #94cfff;

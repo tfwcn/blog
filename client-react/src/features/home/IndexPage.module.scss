@@ -1,24 +1,28 @@
+@import '../../common/common.scss';
+
 .indexPage {
   display: flex;
   flex-direction: column;
   width: 100%;
   min-height: 100%;
-  background-color: #f5f6f7;
-  background: url('../../static/bg.jpg');
-  background-attachment: fixed;
+  // background-color: #f5f6f7;
+  // background: url('../../static/bg.jpg');
+  // background-attachment: fixed;
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // background-position: top center;
   .header {
     display: flex;
     flex: 1;
-    border-top: 2px solid #008cff;
-    background-color: white;
+    border-top: 2px solid $background-color2;
+    background-color: $background-color;
     box-shadow: 0 0 1px rgb(161, 161, 161);
-    opacity: 0.9;
     .empty {
       flex: 1;
     }
     .emptyRight {
       flex: 1;
-      background-color: #008cff;
+      background-color: $background-color2;
     }
     .content {
       flex: 100000;
@@ -31,7 +35,7 @@
       .right {
         position: relative;
         float: right;
-        background-color: #008cff;
+        background-color: $background-color2;
         padding: 0 20px;
         color: white;
         font-size: 14px;
@@ -41,7 +45,7 @@
           position: absolute;
           width: 0;
           height: 0;
-          border-top: 30px solid #008cff;
+          border-top: 30px solid $background-color2;
           border-left: 30px solid transparent;
           left: -30px;
         }
@@ -64,10 +68,9 @@
   }
   .footer {
     box-shadow: 0 0 1px rgb(161, 161, 161);
-    background-color: white;
+    background-color: $background-color;
     padding: 3px 0;
     text-align: center;
-    opacity: 0.9;
     flex: 1;
   }
 }

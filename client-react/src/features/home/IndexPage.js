@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import { Route, Switch } from 'react-router';
 import * as actions from './redux/actions';
-import TopMenu from './TopMenu';
+// import TopMenu from './TopMenu';
 import HomePage from './HomePage';
+import BackgroundImage from './BackgroundImage';
 import styles from './IndexPage.module.scss';
 
 export class IndexPage extends Component {
@@ -22,13 +23,14 @@ export class IndexPage extends Component {
 
   render() {
     return (
-      <div className={styles.indexPage} onClick={this.test}>
+      <div className={styles.indexPage}>
+        <BackgroundImage />
         <div className={styles.header}>
           <div className={styles.empty} />
           <div className={styles.content}>
-            <span className={styles.logo} />
+            <span className={styles.logo}>PPHT个人博客</span>
             {/* 菜单 */}
-            <TopMenu location={this.props.location} />
+            {/* <TopMenu location={this.props.location} /> */}
             {/* 右边按钮 */}
             <span className={styles.right}>
               <span className={styles.triangle} />
@@ -49,7 +51,11 @@ export class IndexPage extends Component {
               </ul>
             </div> */}
             <Switch>
-              <Route path={'/'} component={HomePage} />
+              <Route
+                path={'/'}
+                component={HomePage}
+                key={this.props.location.pathname}
+              />
             </Switch>
           </div>
           <div className={styles.empty} />
