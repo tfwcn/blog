@@ -8,6 +8,7 @@ import * as actions from './redux/actions';
 // import TopMenu from './TopMenu';
 import HomePage from './HomePage';
 import BackgroundImage from './BackgroundImage';
+import ForegroundImage from './ForegroundImage';
 import styles from './IndexPage.module.scss';
 
 export class IndexPage extends Component {
@@ -25,6 +26,7 @@ export class IndexPage extends Component {
     return (
       <div className={styles.indexPage}>
         <BackgroundImage />
+        <ForegroundImage />
         <div className={styles.header}>
           <div className={styles.empty} />
           <div className={styles.content}>
@@ -60,7 +62,7 @@ export class IndexPage extends Component {
           </div>
           <div className={styles.empty} />
         </div>
-        <div className={styles.footer}>footer</div>
+        <div className={styles.footer}>&copy;2011-2019 PPHT个人版权所有</div>
       </div>
     );
   }

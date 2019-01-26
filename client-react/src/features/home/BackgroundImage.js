@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-// import ReactDOM from 'react-dom';
 import * as THREE from 'three';
-// import PropTypes from 'prop-types';
-// import { bindActionCreators } from 'redux';
-// import { connect } from 'react-redux';
-// import * as actions from './redux/actions';
+import * as Stats from 'stats.js';
 import styles from './BackgroundImage.module.scss';
 
 export default class BackgroundImage extends Component {
@@ -16,12 +12,15 @@ export default class BackgroundImage extends Component {
   }
   constructor(props) {
     super(props);
-    console.log(props);
+    this.backgroundImageRef = React.createRef();
   }
   componentDidMount() {
-    this.initThree();
+    // this.initThree();
   }
   initThree() {
+    var stats = new Stats();
+    stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+    this.backgroundImageRef.current.appendChild(stats.dom);
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(
       75,
@@ -30,10 +29,13 @@ export default class BackgroundImage extends Component {
       1000
     );
 
-    var renderer = new THREE.WebGLRenderer();
+    var renderer = new THREE.WebGLRenderer({
+      antialias: false,
+      alpha: true,
+    });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0.0);
-    document.getElementById('backgroundImage').appendChild(renderer.domElement);
+    this.backgroundImageRef.current.appendChild(renderer.domElement);
 
     var geometry = new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -49,6 +51,7 @@ export default class BackgroundImage extends Component {
       cube.rotation.y += 0.01;
 
       renderer.render(scene, camera);
+      stats.update();
     };
     function onWindowResize() {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -61,10 +64,9 @@ export default class BackgroundImage extends Component {
   }
 
   render() {
-    this.bgElement = (
-      <div id={'backgroundImage'} className={styles.backgroundImage} />
+    return (
+      <div ref={this.backgroundImageRef} className={styles.backgroundImage} />
     );
-    return this.bgElement;
   }
 }
 
