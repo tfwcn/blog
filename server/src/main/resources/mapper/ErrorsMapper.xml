@@ -39,4 +39,80 @@
     select id, num, message, detail, create_time, update_time
     from errors
   </select>
+  <resultMap id="BaseResultMap" type="com.tfwcn.blog.models.Errors">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="num" jdbcType="BIGINT" property="num" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="create_time" jdbcType="TIME" property="createTime" />
+    <result column="update_time" jdbcType="TIME" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from errors
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tfwcn.blog.models.Errors">
+    insert into errors (id, num, message, 
+      detail, create_time, update_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{num,jdbcType=BIGINT}, #{message,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIME}, #{updateTime,jdbcType=TIME}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfwcn.blog.models.Errors">
+    update errors
+    set num = #{num,jdbcType=BIGINT},
+      message = #{message,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIME},
+      update_time = #{updateTime,jdbcType=TIME}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, num, message, detail, create_time, update_time
+    from errors
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, num, message, detail, create_time, update_time
+    from errors
+  </select>
+  <resultMap id="BaseResultMap" type="com.tfwcn.blog.models.Errors">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="num" jdbcType="BIGINT" property="num" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="create_time" jdbcType="TIME" property="createTime" />
+    <result column="update_time" jdbcType="TIME" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from errors
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tfwcn.blog.models.Errors">
+    insert into errors (id, num, message, 
+      detail, create_time, update_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{num,jdbcType=BIGINT}, #{message,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIME}, #{updateTime,jdbcType=TIME}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfwcn.blog.models.Errors">
+    update errors
+    set num = #{num,jdbcType=BIGINT},
+      message = #{message,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIME},
+      update_time = #{updateTime,jdbcType=TIME}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, num, message, detail, create_time, update_time
+    from errors
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, num, message, detail, create_time, update_time
+    from errors
+  </select>
 </mapper>
