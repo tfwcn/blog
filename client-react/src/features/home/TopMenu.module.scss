@@ -11,11 +11,15 @@
       line-height: 30px;
       font-size: 14px;
       background-color: white;
-      color: #8eccff;
+      a {
+        color: #8eccff;
+      }
     }
     .select {
       background-color: #8eccff;
-      color: white;
+      a {
+        color: white;
+      }
     }
   }
 }

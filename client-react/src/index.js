@@ -18,7 +18,7 @@ const render = () => {
       <ConnectedRouter history={history}>
         {/* your usual react-router v4 routing */}
         <Switch>
-          <Route path="/" component={IndexPage} />
+          <Route path="" component={IndexPage} />
         </Switch>
       </ConnectedRouter>
     </Provider>,

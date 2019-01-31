@@ -1,0 +1,136 @@
+@import '../../common/common.scss';
+
+.homePage {
+  display: flex;
+  flex-flow: column;
+  min-height: 100%;
+  // 地址导航
+  .breadcrumb {
+    background-color: $background-color;
+    box-shadow: 0 0 1px rgb(161, 161, 161);
+    margin-top: 5px;
+    font-size: 14px;
+    color: #a0a0a0;
+    padding: 10px;
+    a {
+      color: $font-color3;
+      &:hover {
+        color: $font-color3-hover;
+      }
+    }
+    .nowItem {
+      color: black;
+    }
+  }
+  .typeList {
+    flex: 1;
+    background-color: $background-color;
+    box-shadow: 0 0 1px rgb(161, 161, 161);
+    margin-top: 5px;
+    .typeListTitle {
+      border-bottom: 1px solid $border-color1;
+      font-size: 16px;
+      color: $font-color3;
+      padding: 10px 0;
+      .icon {
+        margin: 0 5px 0 10px;
+      }
+    }
+    .typeListContent {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 10px {
+        right: 0;
+      }
+      .item {
+        position: relative;
+        width: 160px;
+        height: 60px;
+        line-height: 60px;
+        border-top: 1px solid $border-color3;
+        border-bottom: 2px solid $border-color3;
+        text-align: center;
+        margin-right: 25px;
+        font-size: 16px;
+        a {
+          display: block;
+          width: 100%;
+          height: 100%;
+          color: $font-color3;
+          &:hover {
+            color: $font-color3-hover;
+            background-color: $background-color4;
+          }
+        }
+        .triangleLeft {
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-top: 10px solid $border-color3;
+          border-right: 10px solid transparent;
+          top: 0;
+          left: 0;
+        }
+        .triangleRight {
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-top: 10px solid $border-color3;
+          border-left: 10px solid transparent;
+          top: 0;
+          right: 0;
+        }
+      }
+    }
+  }
+  .blogList {
+    flex: 100000;
+    background-color: $background-color;
+    box-shadow: 0 0 1px rgb(161, 161, 161);
+    margin: 5px 0;
+    .blogListTitle {
+      border-bottom: 1px solid $border-color1;
+      font-size: 16px;
+      color: $font-color3;
+      padding: 10px 0;
+      .icon {
+        margin: 0 5px 0 10px;
+      }
+    }
+    .blogListContent {
+      flex-wrap: wrap;
+      .blogListItem {
+        border-bottom: 1px solid $border-color2;
+        padding: 5px 10px;
+        &:hover {
+          background-color: $background-color3;
+        }
+        .title {
+          font-size: 18px;
+          font-weight: bold;
+          padding: 5px 10px;
+          a {
+            color: black;
+            &:hover {
+              color: $font-color3;
+            }
+          }
+        }
+        .content {
+          font-size: 14px;
+          color: $font-color1;
+          padding: 5px 10px;
+        }
+        .info {
+          font-size: 14px;
+          color: $font-color1;
+          padding: 3px 10px;
+          .time {
+            font-size: 14px;
+            color: $font-color2;
+          }
+        }
+      }
+    }
+  }
+}

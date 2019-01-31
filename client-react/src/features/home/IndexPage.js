@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Icon } from 'antd';
-import { Route, Switch, Redirect, withRouter } from 'react-router';
+import { Route, Switch } from 'react-router';
 import * as actions from './redux/actions';
-import TopMenu from './TopMenu';
+// import TopMenu from './TopMenu';
+import HomePage from './HomePage';
+import BackgroundImage from './BackgroundImage';
+import ForegroundImage from './ForegroundImage';
 import styles from './IndexPage.module.scss';
-import { HomePage } from './HomePage';
-import { ContentPage } from './ContentPage';
 
 export class IndexPage extends Component {
   static get propTypes() {
     return {
       home: PropTypes.object.isRequired,
       actions: PropTypes.object.isRequired,
-      topMenuList: PropTypes.object.isRequired,
     };
   }
   constructor(props) {
@@ -24,13 +24,15 @@ export class IndexPage extends Component {
 
   render() {
     return (
-      <div className={styles.homePage} onClick={this.test}>
+      <div className={styles.indexPage}>
+        <BackgroundImage />
+        <ForegroundImage />
         <div className={styles.header}>
           <div className={styles.empty} />
           <div className={styles.content}>
-            <span className={styles.logo} />
+            <span className={styles.logo}>PPHT个人博客</span>
             {/* 菜单 */}
-            <TopMenu location={this.props.location} />
+            {/* <TopMenu location={this.props.location} /> */}
             {/* 右边按钮 */}
             <span className={styles.right}>
               <span className={styles.triangle} />
@@ -50,17 +52,17 @@ export class IndexPage extends Component {
                 <li>Python</li>
               </ul>
             </div> */}
-            <div className={styles.right}>
-              <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route path="/:item" component={ContentPage} />
-                <Redirect to="/" />
-              </Switch>
-            </div>
+            <Switch>
+              <Route
+                path={'/'}
+                component={HomePage}
+                key={this.props.location.pathname}
+              />
+            </Switch>
           </div>
           <div className={styles.empty} />
         </div>
-        <div className={styles.footer}>footer</div>
+        <div className={styles.footer}>&copy;2011-2019 PPHT个人版权所有</div>
       </div>
     );
   }
@@ -80,9 +82,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(IndexPage)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IndexPage);

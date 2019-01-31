@@ -1,5 +1,8 @@
 <template>
   <div class="p-home">
+
+    <cloud class="canvas" />
+
     <div class="logo">
       <div class="left item"></div>
       <div class="middle item"></div>
@@ -26,19 +29,23 @@
 </template>
 
 <script>
+import Cloud from '@/components/Cloud.vue';
 
 export default {
   layout: 'index',
 
+  components: {
+    Cloud
+  },
+
   head() {
     return {
-      title: '首页'
+      title: 'HYH\'s Blog'
     };
   },
 
   data() {
     return {
-      navList: [],
       year: new Date().getFullYear()
     };
   }
@@ -47,15 +54,15 @@ export default {
 
 <style lang="scss" scoped>
 .p-home {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #f8f8f8;
-  padding-bottom: 30px;
-  box-sizing: border-box;
+
+  .canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+  }
 
   .logo {
     width: 176px;
