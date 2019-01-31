@@ -44,12 +44,12 @@ dependencies {
     mybatisGenerator('tk.mybatis:mapper:4.0.4')
 }
 
-task mybatisGenerate {
-    ant.taskdef(
-            name: 'mbgenerator',
-            classname: 'org.mybatis.generator.ant.GeneratorAntTask',
-            classpath: configurations.mybatisGenerator.asPath
-    )
-    ant.mbgenerator(overwrite: true,
-            configfile: 'src/main/resources/generatorConfig.xml', verbose: true)
-}
+//task mybatisGenerate {
+//    ant.taskdef(
+//            name: 'mbgenerator',
+//            classname: 'org.mybatis.generator.ant.GeneratorAntTask',
+//            classpath: configurations.mybatisGenerator.asPath
+//    )
+//    ant.mbgenerator(overwrite: true,
+//            configfile: 'src/main/resources/generatorConfig.xml', verbose: true)
+//}

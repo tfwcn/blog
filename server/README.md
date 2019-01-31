@@ -1,7 +1,7 @@
 # blog
 
 ## build jar文件
-```gradle build```
+```gradle build -x test```
 
 ## build失败时尝试升级gradle
 ```scoop update gradle```
