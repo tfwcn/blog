@@ -1,8 +1,42 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as THREE from 'three';
 import * as Stats from 'stats.js';
 import WEBGL from '../../common/WebGL';
 import styles from './ForegroundImage.module.scss';
+
+class PointSprite {
+  static get propTypes() {
+    return {
+      spriteMap: PropTypes.object.isRequired,
+      spriteMaterial: PropTypes.object.isRequired,
+      sprite: PropTypes.object.isRequired,
+    };
+  }
+  constructor(props) {
+    this.spriteMap = props.spriteMap;
+
+    this.spriteMaterial = new THREE.SpriteMaterial({
+      map: this.spriteMap,
+      color: 0xffffff,
+    });
+
+    this.sprite = new THREE.Sprite(this.spriteMaterial);
+    this.sprite.position.copy(props.position);
+    this.sprite.scale.x = 0.4;
+    this.sprite.scale.y = 0.4;
+  }
+  run() {
+    if (this.sprite.scale.x > 0) {
+      this.sprite.position.y -= (0.4 - this.sprite.scale.x) * 0.1;
+      this.sprite.scale.x -= 0.01;
+      this.sprite.scale.y -= 0.01;
+    }
+  }
+  CheckEnd() {
+    return this.sprite.scale.x <= 0;
+  }
+}
 
 export default class ForegroundImage extends Component {
   constructor(props) {
@@ -10,139 +44,35 @@ export default class ForegroundImage extends Component {
     this.foregroundImageRef = React.createRef();
   }
   componentDidMount() {
-    // this.initThree();
-    this.initThree2();
+    // this.initThree2();
+    this.initThree3();
   }
-  initThree() {
-    if (WEBGL.isWebGL2Available() === false) {
-      document.body.appendChild(WEBGL.getWebGL2ErrorMessage());
-    }
-
-    let stats = new Stats();
-    stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-    this.foregroundImageRef.current.appendChild(stats.dom);
-
-    let scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
+  //鼠标坐标映射到三维空间
+  convertTo3DCoordinate(camera, clientX, clientY) {
+    // console.log('cx: ' + clientX + ', cy: ' + clientY);
+    let mv = new THREE.Vector3(
+      (clientX / window.innerWidth) * 2 - 1,
+      -(clientY / window.innerHeight) * 2 + 1,
+      0
     );
-    camera.position.x = 0;
-    camera.position.y = 0;
-    camera.position.z = 0;
+    // console.log('mx: ' + mv.x + ', my: ' + mv.y + ', mz:' + mv.z);
+    // mv.unproject(this.camera);
+    // console.log('x: ' + mv.x + ', y: ' + mv.y + ', z:' + mv.z);
+    return mv.unproject(camera);
+  }
+  //鼠标坐标映射到三维空间并映射到某个平面
+  convertTo3DCoordinateForZIndex(camera, clientX, clientY, z) {
+    let vector = this.convertTo3DCoordinate(camera, clientX, clientY);
+    //作一条射线，与某个平面的交点作为坐标
+    let ray = new THREE.Ray(camera.position, vector.sub(camera.position));
 
-    let renderer = new THREE.WebGLRenderer({
-      antialias: false,
-      alpha: true,
-    });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0.0);
-    this.foregroundImageRef.current.appendChild(renderer.domElement);
-    // scene = new THREE.Scene();
-    // scene.fog = new THREE.FogExp2(0x000000, 0.0008); //雾
-    var geometry = new THREE.BufferGeometry();
-    var vertices = [];
-    let materials = [];
-    let mouseX = 0;
-    let mouseY = 0;
-    let windowHalfX = window.innerWidth / 2;
-    let windowHalfY = window.innerHeight / 2;
-    var textureLoader = new THREE.TextureLoader();
-    var sprite1 = textureLoader.load(require('../../static/p.png'));
-    var sprite2 = textureLoader.load(require('../../static/p.png'));
-    var sprite3 = textureLoader.load(require('../../static/p.png'));
-    var sprite4 = textureLoader.load(require('../../static/p.png'));
-    var sprite5 = textureLoader.load(require('../../static/p.png'));
-    for (let i = 0; i < 10000; i++) {
-      var x = Math.random() * 2000 - 1000;
-      var y = Math.random() * 2000 - 1000;
-      var z = Math.random() * 2000 - 1000;
-      vertices.push(x, y, z);
-    }
-    geometry.addAttribute(
-      'position',
-      new THREE.Float32BufferAttribute(vertices, 3)
-    );
-    let parameters = [
-      [[1.0, 1, 0.5], sprite2, 20],
-      [[0.95, 1, 0.5], sprite3, 15],
-      [[0.9, 1, 0.5], sprite1, 10],
-      [[0.85, 1, 0.5], sprite5, 8],
-      [[0.8, 1, 0.5], sprite4, 5],
-    ];
-    for (let i = 0; i < parameters.length; i++) {
-      var color = parameters[i][0];
-      var sprite = parameters[i][1];
-      var size = parameters[i][2];
-      materials[i] = new THREE.PointsMaterial({
-        size: size,
-        map: sprite,
-        blending: THREE.AdditiveBlending,
-        depthTest: false,
-        transparent: true,
-      });
-      materials[i].color.setHSL(color[0], color[1], color[2]);
-      var particles = new THREE.Points(geometry, materials[i]);
-      particles.rotation.x = Math.random() * 6;
-      particles.rotation.y = Math.random() * 6;
-      particles.rotation.z = Math.random() * 6;
-      scene.add(particles);
-    }
-
-    var animate = function() {
-      requestAnimationFrame(animate);
-      render();
-      stats.update();
-    };
-    function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-    function onDocumentMouseMove(event) {
-      mouseX = event.clientX - windowHalfX;
-      mouseY = event.clientY - windowHalfY;
-    }
-    function onDocumentTouchStart(event) {
-      if (event.touches.length === 1) {
-        event.preventDefault();
-        mouseX = event.touches[0].pageX - windowHalfX;
-        mouseY = event.touches[0].pageY - windowHalfY;
-      }
-    }
-    function onDocumentTouchMove(event) {
-      if (event.touches.length === 1) {
-        event.preventDefault();
-        mouseX = event.touches[0].pageX - windowHalfX;
-        mouseY = event.touches[0].pageY - windowHalfY;
-      }
-    }
-    window.addEventListener('resize', onWindowResize, false);
-    document.addEventListener('mousemove', onDocumentMouseMove, false);
-    document.addEventListener('touchstart', onDocumentTouchStart, false);
-    document.addEventListener('touchmove', onDocumentTouchMove, false);
-    function render() {
-      var time = Date.now() * 0.00005;
-      camera.position.x += (mouseX - camera.position.x) * 0.05;
-      camera.position.y += (-mouseY - camera.position.y) * 0.05;
-      camera.lookAt(scene.position);
-      for (let i = 0; i < scene.children.length; i++) {
-        var object = scene.children[i];
-        if (object instanceof THREE.Points) {
-          object.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
-        }
-      }
-      for (let i = 0; i < materials.length; i++) {
-        var color = parameters[i][0];
-        var h = ((360 * (color[0] + time)) % 360) / 360;
-        materials[i].color.setHSL(h, color[1], color[2]);
-      }
-      renderer.render(scene, camera);
-    }
-
-    animate();
+    let planeNormal = camera.position.clone();
+    planeNormal.sub(new THREE.Vector3(0, 0, 0).unproject(this.camera));
+    planeNormal.normalize();
+    let plane = new THREE.Plane(planeNormal, z);
+    let point = new THREE.Vector3(0, 0, 0);
+    ray.intersectPlane(plane, point);
+    return point;
   }
   initThree2() {
     if (WEBGL.isWebGL2Available() === false) {
@@ -154,39 +84,147 @@ export default class ForegroundImage extends Component {
     this.foregroundImageRef.current.appendChild(stats.dom);
 
     let scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(
-      90,
+    this.camera = new THREE.PerspectiveCamera(
+      45,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
-    camera.position.copy(new THREE.Vector3(0, 0, 0)); //设置摄像机位置
-    camera.up.copy(new THREE.Vector3(0, 1, 0)); //设置y正方向为上
-    camera.lookAt(new THREE.Vector3(0, 0, 1)); //设置视点
+    this.camera.position.copy(new THREE.Vector3(0, 0, 0)); //设置摄像机位置
+    this.camera.up.copy(new THREE.Vector3(0, 1, 0)); //设置y正方向为上
+    this.camera.lookAt(new THREE.Vector3(0, 0, 1)); //设置视点
 
-    let renderer = new THREE.WebGLRenderer({
+    this.renderer = new THREE.WebGLRenderer({
       antialias: false,
       alpha: true,
     });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0.0);
-    this.foregroundImageRef.current.appendChild(renderer.domElement);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setClearColor(0x000000, 0.0);
+    this.renderer.shadowMap.enabled = true; //阴影
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+    this.foregroundImageRef.current.appendChild(this.renderer.domElement);
+    //全局光
+    var light = new THREE.AmbientLight(0xffffff, 0.5); // soft white light
+    scene.add(light);
+    //平行光
+    var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    // directionalLight.castShadow = true; //产生阴影
 
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
-    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    var cube = new THREE.Mesh(geometry, material);
-    cube.position.copy(new THREE.Vector3(0, 0, 1));
-    scene.add(cube);
+    //Set up shadow properties for the light
+    directionalLight.shadow.mapSize.width = 512; // default
+    directionalLight.shadow.mapSize.height = 512; // default
+    directionalLight.shadow.camera.near = 0.5; // default
+    directionalLight.shadow.camera.far = 500; // default
 
-    function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-    window.addEventListener('resize', onWindowResize, false);
-    var animate = function() {
+    directionalLight.position.copy(new THREE.Vector3(1, 1, 0)); //位置
+    directionalLight.target.position.copy(new THREE.Vector3(0, 0, 1)); //方向
+    scene.add(directionalLight);
+    scene.add(directionalLight.target);
+
+    let geometry = new THREE.BoxGeometry(1, 1, 1);
+    var edges = new THREE.EdgesGeometry(geometry); //显示边缘
+    let material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+    this.cube = new THREE.Mesh(geometry, material);
+    // this.cube.castShadow = true; //产生阴影
+    // this.cube.receiveShadow = true; //接收阴影
+    this.cube.position.copy(new THREE.Vector3(0, 0, 10));
+    this.cube.add(new THREE.LineSegments(edges, material));
+    scene.add(this.cube);
+
+    window.addEventListener(
+      'resize',
+      () => {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+      },
+      false
+    );
+    document.addEventListener(
+      'mousemove',
+      () => {
+        this.convertTo3DCoordinate(event.clientX, event.clientY);
+      },
+      false
+    );
+    let animate = () => {
       requestAnimationFrame(animate);
-      renderer.render(scene, camera);
+      this.renderer.render(scene, this.camera);
+      stats.update();
+    };
+    animate();
+  }
+  initThree3() {
+    if (WEBGL.isWebGL2Available() === false) {
+      document.body.appendChild(WEBGL.getWebGL2ErrorMessage());
+    }
+
+    let stats = new Stats();
+    stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+    this.foregroundImageRef.current.appendChild(stats.dom);
+
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(
+      45,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    this.camera.position.copy(new THREE.Vector3(0, 0, 0)); //设置摄像机位置
+    this.camera.up.copy(new THREE.Vector3(0, 1, 0)); //设置y正方向为上
+    this.camera.lookAt(new THREE.Vector3(0, 0, 1)); //设置视点
+
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: false,
+      alpha: true,
+    });
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setClearColor(0x000000, 0.0);
+    this.foregroundImageRef.current.appendChild(this.renderer.domElement);
+
+    let textureLoader = new THREE.TextureLoader();
+    this.pointSpriteMap = textureLoader.load(require('../../static/p.png'));
+    this.pointSpriteList = [];
+
+    window.addEventListener(
+      'resize',
+      () => {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+      },
+      false
+    );
+    document.addEventListener(
+      'mousemove',
+      event => {
+        let position = this.convertTo3DCoordinateForZIndex(
+          this.camera,
+          event.clientX,
+          event.clientY,
+          10
+        );
+        if (position != null) {
+          let tmpPointSprite = new PointSprite({
+            spriteMap: this.pointSpriteMap,
+            position: position,
+          });
+          this.scene.add(tmpPointSprite.sprite);
+          this.pointSpriteList.push(tmpPointSprite);
+        }
+      },
+      false
+    );
+    let animate = () => {
+      requestAnimationFrame(animate);
+      this.pointSpriteList.map(item => {
+        item.run();
+        if (item.CheckEnd()) {
+          this.pointSpriteList.splice(this.pointSpriteList.indexOf(item), 1);
+          this.scene.remove(item.sprite);
+        }
+      });
+      this.renderer.render(this.scene, this.camera);
       stats.update();
     };
     animate();
