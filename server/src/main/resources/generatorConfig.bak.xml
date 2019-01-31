@@ -4,10 +4,12 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
     <context id="Postgresql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
-        <!--<plugin type="tk.mybatis.mapper.generator.MapperPlugin">-->
-        <!--<property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>-->
-        <!--&lt;!&ndash; caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true &ndash;&gt;-->
-        <!--<property name="caseSensitive" value="true"/>-->
+        <!--添加@Mapper-->
+        <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"></plugin>
+        <!--分页-->
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+        <!--禁用Mapper合并-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"></plugin>
         <!--</plugin>-->
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
