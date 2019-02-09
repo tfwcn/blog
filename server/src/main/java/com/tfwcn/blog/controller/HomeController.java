@@ -23,7 +23,7 @@ import java.util.Map;
  * 用户操作类
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class HomeController {
 
     /**
