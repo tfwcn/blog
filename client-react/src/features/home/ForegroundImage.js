@@ -159,9 +159,9 @@ export default class ForegroundImage extends Component {
       document.body.appendChild(WEBGL.getWebGL2ErrorMessage());
     }
 
-    let stats = new Stats();
-    stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-    this.foregroundImageRef.current.appendChild(stats.dom);
+    // let stats = new Stats();
+    // stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+    // this.foregroundImageRef.current.appendChild(stats.dom);
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
@@ -225,7 +225,7 @@ export default class ForegroundImage extends Component {
         }
       });
       this.renderer.render(this.scene, this.camera);
-      stats.update();
+      // stats.update();
     };
     animate();
   }
