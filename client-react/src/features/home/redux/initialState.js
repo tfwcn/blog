@@ -5,7 +5,10 @@ const initialState = {
   typeList: [],
   // 当前面包屑数据
   breadcrumbList: [],
-  nowTypeKey: '',
+  //是否显示loading
+  isLoading: false,
+  //博客文章列表
+  blogList: [],
 };
 
 export default initialState;

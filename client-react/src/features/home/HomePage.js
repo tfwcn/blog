@@ -12,7 +12,6 @@ export class HomePage extends Component {
     return {
       typeList: PropTypes.array.isRequired,
       breadcrumbList: PropTypes.array.isRequired,
-      nowTypeKey: PropTypes.string.isRequired,
       actions: PropTypes.object.isRequired,
     };
   }
@@ -21,21 +20,22 @@ export class HomePage extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
+    // console.log('componentDidMount');
     let nowKey = this.props.location.pathname.substring(
       0,
       this.props.location.pathname.length - 1
     );
     nowKey = nowKey.substring(nowKey.lastIndexOf('/') + 1);
+    this.nowTypeKey = nowKey;
     this.props.actions.homeTypeListInit(nowKey);
   }
 
   componentWillUnmount() {
-    console.log('componentWillUnmount');
+    // console.log('componentWillUnmount');
   }
 
   render() {
-    let nowTypeKey = this.props.nowTypeKey;
+    let nowTypeKey = this.nowTypeKey;
     let typeList = this.props.typeList;
     let breadcrumbList = this.props.breadcrumbList;
     let hasTypeItem = typeList.find(i => i.pkey == nowTypeKey);
@@ -169,7 +169,6 @@ function mapStateToProps(state) {
   return {
     typeList: state.home.typeList,
     breadcrumbList: state.home.breadcrumbList,
-    nowTypeKey: state.home.nowTypeKey,
   };
 }
 
