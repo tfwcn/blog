@@ -9,6 +9,7 @@
     <result column="create_time" jdbcType="TIME" property="createTime" />
     <result column="update_time" jdbcType="TIME" property="updateTime" />
     <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="pid" jdbcType="VARCHAR" property="pid" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from notes_type
@@ -17,10 +18,10 @@
   <insert id="insert" parameterType="com.tfwcn.blog.models.NotesType">
     insert into notes_type (id, num, name, 
       detail, create_time, update_time, 
-      path)
+      path, pid)
     values (#{id,jdbcType=VARCHAR}, #{num,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
       #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIME}, #{updateTime,jdbcType=TIME}, 
-      #{path,jdbcType=VARCHAR})
+      #{path,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.tfwcn.blog.models.NotesType">
     update notes_type
@@ -29,16 +30,17 @@
       detail = #{detail,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIME},
       update_time = #{updateTime,jdbcType=TIME},
-      path = #{path,jdbcType=VARCHAR}
+      path = #{path,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select id, num, name, detail, create_time, update_time, path
+    select id, num, name, detail, create_time, update_time, path, pid
     from notes_type
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, num, name, detail, create_time, update_time, path
+    select id, num, name, detail, create_time, update_time, path, pid
     from notes_type
   </select>
 </mapper>

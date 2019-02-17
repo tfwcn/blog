@@ -1,9 +1,8 @@
 package com.tfwcn.blog.dao;
 
 import com.tfwcn.blog.models.Notes;
-import org.apache.ibatis.annotations.Mapper;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface NotesMapper {

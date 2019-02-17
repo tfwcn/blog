@@ -1,0 +1,13 @@
+@import '../../common/common.scss';
+
+.blogAddPage {
+  display: flex;
+  flex-flow: column;
+  min-height: 100%;
+  .blogForm {
+    flex: 1;
+    background-color: $background-color;
+    box-shadow: 0 0 1px rgb(161, 161, 161);
+    margin: 5px 0;
+  }
+}

@@ -18,6 +18,27 @@ export class HomePage extends Component {
   constructor(props) {
     super(props);
   }
+  //查询博客列表
+  selectBlogs() {
+    this.props.actions.homeBlogListLoading();
+    fetch('/api/note/list', {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ page: 1, rows: 10 }),
+    })
+      .then(res => res.json())
+      .catch(error => {
+        this.props.actions.homeBlogListError(error);
+      })
+      .then(response => {
+        console.log(response);
+        this.props.actions.homeBlogListSuccess(response);
+      });
+  }
 
   componentDidMount() {
     // console.log('componentDidMount');
@@ -28,6 +49,7 @@ export class HomePage extends Component {
     nowKey = nowKey.substring(nowKey.lastIndexOf('/') + 1);
     this.nowTypeKey = nowKey;
     this.props.actions.homeTypeListInit(nowKey);
+    this.selectBlogs();
   }
 
   componentWillUnmount() {

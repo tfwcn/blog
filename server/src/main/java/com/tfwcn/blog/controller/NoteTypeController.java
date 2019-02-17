@@ -31,7 +31,7 @@ public class NoteTypeController {
             CommonHelper.getId(noteTypeInfo);
             noteTypeDao.insert(noteTypeInfo);
             //返回值
-            ResponseInfo responseInfo = new ResponseInfo(1, null);
+            ResponseInfo responseInfo = new ResponseInfo(0, null);
             return ResponseEntity.ok(responseInfo);
         } catch (Exception ex) {
             //返回值
@@ -41,17 +41,17 @@ public class NoteTypeController {
     }
 
     /**
-     * 新增 贴子类型 /api/note_type/get_list
+     * 新增 贴子类型 /api/note_type/list
      *
      * @param id 贴子类型 id
      * @return 返回状态码，0：成功
      */
-    @RequestMapping(method = RequestMethod.GET, path = "/get_list")
-    public ResponseEntity<?> getList(@RequestParam(required = false) String id) {
+    @RequestMapping(method = RequestMethod.GET, path = "/list")
+    public ResponseEntity<?> list(@RequestParam(required = false) String id) {
         try {
             Collection<NotesType> tmpListNoteTypeInfo = noteTypeDao.selectAll();
             //返回值
-            ResponseInfo responseInfo = new ResponseInfo(1, tmpListNoteTypeInfo);
+            ResponseInfo responseInfo = new ResponseInfo(0, tmpListNoteTypeInfo);
             return ResponseEntity.ok(responseInfo);
         } catch (Exception ex) {
             //返回值

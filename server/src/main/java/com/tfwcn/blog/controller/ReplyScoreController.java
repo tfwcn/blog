@@ -32,7 +32,7 @@ public class ReplyScoreController {
             CommonHelper.getId(replyScoreInfo);
             replyScoreDao.insert(replyScoreInfo);
             //返回值
-            ResponseInfo responseInfo = new ResponseInfo(1, null);
+            ResponseInfo responseInfo = new ResponseInfo(0, null);
             return ResponseEntity.ok(responseInfo);
         } catch (Exception ex) {
             //返回值

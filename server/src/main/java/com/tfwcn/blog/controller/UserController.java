@@ -58,7 +58,7 @@ public class UserController {
                 return ResponseEntity.ok(responseInfo);
             }
             //返回值，成功
-            ResponseInfo responseInfo = new ResponseInfo(1, null);
+            ResponseInfo responseInfo = new ResponseInfo(0, null);
             return ResponseEntity.ok(responseInfo);
         } catch (Exception ex) {
             //返回值
@@ -116,7 +116,7 @@ public class UserController {
             userInfo.setUserName(userName);
             userDao.insert(userInfo);
             //返回值，成功
-            ResponseInfo responseInfo = new ResponseInfo(1, "注册成功！");
+            ResponseInfo responseInfo = new ResponseInfo(0, "注册成功！");
             return ResponseEntity.ok(responseInfo);
         } catch (Exception ex) {
             //返回值
@@ -156,7 +156,7 @@ public class UserController {
                 return ResponseEntity.ok(responseInfo);
             } else {
                 //返回值，成功
-                ResponseInfo responseInfo = new ResponseInfo(1, loginName + "登录成功！");
+                ResponseInfo responseInfo = new ResponseInfo(0, loginName + "登录成功！");
                 return ResponseEntity.ok(responseInfo);
             }
         } catch (Exception ex) {

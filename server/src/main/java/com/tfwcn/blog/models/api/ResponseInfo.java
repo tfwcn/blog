@@ -3,11 +3,11 @@ package com.tfwcn.blog.models.api;
 /**
  * 请求返回类
  */
-public class ResponseInfo {
+public class ResponseInfo<T> {
     public ResponseInfo() {
     }
 
-    public ResponseInfo(int code, Object result) {
+    public ResponseInfo(int code, T result) {
         this.code = code;
         this.result = result;
     }
@@ -19,7 +19,7 @@ public class ResponseInfo {
     /**
      * 返回值
      */
-    private Object result;
+    private T result;
 
     public int getCode() {
         return code;
@@ -29,11 +29,11 @@ public class ResponseInfo {
         this.code = code;
     }
 
-    public Object getResult() {
+    public T getResult() {
         return result;
     }
 
-    public void setResult(Object result) {
+    public void setResult(T result) {
         this.result = result;
     }
 }

@@ -4,9 +4,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import { Route, Switch } from 'react-router';
+import { Link } from 'react-router-dom';
 import * as actions from './redux/actions';
 // import TopMenu from './TopMenu';
 import HomePage from './HomePage';
+import BlogAddPage from './BlogAddPage';
 import BackgroundImage from './BackgroundImage';
 import ForegroundImage from './ForegroundImage';
 import styles from './IndexPage.module.scss';
@@ -36,8 +38,10 @@ export class IndexPage extends Component {
             {/* 右边按钮 */}
             <span className={styles.right}>
               <span className={styles.triangle} />
-              <Icon className={styles.icon} type="form" />
-              写博客
+              <Link to={'/blog/add'}>
+                <Icon className={styles.icon} type="form" />
+                写博客
+              </Link>
             </span>
           </div>
           <div className={styles.emptyRight} />
@@ -53,6 +57,7 @@ export class IndexPage extends Component {
               </ul>
             </div> */}
             <Switch>
+              <Route path={'/blog/add'} component={BlogAddPage} />
               <Route
                 path={'/'}
                 component={HomePage}

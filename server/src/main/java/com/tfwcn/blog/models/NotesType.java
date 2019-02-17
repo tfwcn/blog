@@ -17,6 +17,8 @@ public class NotesType {
 
     private String path;
 
+    private String pid;
+
     public String getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class NotesType {
 
     public void setPath(String path) {
         this.path = path == null ? null : path.trim();
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid == null ? null : pid.trim();
     }
 }

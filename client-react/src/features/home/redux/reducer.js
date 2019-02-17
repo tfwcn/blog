@@ -1,15 +1,9 @@
 import initialState from './initialState';
 import { reducer as homeTopMenuInit } from './homeTopMenuInit';
 import { reducer as homeTypeListInit } from './homeTypeListInit';
-import { reducer as homeShowLoading } from './homeShowLoading';
-import { reducer as homeBlogInit } from './homeBlogInit';
+import { reducer as homeBlogList } from './homeBlogList';
 
-const reducers = [
-  homeTopMenuInit,
-  homeTypeListInit,
-  homeShowLoading,
-  homeBlogInit,
-];
+const reducers = [homeTopMenuInit, homeTypeListInit, homeBlogList];
 
 export default function reducer(state = initialState, action) {
   let newState;
