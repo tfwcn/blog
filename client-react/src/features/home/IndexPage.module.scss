@@ -37,10 +37,18 @@
         float: right;
         background-color: $background-color2;
         padding: 0 20px;
-        color: white;
         font-size: 14px;
         height: 30px;
         line-height: 30px;
+        a {
+          display: block;
+          width: 100%;
+          height: 100%;
+          color: $font-color4;
+          &:hover {
+            color: $font-color4-hover;
+          }
+        }
         .triangle {
           position: absolute;
           width: 0;

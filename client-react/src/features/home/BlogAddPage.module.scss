@@ -9,5 +9,25 @@
     background-color: $background-color;
     box-shadow: 0 0 1px rgb(161, 161, 161);
     margin: 5px 0;
+    .content {
+      width: 800px;
+      margin: 0 auto;
+      .item {
+        display: flex;
+        flex-flow: row;
+        margin: 10px 0 0 0;
+        .name {
+          flex: 1;
+        }
+        .value {
+          flex: 10;
+          .text {
+            border: 1px solid $background-color5;
+            display: block;
+            width: 100%;
+          }
+        }
+      }
+    }
   }
 }

@@ -75,30 +75,34 @@ export class BlogAddPage extends Component {
     return (
       <div className={styles.blogAddPage}>
         <div className={styles.blogForm}>
-          <form>
-            <div>
-              <div>标题:</div>
-              <div>
-                <input type="text" name="title" />
+          <div className={styles.content}>
+            <form>
+              <div className={styles.item}>
+                <div className={styles.name}>标题:</div>
+                <div className={styles.value}>
+                  <input className={styles.text} type="text" name="title" />
+                </div>
               </div>
-            </div>
-            <label>
-              <div>内容:</div>
-              <div>
-                <Editor
-                  apiKey="7eh5wmpkjhy1e9b2i6zo6r661dztmxiw3nrhrla6tvd9i5jd"
-                  initialValue="<p>This is the initial content of the editor</p>"
-                  init={{
-                    plugins: 'link image code',
-                    toolbar:
-                      'undo redo | cut copy paste | formatselect | forecolor backcolor bold italic strikethrough | alignleft aligncenter alignright | link image code | removeformat',
-                  }}
-                  onChange={this.handleEditorChange}
-                />
+              <div className={styles.item}>
+                <div className={styles.name}>内容:</div>
+                <div className={styles.value}>
+                  <Editor
+                    apiKey="7eh5wmpkjhy1e9b2i6zo6r661dztmxiw3nrhrla6tvd9i5jd"
+                    initialValue="<p>This is the initial content of the editor</p>"
+                    init={{
+                      plugins: 'link image code',
+                      toolbar:
+                        'undo redo | cut copy paste | formatselect | forecolor backcolor bold italic strikethrough | alignleft aligncenter alignright | link image code | removeformat',
+                      height: 700,
+                      language: 'zh_CN',
+                    }}
+                    onChange={this.handleEditorChange}
+                  />
+                </div>
               </div>
-            </label>
-            <input type="submit" value="发布博客" />
-          </form>
+              <input type="submit" value="发布博客" />
+            </form>
+          </div>
         </div>
       </div>
     );
