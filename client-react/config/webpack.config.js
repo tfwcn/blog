@@ -72,7 +72,7 @@ module.exports = function(webpackEnv) {
         loader: MiniCssExtractPlugin.loader,
         options: Object.assign(
           {},
-          shouldUseRelativeAssetPaths ? { publicPath: '../../' } : undefined,
+          shouldUseRelativeAssetPaths ? { publicPath: '../../' } : undefined
         ),
       },
       {
@@ -256,7 +256,7 @@ module.exports = function(webpackEnv) {
       // https://github.com/facebook/create-react-app/issues/253
       modules: ['node_modules'].concat(
         // It is guaranteed to exist because we tweak it in `env.js`
-        process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
+        process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
       ),
       // These are the reasonable defaults supported by the Node ecosystem.
       // We also include JSX as a common component filename extension to support
@@ -337,7 +337,7 @@ module.exports = function(webpackEnv) {
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
-                  'babel-preset-react-app/webpack-overrides',
+                  'babel-preset-react-app/webpack-overrides'
                 ),
 
                 plugins: [
@@ -430,7 +430,7 @@ module.exports = function(webpackEnv) {
                   importLoaders: 3,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                 },
-                'sass-loader',
+                'sass-loader'
               ),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -449,7 +449,7 @@ module.exports = function(webpackEnv) {
                   modules: true,
                   getLocalIdent: getCSSModuleLocalIdent,
                 },
-                'sass-loader',
+                'sass-loader'
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
@@ -498,8 +498,8 @@ module.exports = function(webpackEnv) {
                   minifyURLs: true,
                 },
               }
-            : undefined,
-        ),
+            : undefined
+        )
       ),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.

@@ -23,7 +23,7 @@
       )
     values (#{id,jdbcType=VARCHAR}, #{num,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, 
       #{noteId,jdbcType=VARCHAR}, #{replyId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{score,jdbcType=BIGINT}, #{createTime,jdbcType=TIME}, #{updateTime,jdbcType=TIME}
+      #{score,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.tfwcn.blog.models.Replies">
@@ -34,8 +34,8 @@
       reply_id = #{replyId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       score = #{score,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIME},
-      update_time = #{updateTime,jdbcType=TIME}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

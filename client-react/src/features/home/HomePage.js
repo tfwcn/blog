@@ -8,15 +8,12 @@ import * as actions from './redux/actions';
 import styles from './HomePage.module.scss';
 
 export class HomePage extends Component {
-  static get propTypes() {
-    return {
-      typeList: PropTypes.array.isRequired,
-      breadcrumbList: PropTypes.array.isRequired,
-      actions: PropTypes.object.isRequired,
-    };
-  }
   constructor(props) {
     super(props);
+    this.state = {
+      blogList: [],
+      result: null,
+    };
   }
   //查询博客列表
   selectBlogs() {
@@ -31,12 +28,14 @@ export class HomePage extends Component {
       body: JSON.stringify({ page: 1, rows: 10 }),
     })
       .then(res => res.json())
-      .catch(error => {
-        this.props.actions.homeBlogListError(error);
-      })
       .then(response => {
         console.log(response);
-        this.props.actions.homeBlogListSuccess(response);
+        // this.props.actions.homeBlogListSuccess(response);
+        this.setState({ blogList: response.result.list });
+      })
+      .catch(error => {
+        // this.props.actions.homeBlogListError(error);
+        console.log(error);
       });
   }
 
@@ -115,7 +114,26 @@ export class HomePage extends Component {
             博客文章
           </div>
           <div className={styles.blogListContent}>
-            <div className={styles.blogListItem}>
+            {this.state.blogList.map(m => (
+              <div key={m.id} className={styles.blogListItem}>
+                <div className={styles.title}>
+                  <Link to={''}>{m.title}</Link>
+                </div>
+                <div
+                  className={styles.content}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      m.content.replace(/<\/?[a-z]+>/gi, '').substring(0, 300) +
+                      '...',
+                  }}
+                />
+                <div className={styles.info}>
+                  <span className={styles.time}>{m.createTime}</span> 阅读数 22
+                  评论数 0
+                </div>
+              </div>
+            ))}
+            {/* <div className={styles.blogListItem}>
               <div className={styles.title}>
                 <Link to={''}>
                   Mask RCNN训练自己的数据集(修正及windows下使用labelme)
@@ -178,13 +196,18 @@ export class HomePage extends Component {
                 <span className={styles.time}>2018-10-29 09:22:21</span> 阅读数
                 22 评论数 0
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
     );
   }
 }
+HomePage.propTypes = {
+  typeList: PropTypes.array.isRequired,
+  breadcrumbList: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired,
+};
 
 /* istanbul ignore next */
 function mapStateToProps(state) {

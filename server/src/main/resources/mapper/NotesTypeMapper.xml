@@ -20,7 +20,7 @@
       detail, create_time, update_time, 
       path, pid)
     values (#{id,jdbcType=VARCHAR}, #{num,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIME}, #{updateTime,jdbcType=TIME}, 
+      #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
       #{path,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.tfwcn.blog.models.NotesType">
@@ -28,8 +28,8 @@
     set num = #{num,jdbcType=BIGINT},
       name = #{name,jdbcType=VARCHAR},
       detail = #{detail,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIME},
-      update_time = #{updateTime,jdbcType=TIME},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
       path = #{path,jdbcType=VARCHAR},
       pid = #{pid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}

@@ -6,7 +6,8 @@ module.exports = {
   },
   extends: 'eslint:recommended',
   globals: {
-    process: true,
+    process: 'writable',
+    tinymce: 'writable',
   },
   parserOptions: {
     ecmaFeatures: {

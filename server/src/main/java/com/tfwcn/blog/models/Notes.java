@@ -17,6 +17,8 @@ public class Notes {
 
     private Date updateTime;
 
+    private Integer state;
+
     public String getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class Notes {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

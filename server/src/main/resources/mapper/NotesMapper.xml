@@ -7,8 +7,9 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="type_id" jdbcType="VARCHAR" property="typeId" />
-    <result column="create_time" jdbcType="TIME" property="createTime" />
-    <result column="update_time" jdbcType="TIME" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from notes
@@ -17,10 +18,10 @@
   <insert id="insert" parameterType="com.tfwcn.blog.models.Notes">
     insert into notes (id, num, title, 
       content, type_id, create_time, 
-      update_time)
+      update_time, state)
     values (#{id,jdbcType=VARCHAR}, #{num,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIME}, 
-      #{updateTime,jdbcType=TIME})
+      #{content,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.tfwcn.blog.models.Notes">
     update notes
@@ -28,17 +29,23 @@
       title = #{title,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       type_id = #{typeId,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIME},
-      update_time = #{updateTime,jdbcType=TIME}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select id, num, title, content, type_id, create_time, update_time
+    select id, num, title, content, type_id, create_time, update_time, state
     from notes
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, num, title, content, type_id, create_time, update_time
+    select id, num, title, content, type_id, create_time, update_time, state
     from notes
+    <where>
+      <if test="state!=null">
+        and state=#{state,jdbcType=INTEGER}
+      </if>
+    </where>
   </select>
 </mapper>

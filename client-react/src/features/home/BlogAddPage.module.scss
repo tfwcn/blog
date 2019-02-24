@@ -10,7 +10,7 @@
     box-shadow: 0 0 1px rgb(161, 161, 161);
     margin: 5px 0;
     .content {
-      width: 800px;
+      width: 900px;
       margin: 0 auto;
       .item {
         display: flex;
@@ -26,6 +26,8 @@
             display: block;
             width: 100%;
           }
+        }
+        .button {
         }
       }
     }

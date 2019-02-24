@@ -41,6 +41,7 @@ public class NoteController {
             model.setTitle(request.getTitle());
             model.setContent(request.getContent());
             model.setTypeId(request.getTypeId());
+            model.setState(0);
             CommonHelper.getId(model);
             noteDao.insert(model);
             //返回值
@@ -91,7 +92,7 @@ public class NoteController {
         try {
             //获取第1页，10条内容，默认查询总数count
             PageHelper.startPage(request.getPage(), request.getRows());
-            var list = noteDao.selectAll();
+            var list = noteDao.selectAll(1);
             //用PageInfo对结果进行包装
             PageInfo page = new PageInfo(list);
             //返回值

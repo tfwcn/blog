@@ -18,7 +18,7 @@
       detail, create_time, update_time
       )
     values (#{id,jdbcType=VARCHAR}, #{num,jdbcType=BIGINT}, #{message,jdbcType=VARCHAR}, 
-      #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIME}, #{updateTime,jdbcType=TIME}
+      #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.tfwcn.blog.models.Errors">
@@ -26,8 +26,8 @@
     set num = #{num,jdbcType=BIGINT},
       message = #{message,jdbcType=VARCHAR},
       detail = #{detail,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIME},
-      update_time = #{updateTime,jdbcType=TIME}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
