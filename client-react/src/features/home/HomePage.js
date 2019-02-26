@@ -123,7 +123,7 @@ export class HomePage extends Component {
                   className={styles.content}
                   dangerouslySetInnerHTML={{
                     __html:
-                      m.content.replace(/<\/?[a-z]+>/gi, '').substring(0, 300) +
+                      m.content.replace(/<.+>/gi, '').substring(0, 300) +
                       '...',
                   }}
                 />
