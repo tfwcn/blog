@@ -41,6 +41,7 @@ export class HomePage extends Component {
 
   componentDidMount() {
     // console.log('componentDidMount');
+    document.title = 'PPHT个人博客--首页';
     let nowKey = this.props.location.pathname.substring(
       0,
       this.props.location.pathname.length - 1
@@ -109,7 +110,6 @@ export class HomePage extends Component {
         ) : null}
         <div className={styles.blogList}>
           <div className={styles.blogListTitle}>
-            {/* <span className={styles.icon} /> */}
             <Icon type="book" className={styles.icon} />
             博客文章
           </div>
@@ -117,13 +117,13 @@ export class HomePage extends Component {
             {this.state.blogList.map(m => (
               <div key={m.id} className={styles.blogListItem}>
                 <div className={styles.title}>
-                  <Link to={''}>{m.title}</Link>
+                  <Link to={'/blog/' + m.num}>{m.title}</Link>
                 </div>
                 <div
                   className={styles.content}
                   dangerouslySetInnerHTML={{
                     __html:
-                      m.content.replace(/<\/?[a-z]+>/gi, '').substring(0, 300) +
+                      m.content.replace(/<[^>]+>/gi, '').substring(0, 300) +
                       '...',
                   }}
                 />

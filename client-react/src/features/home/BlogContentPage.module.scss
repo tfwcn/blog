@@ -1,0 +1,25 @@
+@import '../../common/common.scss';
+
+.blogContentPage {
+  display: flex;
+  flex-flow: column;
+  min-height: 100%;
+  .blogContent {
+    flex: 100000;
+    background-color: $background-color;
+    box-shadow: 0 0 1px rgb(161, 161, 161);
+    margin: 5px 0;
+    .blogContentTitle {
+      border-bottom: 1px solid $border-color1;
+      font-size: 16px;
+      color: $font-color3;
+      padding: 10px 0;
+      .icon {
+        margin: 0 5px 0 10px;
+      }
+    }
+    .blogContentContent {
+      // overflow: hidden;
+    }
+  }
+}

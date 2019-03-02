@@ -13,6 +13,8 @@ public interface NotesMapper {
 
     Notes selectByPrimaryKey(String id);
 
+    Notes selectByNum(Long num);
+
     List<Notes> selectAll(@Param("state") Integer state);
 
     int updateByPrimaryKey(Notes record);

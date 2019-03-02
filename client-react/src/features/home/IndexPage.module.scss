@@ -31,6 +31,10 @@
       overflow: hidden;
       .logo {
         display: inline-block;
+        a {
+          line-height: 30px;
+          height: 30px;
+        }
       }
       .right {
         position: relative;

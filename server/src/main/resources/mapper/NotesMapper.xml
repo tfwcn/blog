@@ -39,6 +39,11 @@
     from notes
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="selectByNum" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, num, title, content, type_id, create_time, update_time, state
+    from notes
+    where num = #{num,jdbcType=BIGINT}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, num, title, content, type_id, create_time, update_time, state
     from notes
