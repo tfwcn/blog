@@ -31,6 +31,8 @@ export class BlogAddPage extends Component {
       //取消默认动作
       e.preventDefault();
       console.log(e);
+      if (this.state.title.trim() == '' || this.state.content.trim() == '')
+        return;
       fetch('/api/note/add', {
         method: 'POST',
         mode: 'cors',
@@ -96,11 +98,18 @@ export class BlogAddPage extends Component {
                           '/libs/tinymce/lang/zh_CN.js',
                         language: 'zh_CN',
                       }}
+                      value={this.state.content}
                       onChange={this.handleContentChange}
                     />
                   </div>
                 </div>
-                <input type="submit" value="发布博客" />
+                <div className={styles.bottom}>
+                  <input
+                    className={styles.button}
+                    type="submit"
+                    value="发布博客"
+                  />
+                </div>
               </form>
             )}
           </div>

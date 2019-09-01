@@ -9,6 +9,7 @@ import * as actions from './redux/actions';
 // import TopMenu from './TopMenu';
 import HomePage from './HomePage';
 import BlogAddPage from './BlogAddPage';
+import BlogContentPage from './BlogContentPage';
 import BackgroundImage from './BackgroundImage';
 import ForegroundImage from './ForegroundImage';
 import styles from './IndexPage.module.scss';
@@ -22,6 +23,7 @@ export class IndexPage extends Component {
   }
   constructor(props) {
     super(props);
+    document.title = 'PPHT个人博客';
   }
 
   render() {
@@ -32,7 +34,9 @@ export class IndexPage extends Component {
         <div className={styles.header}>
           <div className={styles.empty} />
           <div className={styles.content}>
-            <span className={styles.logo}>PPHT个人博客</span>
+            <span className={styles.logo}>
+              <Link to={''}>PPHT个人博客</Link>
+            </span>
             {/* 菜单 */}
             {/* <TopMenu location={this.props.location} /> */}
             {/* 右边按钮 */}
@@ -58,6 +62,7 @@ export class IndexPage extends Component {
             </div> */}
             <Switch>
               <Route path={'/blog/add'} component={BlogAddPage} />
+              <Route path={'/blog/:id'} component={BlogContentPage} />
               <Route
                 path={'/'}
                 component={HomePage}

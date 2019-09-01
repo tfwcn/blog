@@ -5,10 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.tfwcn.blog.dao.NotesMapper;
 import com.tfwcn.blog.helper.CommonHelper;
 import com.tfwcn.blog.models.Notes;
-import com.tfwcn.blog.models.api.NotesAddRequest;
-import com.tfwcn.blog.models.api.NotesEditRequest;
-import com.tfwcn.blog.models.api.NotesListRequest;
-import com.tfwcn.blog.models.api.ResponseInfo;
+import com.tfwcn.blog.models.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -97,6 +94,27 @@ public class NoteController {
             PageInfo page = new PageInfo(list);
             //返回值
             var responseInfo = new ResponseInfo<>(0, page);
+            return ResponseEntity.ok(responseInfo);
+        } catch (Exception ex) {
+            //返回值
+            ResponseInfo responseInfo = CommonHelper.SaveErrorLog(ex);
+            return ResponseEntity.ok(responseInfo);
+        }
+    }
+
+    /**
+     * 查询 贴子信息 /api/note/model
+     *
+     * @param request 查询条件 page,rows,
+     * @return 返回状态码，1：成功
+     */
+    @RequestMapping(method = RequestMethod.POST, path = "/model")
+    public ResponseEntity<?> model(@RequestBody NotesModelRequest request) {
+        try {
+            //通过序号获取记录
+            var model = noteDao.selectByNum(request.getNum());
+            //返回值
+            var responseInfo = new ResponseInfo<>(0, model);
             return ResponseEntity.ok(responseInfo);
         } catch (Exception ex) {
             //返回值
