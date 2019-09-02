@@ -1,0 +1,31 @@
+﻿<%@ Template Language="C#" TargetLanguage="Text" Src="TemplateHelper.cs" Inherits="TemplateHelper" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="SchemaExplorer" %>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Hs.Fs.MetroSystem.ViewModel.UIModels
+{
+    public class <%= this.GetClassName(SourceTable) %>UIModel : BasePageModel
+    {
+        <% foreach ( ColumnSchema col in this.SourceTable.Columns ) { %>
+        private <%= this.GetSystemType(col) %> <%= this.GetPropNameLower(col) %>;
+        /// <summary>
+        /// <%= col.Description %>
+        /// </summary>
+        public <%= this.GetSystemType(col) %> <%= this.GetPropName(col) %>
+        {
+            get { return <%= this.GetPropNameLower(col) %>; }
+            set
+            {
+                <%= this.GetPropNameLower(col) %> = value;
+                this.RaisePropertyChange("<%= this.GetPropName(col) %>");
+            }
+        }
+        <% } %>
+    }
+}

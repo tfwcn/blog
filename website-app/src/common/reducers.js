@@ -1,6 +1,6 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
-import homeReducers from '../home/common/reducers';
+import homeReducers from '../views/home/common/reducers';
 
 // 整合所有reducer
 const reducers = {

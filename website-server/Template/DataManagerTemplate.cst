@@ -1,0 +1,60 @@
+﻿<%@ Template Language="C#" TargetLanguage="Text" Src="TemplateHelper.cs" Inherits="TemplateHelper" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="SchemaExplorer" %>
+using Hs.Common;
+using Hs.Fs.MetroSystem.Model;
+using Hs.Fs.MetroSystem.Model.Args;
+using Hs.Fs.MetroSystem.Model.Server;
+using System;
+using System.Collections.Generic;
+
+namespace Hs.Fs.MetroSystem.DataManager.Server
+{
+    public class <%= this.GetClassName(SourceTable) %>Manager : Base.BaseManager
+    {
+        public <%= this.GetClassName(SourceTable) %>Manager(string baseUrl) : base(baseUrl)
+        {
+        }
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>Model> GetModel(<%= this.GetClassName(SourceTable) %>GetModelRequest request)
+        {
+            return Action<<%= this.GetClassName(SourceTable) %>Model>(request, "api/<%= this.GetClassName(SourceTable) %>/model");
+        }
+
+        public ServerResponse<List<<%= this.GetClassName(SourceTable) %>Model>> GetList(<%= this.GetClassName(SourceTable) %>GetListRequest request, out int total)
+        {
+            total = 0;
+            var result = GetCount(JsonHelper.CloneObject<<%= this.GetClassName(SourceTable) %>GetCountRequest>(request));
+            if (result.Code == ServerResponseType.成功)
+            {
+                total = result.Data;
+            }
+            return Action<List<<%= this.GetClassName(SourceTable) %>Model>>(request, "api/<%= this.GetClassName(SourceTable) %>/list");
+        }
+
+        public ServerResponse<int> GetCount(<%= this.GetClassName(SourceTable) %>GetCountRequest request)
+        {
+            return Action<int>(request, "api/<%= this.GetClassName(SourceTable) %>/count");
+        }
+
+        public ServerResponse<int> Add(<%= this.GetClassName(SourceTable) %>Model request)
+        {
+            var tmpModel = JsonHelper.CloneObject<<%= this.GetClassName(SourceTable) %>Model>(request);
+            tmpModel.Id = Guid.NewGuid().ToString();
+            var result = Action<int>(tmpModel, "api/<%= this.GetClassName(SourceTable) %>/add");
+            if (result.Code == ServerResponseType.成功)
+                request.Id = tmpModel.Id;
+            return result;
+        }
+
+        public ServerResponse<int> Update(<%= this.GetClassName(SourceTable) %>Model request)
+        {
+            return Action<int>(request, "api/<%= this.GetClassName(SourceTable) %>/update");
+        }
+
+        public ServerResponse<int> Delete(<%= this.GetClassName(SourceTable) %>Model request)
+        {
+            return Action<int>(request, "api/<%= this.GetClassName(SourceTable) %>/delete");
+        }
+    }
+}

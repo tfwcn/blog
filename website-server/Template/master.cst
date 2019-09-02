@@ -1,0 +1,135 @@
+﻿<%@ Template Language="C#" TargetLanguage="Text" Src="TemplateHelper.cs" Inherits="TemplateHelper" %>
+<%@ Property Name="SourceDatabase" Type="SchemaExplorer.DatabaseSchema" Category="内容" Description="数据库" DeepLoad="True" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" Optional="True" %>
+<%@ Property Name="OutputDirectory" Type="System.String" Category="输出" Description="输出文件夹" %>
+<%@ Register Name="ModelTemplate" Template="ModelTemplate.cst" %>
+<%@ Register Name="ArgsTemplate" Template="ArgsTemplate.cst" %>
+<%@ Register Name="UIModelTemplate" Template="UIModelTemplate.cst" %>
+<%@ Register Name="DataManagerTemplate" Template="DataManagerTemplate.cst" %>
+<%@ Register Name="DalTemplate" Template="DalTemplate.cst" %>
+<%@ Register Name="ControllerTemplate" Template="ControllerTemplate.cst" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Assembly Name="System.Design" %>
+<%@ Import NameSpace="SchemaExplorer" %>
+<%@ Import NameSpace="System.IO" %>
+<script runat="template">
+//文本输出调用方法
+public override void Render(TextWriter writer)
+{
+    Trace.WriteLine("开始生成...");
+    this.Progress.MaximumValue = 100;//进度条最大值
+    
+    DateTime startTime = DateTime.Now;
+    
+    if (!Directory.Exists(this.OutputDirectory))
+    {
+        Trace.WriteLine("创建目录...");
+        Directory.CreateDirectory(this.OutputDirectory);
+    }
+    else
+    {
+        Trace.WriteLine("清空目录...");
+        this.DeleteFiles(this.OutputDirectory, "*");
+    }
+    if(SourceTable == null){
+        foreach(var table in SourceDatabase.Tables){
+            this.BuildTemplate(table);
+        }
+    }else{
+        var table = SourceTable;
+        this.BuildTemplate(table);
+    }
+    
+    Trace.WriteLine("生成完成. 用时: " + (DateTime.Now - startTime).ToString());
+    Trace.WriteLine("已输出到文件夹: " + this.OutputDirectory);
+}
+
+public void BuildTemplate(TableSchema table){
+    //生成Model
+    this.BuildModelTemplate(table);
+    //生成Args
+    this.BuildArgsTemplate(table);
+    //生成UIModel
+    this.BuildUIModelTemplate(table);
+    //生成DataManager
+    this.BuildDataManagerTemplate(table);
+    //生成Dal
+    this.BuildDalTemplate(table);
+    //生成Controller
+    this.BuildControllerTemplate(table);
+}
+public void BuildModelTemplate(TableSchema table){
+    //生成Model
+    Trace.WriteLine("生成" + this.GetClassName(table) + "Model...");
+    ModelTemplate template = this.Create<ModelTemplate>();
+    template.Progress.OnProgress += new ProgressEventHandler(this.OnProgress);
+    this.CopyPropertiesTo(template);
+	template.SetProperty("SourceTable", table);
+    string filePath = this.OutputDirectory + "\\Models\\" + this.GetClassName(table) + "Model.cs";
+    Trace.WriteLine(filePath);
+    template.RenderToFile(filePath, true);
+}
+public void BuildArgsTemplate(TableSchema table){
+    //生成Args
+    Trace.WriteLine("生成" + this.GetClassName(table) + "Args...");
+    ArgsTemplate template = this.Create<ArgsTemplate>();
+    template.Progress.OnProgress += new ProgressEventHandler(this.OnProgress);
+    this.CopyPropertiesTo(template);
+	template.SetProperty("SourceTable", table);
+    string filePath = this.OutputDirectory + "\\Args\\" + this.GetClassName(table) + "Args.cs";
+    Trace.WriteLine(filePath);
+    template.RenderToFile(filePath, true);
+}
+public void BuildUIModelTemplate(TableSchema table){
+    //生成UIModel
+    Trace.WriteLine("生成" + this.GetClassName(table) + "Dao...");
+    UIModelTemplate template = this.Create<UIModelTemplate>();
+    template.Progress.OnProgress += new ProgressEventHandler(this.OnProgress);
+    this.CopyPropertiesTo(template);
+	template.SetProperty("SourceTable", table);
+    string filePath = this.OutputDirectory + "\\UIModels\\" + this.GetClassName(table) + "UIModel.cs";
+    Trace.WriteLine(filePath);
+    template.RenderToFile(filePath, true);
+}
+public void BuildDataManagerTemplate(TableSchema table){
+    //生成DataManager
+    Trace.WriteLine("生成" + this.GetClassName(table) + "DataManager...");
+    DataManagerTemplate template = this.Create<DataManagerTemplate>();
+    template.Progress.OnProgress += new ProgressEventHandler(this.OnProgress);
+    this.CopyPropertiesTo(template);
+	template.SetProperty("SourceTable", table);
+    string filePath = this.OutputDirectory + "\\DataManager\\" + this.GetClassName(table) + "Manager.cs";
+    Trace.WriteLine(filePath);
+    template.RenderToFile(filePath, true);
+}
+public void BuildDalTemplate(TableSchema table){
+    //生成DAL
+    Trace.WriteLine("生成" + this.GetClassName(table) + "DAL...");
+    DalTemplate template = this.Create<DalTemplate>();
+    template.Progress.OnProgress += new ProgressEventHandler(this.OnProgress);
+    this.CopyPropertiesTo(template);
+	template.SetProperty("SourceTable", table);
+    string filePath = this.OutputDirectory + "\\DAL\\" + this.GetClassName(table) + "DAL.cs";
+    Trace.WriteLine(filePath);
+    template.RenderToFile(filePath, true);
+}
+public void BuildControllerTemplate(TableSchema table){
+    //生成Controllers
+    Trace.WriteLine("生成" + this.GetClassName(table) + "Controller...");
+    ControllerTemplate template = this.Create<ControllerTemplate>();
+    template.Progress.OnProgress += new ProgressEventHandler(this.OnProgress);
+    this.CopyPropertiesTo(template);
+	template.SetProperty("SourceTable", table);
+    string filePath = this.OutputDirectory + "\\Controllers\\" + this.GetClassName(table) + "Controller.cs";
+    Trace.WriteLine(filePath);
+    template.RenderToFile(filePath, true);
+}
+
+public void OnProgress(object sender, ProgressEventArgs e)
+{
+    if (e.Value > 0)
+    {
+        this.Progress.Value = (int)(((Double)e.Value / (Double)e.MaximumValue) * 100);
+    }
+}
+</script>

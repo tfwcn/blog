@@ -1,0 +1,45 @@
+﻿<%@ Template Language="C#" TargetLanguage="Text" Src="TemplateHelper.cs" Inherits="TemplateHelper" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="SchemaExplorer" %>
+using Hs.Fs.MetroSystem.Model.Server.Args.Base;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Hs.Fs.MetroSystem.Model.Server.Args
+{
+    /// <summary>
+    /// 查询单条记录
+    /// </summary>
+    [Table("<%= SourceTable.Name %>")]
+    public class <%= this.GetClassName(SourceTable) %>GetListRequest : PageRequestBase
+    {
+
+    }
+
+    /// <summary>
+    /// 查询单条记录
+    /// </summary>
+    [Table("<%= SourceTable.Name %>")]
+    public class <%= this.GetClassName(SourceTable) %>GetModelRequest : GetRequestBase
+    {
+    
+    }
+
+    /// <summary>
+    /// 查询单条记录
+    /// </summary>
+    [Table("<%= SourceTable.Name %>")]
+    public class <%= this.GetClassName(SourceTable) %>GetCountRequest
+    {
+
+    }
+
+    /// <summary>
+    /// 查询单条记录
+    /// </summary>
+    [Table("<%= SourceTable.Name %>")]
+    public class <%= this.GetClassName(SourceTable) %>DeleteRequest : DeleteRequestBase
+    {
+
+    }
+}
