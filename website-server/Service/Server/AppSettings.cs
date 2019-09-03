@@ -8,9 +8,6 @@ namespace Server
     public class AppSettings
     {
         public string ConnectionString { get; set; }
-        public string LedIp { get; set; }
-        public int LedPort { get; set; }
-        public string LedFormat { get; set; }
         public string ImageDir { get; set; }
     }
 }

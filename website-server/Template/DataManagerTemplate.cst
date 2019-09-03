@@ -2,14 +2,14 @@
 <%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
 <%@ Assembly Name="SchemaExplorer" %>
 <%@ Import NameSpace="SchemaExplorer" %>
-using Hs.Common;
-using Hs.Fs.MetroSystem.Model;
-using Hs.Fs.MetroSystem.Model.Args;
-using Hs.Fs.MetroSystem.Model.Server;
+using Common;
+using Model.Server.Models;
+using Model.Server.Args;
+using Model.Server;
 using System;
 using System.Collections.Generic;
 
-namespace Hs.Fs.MetroSystem.DataManager.Server
+namespace DataManager.Server
 {
     public class <%= this.GetClassName(SourceTable) %>Manager : Base.BaseManager
     {
@@ -37,24 +37,22 @@ namespace Hs.Fs.MetroSystem.DataManager.Server
             return Action<int>(request, "api/<%= this.GetClassName(SourceTable) %>/count");
         }
 
-        public ServerResponse<int> Add(<%= this.GetClassName(SourceTable) %>Model request)
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>AddResponse> Add(<%= this.GetClassName(SourceTable) %>Model request)
         {
-            var tmpModel = JsonHelper.CloneObject<<%= this.GetClassName(SourceTable) %>Model>(request);
-            tmpModel.Id = Guid.NewGuid().ToString();
-            var result = Action<int>(tmpModel, "api/<%= this.GetClassName(SourceTable) %>/add");
+            var result = Action<<%= this.GetClassName(SourceTable) %>AddResponse>(request, "api/<%= this.GetClassName(SourceTable) %>/add");
             if (result.Code == ServerResponseType.成功)
-                request.Id = tmpModel.Id;
+                request.Id = result.Data.Id;
             return result;
         }
 
-        public ServerResponse<int> Update(<%= this.GetClassName(SourceTable) %>Model request)
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>UpdateResponse> Update(<%= this.GetClassName(SourceTable) %>Model request)
         {
-            return Action<int>(request, "api/<%= this.GetClassName(SourceTable) %>/update");
+            return Action<<%= this.GetClassName(SourceTable) %>UpdateResponse>(request, "api/<%= this.GetClassName(SourceTable) %>/update");
         }
 
-        public ServerResponse<int> Delete(<%= this.GetClassName(SourceTable) %>Model request)
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>DeleteResponse> Delete(<%= this.GetClassName(SourceTable) %>Model request)
         {
-            return Action<int>(request, "api/<%= this.GetClassName(SourceTable) %>/delete");
+            return Action<<%= this.GetClassName(SourceTable) %>DeleteResponse>(request, "api/<%= this.GetClassName(SourceTable) %>/delete");
         }
     }
 }

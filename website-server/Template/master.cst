@@ -4,7 +4,6 @@
 <%@ Property Name="OutputDirectory" Type="System.String" Category="输出" Description="输出文件夹" %>
 <%@ Register Name="ModelTemplate" Template="ModelTemplate.cst" %>
 <%@ Register Name="ArgsTemplate" Template="ArgsTemplate.cst" %>
-<%@ Register Name="UIModelTemplate" Template="UIModelTemplate.cst" %>
 <%@ Register Name="DataManagerTemplate" Template="DataManagerTemplate.cst" %>
 <%@ Register Name="DalTemplate" Template="DalTemplate.cst" %>
 <%@ Register Name="ControllerTemplate" Template="ControllerTemplate.cst" %>
@@ -49,8 +48,6 @@ public void BuildTemplate(TableSchema table){
     this.BuildModelTemplate(table);
     //生成Args
     this.BuildArgsTemplate(table);
-    //生成UIModel
-    this.BuildUIModelTemplate(table);
     //生成DataManager
     this.BuildDataManagerTemplate(table);
     //生成Dal
@@ -77,17 +74,6 @@ public void BuildArgsTemplate(TableSchema table){
     this.CopyPropertiesTo(template);
 	template.SetProperty("SourceTable", table);
     string filePath = this.OutputDirectory + "\\Args\\" + this.GetClassName(table) + "Args.cs";
-    Trace.WriteLine(filePath);
-    template.RenderToFile(filePath, true);
-}
-public void BuildUIModelTemplate(TableSchema table){
-    //生成UIModel
-    Trace.WriteLine("生成" + this.GetClassName(table) + "Dao...");
-    UIModelTemplate template = this.Create<UIModelTemplate>();
-    template.Progress.OnProgress += new ProgressEventHandler(this.OnProgress);
-    this.CopyPropertiesTo(template);
-	template.SetProperty("SourceTable", table);
-    string filePath = this.OutputDirectory + "\\UIModels\\" + this.GetClassName(table) + "UIModel.cs";
     Trace.WriteLine(filePath);
     template.RenderToFile(filePath, true);
 }

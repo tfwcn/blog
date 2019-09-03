@@ -2,11 +2,12 @@
 <%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
 <%@ Assembly Name="SchemaExplorer" %>
 <%@ Import NameSpace="SchemaExplorer" %>
-using Hs.Fs.MetroSystem.Model.Server.Args.Base;
+using Model.Server.Args.Base;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Hs.Fs.MetroSystem.Model.Server.Args
+namespace Model.Server.Args
 {
+    #region Request
     /// <summary>
     /// 查询单条记录
     /// </summary>
@@ -29,7 +30,7 @@ namespace Hs.Fs.MetroSystem.Model.Server.Args
     /// 查询单条记录
     /// </summary>
     [Table("<%= SourceTable.Name %>")]
-    public class <%= this.GetClassName(SourceTable) %>GetCountRequest
+    public class <%= this.GetClassName(SourceTable) %>GetCountRequest : CountRequestBase
     {
 
     }
@@ -42,4 +43,29 @@ namespace Hs.Fs.MetroSystem.Model.Server.Args
     {
 
     }
+    #endregion
+
+    #region Response
+    /// <summary>
+    /// 新增返回
+    /// </summary>
+    public class <%= this.GetClassName(SourceTable) %>AddResponse : NumResponseBase
+    {
+
+    }
+    /// <summary>
+    /// 更新返回
+    /// </summary>
+    public class <%= this.GetClassName(SourceTable) %>UpdateResponse : NumResponseBase
+    {
+
+    }
+    /// <summary>
+    /// 删除返回
+    /// </summary>
+    public class <%= this.GetClassName(SourceTable) %>DeleteResponse : NumResponseBase
+    {
+
+    }
+    #endregion
 }

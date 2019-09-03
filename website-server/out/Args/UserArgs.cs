@@ -19,16 +19,7 @@ namespace Model.Server.Args
     [Table("t_user")]
     public class UserGetModelRequest : GetRequestBase
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        [Column("c_login_name")]
-        public string LoginName { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        [Column("c_password")]
-        public string Password { get; set; }
+    
     }
 
     /// <summary>

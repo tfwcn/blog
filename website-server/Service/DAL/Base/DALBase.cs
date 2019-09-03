@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.Common;
+using DAL.Helper;
 
-namespace DAL
+namespace DAL.Base
 {
     public abstract class DALBase<T> where T : new()
     {

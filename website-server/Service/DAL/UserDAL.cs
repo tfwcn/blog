@@ -1,4 +1,5 @@
-﻿using Model.Server.Args;
+﻿using DAL.Base;
+using Model.Server.Args;
 using Model.Server.Models;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,7 @@ namespace DAL
         /// <returns></returns>
         public override int Add(UserModel request)
         {
+            request.Id = Guid.NewGuid().ToString();
             request.State = 0;
             request.CreateTime = DateTime.Now;
             request.UpdateTime = DateTime.Now;

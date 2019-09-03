@@ -81,27 +81,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Server\Args\Base\NumResponseBase.cs" />
     <Compile Include="Server\Args\Base\UpdateRequestBase.cs" />
     <Compile Include="Server\Args\Base\DeleteRequestBase.cs" />
     <Compile Include="Server\Args\Base\GetRequestBase.cs" />
     <Compile Include="Server\Args\Base\CountRequestBase.cs" />
     <Compile Include="Server\Args\Base\PageRequestBase.cs" />
-    <Compile Include="Server\Args\GateArgs.cs" />
-    <Compile Include="Server\Args\IssuedArgs.cs" />
-    <Compile Include="Server\Args\CompanyArgs.cs" />
-    <Compile Include="Server\Args\DoorArgs.cs" />
-    <Compile Include="Server\Args\GroupArgs.cs" />
-    <Compile Include="Server\Args\ViewArgs.cs" />
-    <Compile Include="Server\Args\LogArgs.cs" />
-    <Compile Include="Server\Args\PersonArgs.cs" />
+    <Compile Include="Server\Args\NewsArgs.cs" />
     <Compile Include="Server\Args\UserArgs.cs" />
-    <Compile Include="Server\Models\GateModel.cs" />
-    <Compile Include="Server\Models\CompanyModel.cs" />
-    <Compile Include="Server\Models\DoorModel.cs" />
-    <Compile Include="Server\Models\GroupModel.cs" />
-    <Compile Include="Server\Models\LogModel.cs" />
-    <Compile Include="Server\Models\PersonModel.cs" />
-    <Compile Include="Server\Models\View\PersonNumModel.cs" />
+    <Compile Include="Server\Models\NewsModel.cs" />
     <Compile Include="Server\ServerResponse.cs" />
     <Compile Include="Server\Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

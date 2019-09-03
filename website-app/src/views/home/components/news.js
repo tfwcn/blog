@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../common/actions'
 import style from '../styles/news.module.scss'
+import {postData} from '../../../common/fetchHelper'
 
 class News extends React.Component {
     // 组件加载完成
@@ -11,18 +12,18 @@ class News extends React.Component {
         this.getNewsList();
     }
     getNewsList() {
-        this.props.actions.getNewsList([{ id: 0, title: 'aaa' }, { id: 1, title: 'bbb' }]);
-        // fetch('http://news.baidu.com/')
-        //   .then(res => console.log(res));
-        //   .then(response => {
-        //     console.log(response);
-        //     // this.props.actions.homeBlogListSuccess(response);
-        //     this.setState({ blogList: response.result.list });
-        //   })
-        //   .catch(error => {
-        //     // this.props.actions.homeBlogListError(error);
-        //     console.log(error);
-        //   });
+        this.props.actions.getNewsList(null);
+        
+        postData('http://localhost/api/News/list',{page:1,rows:100})
+          .then(response => {
+            console.log(response);
+            if(response.code===0){
+                this.props.actions.getNewsList(response.data);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
     }
     render() {
         let newsElement = "";
@@ -30,7 +31,7 @@ class News extends React.Component {
             newsElement = (
                 <ul>
                     {this.props.newsList.map(m => (
-                        <li key={m.id}><span className={style.dot}></span><a href="/">{m.title}</a></li>
+                        <li key={m.id}><span className={style.dot}></span><a href={m.link} target="_blank" rel="noopener noreferrer">{m.title}</a></li>
                     ))}
                 </ul>
             );

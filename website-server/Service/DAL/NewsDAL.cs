@@ -1,8 +1,4 @@
-﻿<%@ Template Language="C#" TargetLanguage="Text" Src="TemplateHelper.cs" Inherits="TemplateHelper" %>
-<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
-<%@ Assembly Name="SchemaExplorer" %>
-<%@ Import NameSpace="SchemaExplorer" %>
-using DAL.Base;
+﻿using DAL.Base;
 using Model.Server.Args;
 using Model.Server.Models;
 using System;
@@ -11,9 +7,9 @@ using System.Data.Common;
 
 namespace DAL
 {
-    public class <%= this.GetClassName(SourceTable) %>DAL : DALBase<<%= this.GetClassName(SourceTable) %>Model>
+    public class NewsDAL : DALBase<NewsModel>
     {
-        public <%= this.GetClassName(SourceTable) %>DAL(string connectionString)
+        public NewsDAL(string connectionString)
         {
             base.SetConnectionString(connectionString, DBHelperBase.DBType.PostgreSql);
         }
@@ -22,7 +18,7 @@ namespace DAL
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public <%= this.GetClassName(SourceTable) %>Model GetModel(<%= this.GetClassName(SourceTable) %>GetModelRequest request)
+        public NewsModel GetModel(NewsGetModelRequest request)
         {
             List<DbParameter> paramenters = new List<DbParameter>();
             string sqlWhere = CreateWhereSql(request, paramenters);
@@ -33,10 +29,11 @@ namespace DAL
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public List<<%= this.GetClassName(SourceTable) %>Model> GetList(<%= this.GetClassName(SourceTable) %>GetListRequest request)
+        public List<NewsModel> GetList(NewsGetListRequest request)
         {
             List<DbParameter> paramenters = new List<DbParameter>();
             string sqlWhere = CreateWhereSql(request, paramenters);
+            sqlWhere += " order by t_news.c_create_time desc ";
             return base.GetModels(sqlWhere, paramenters, request.Row, request.Page);
         }
         /// <summary>
@@ -44,7 +41,7 @@ namespace DAL
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public int GetCount(<%= this.GetClassName(SourceTable) %>GetCountRequest request)
+        public int GetCount(NewsGetCountRequest request)
         {
             List<DbParameter> paramenters = new List<DbParameter>();
             string sqlWhere = CreateWhereSql(request, paramenters);
@@ -55,7 +52,7 @@ namespace DAL
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public override int Add(<%= this.GetClassName(SourceTable) %>Model request)
+        public override int Add(NewsModel request)
         {
             request.Id = Guid.NewGuid().ToString();
             request.State = 0;
@@ -68,7 +65,7 @@ namespace DAL
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public override int Update(<%= this.GetClassName(SourceTable) %>Model request)
+        public override int Update(NewsModel request)
         {
             request.UpdateTime = DateTime.Now;
             return base.Update(request);
@@ -78,9 +75,9 @@ namespace DAL
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public override int Delete(<%= this.GetClassName(SourceTable) %>Model model)
+        public override int Delete(NewsModel model)
         {
-            var tmpModel = GetModel(new <%= this.GetClassName(SourceTable) %>GetModelRequest() { Id = model.Id });
+            var tmpModel = GetModel(new NewsGetModelRequest() { Id = model.Id });
             if (tmpModel == null)
                 return 0;
             tmpModel.State = 1;

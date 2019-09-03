@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using DAL.Helper;
 
-namespace DAL
+namespace DAL.Base
 {
     public abstract class DBHelperBase : DBTransactionHelper.DBTransactionBase
     {

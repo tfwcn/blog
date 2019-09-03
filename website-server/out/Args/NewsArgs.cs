@@ -7,8 +7,8 @@ namespace Model.Server.Args
     /// <summary>
     /// 查询单条记录
     /// </summary>
-    [Table("t_user")]
-    public class UserGetListRequest : PageRequestBase
+    [Table("t_news")]
+    public class NewsGetListRequest : PageRequestBase
     {
 
     }
@@ -16,26 +16,17 @@ namespace Model.Server.Args
     /// <summary>
     /// 查询单条记录
     /// </summary>
-    [Table("t_user")]
-    public class UserGetModelRequest : GetRequestBase
+    [Table("t_news")]
+    public class NewsGetModelRequest : GetRequestBase
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        [Column("c_login_name")]
-        public string LoginName { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        [Column("c_password")]
-        public string Password { get; set; }
+    
     }
 
     /// <summary>
     /// 查询单条记录
     /// </summary>
-    [Table("t_user")]
-    public class UserGetCountRequest : CountRequestBase
+    [Table("t_news")]
+    public class NewsGetCountRequest : CountRequestBase
     {
 
     }
@@ -43,8 +34,8 @@ namespace Model.Server.Args
     /// <summary>
     /// 查询单条记录
     /// </summary>
-    [Table("t_user")]
-    public class UserDeleteRequest : DeleteRequestBase
+    [Table("t_news")]
+    public class NewsDeleteRequest : DeleteRequestBase
     {
 
     }
@@ -54,21 +45,21 @@ namespace Model.Server.Args
     /// <summary>
     /// 新增返回
     /// </summary>
-    public class UserAddResponse : NumResponseBase
+    public class NewsAddResponse : NumResponseBase
     {
 
     }
     /// <summary>
     /// 更新返回
     /// </summary>
-    public class UserUpdateResponse : NumResponseBase
+    public class NewsUpdateResponse : NumResponseBase
     {
 
     }
     /// <summary>
     /// 删除返回
     /// </summary>
-    public class UserDeleteResponse : NumResponseBase
+    public class NewsDeleteResponse : NumResponseBase
     {
 
     }

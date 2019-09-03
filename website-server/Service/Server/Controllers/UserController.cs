@@ -1,9 +1,9 @@
 ﻿using DAL;
-using Model.Server.Models;
-using Model.Server.Args;
-using Model.Server;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Model.Server;
+using Model.Server.Args;
+using Model.Server.Models;
 using System;
 using System.Collections.Generic;
 
@@ -90,16 +90,13 @@ namespace Server.Controllers
 
         // POST: api/User/add
         [HttpPost("add")]
-        public ServerResponse<int> Add(UserModel request)
+        public ServerResponse<UserAddResponse> Add(UserModel request)
         {
-            ServerResponse<int> response = new ServerResponse<int>();
+            ServerResponse<UserAddResponse> response = new ServerResponse<UserAddResponse>();
             try
             {
-                request.CreateTime = DateTime.Now;
-                request.UpdateTime = DateTime.Now;
-                request.State = 0;
                 var num = dal.Add(request);
-                response.Data = num;
+                response.Data = new UserAddResponse { Id = request.Id, Num = num };
                 if (num == 1)
                 {
                     response.Code = ServerResponseType.成功;
@@ -120,14 +117,14 @@ namespace Server.Controllers
 
         // POST: api/User/update
         [HttpPost("update")]
-        public ServerResponse<int> Update(UserModel request)
+        public ServerResponse<UserUpdateResponse> Update(UserModel request)
         {
-            ServerResponse<int> response = new ServerResponse<int>();
+            ServerResponse<UserUpdateResponse> response = new ServerResponse<UserUpdateResponse>();
             try
             {
                 request.UpdateTime = DateTime.Now;
                 var num = dal.Update(request);
-                response.Data = num;
+                response.Data = new UserUpdateResponse { Id = request.Id, Num = num };
                 if (num == 1)
                 {
                     response.Code = ServerResponseType.成功;
@@ -148,13 +145,13 @@ namespace Server.Controllers
 
         // POST: api/User/delete
         [HttpPost("delete")]
-        public ServerResponse<int> Delete(UserModel request)
+        public ServerResponse<UserDeleteResponse> Delete(UserModel request)
         {
-            ServerResponse<int> response = new ServerResponse<int>();
+            ServerResponse<UserDeleteResponse> response = new ServerResponse<UserDeleteResponse>();
             try
             {
                 var num = dal.Delete(request);
-                response.Data = num;
+                response.Data = new UserDeleteResponse { Id = request.Id, Num = num };
                 if (num == 1)
                 {
                     response.Code = ServerResponseType.成功;

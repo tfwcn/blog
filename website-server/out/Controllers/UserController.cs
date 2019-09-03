@@ -1,8 +1,4 @@
-﻿<%@ Template Language="C#" TargetLanguage="Text" Src="TemplateHelper.cs" Inherits="TemplateHelper" %>
-<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
-<%@ Assembly Name="SchemaExplorer" %>
-<%@ Import NameSpace="SchemaExplorer" %>
-using DAL;
+﻿using DAL;
 using Model.Server.Models;
 using Model.Server.Args;
 using Model.Server;
@@ -15,21 +11,21 @@ namespace Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class <%= this.GetClassName(SourceTable) %>Controller : ControllerBase
+    public class UserController : ControllerBase
     {
         private AppSettings Config;
-        private static <%= this.GetClassName(SourceTable) %>DAL dal;
-        public <%= this.GetClassName(SourceTable) %>Controller(IOptions<AppSettings> setting)
+        private static UserDAL dal;
+        public UserController(IOptions<AppSettings> setting)
         {
             Config = setting.Value;
             if (dal == null)
-                dal = new <%= this.GetClassName(SourceTable) %>DAL(Config.ConnectionString);
+                dal = new UserDAL(Config.ConnectionString);
         }
-        // Post: api/<%= this.GetClassName(SourceTable) %>/model
+        // Post: api/User/model
         [HttpPost("model")]
-        public ServerResponse<<%= this.GetClassName(SourceTable) %>Model> GetModel(<%= this.GetClassName(SourceTable) %>GetModelRequest request)
+        public ServerResponse<UserModel> GetModel(UserGetModelRequest request)
         {
-            ServerResponse<<%= this.GetClassName(SourceTable) %>Model> response = new ServerResponse<<%= this.GetClassName(SourceTable) %>Model>();
+            ServerResponse<UserModel> response = new ServerResponse<UserModel>();
             try
             {
                 var model = dal.GetModel(request);
@@ -52,11 +48,11 @@ namespace Server.Controllers
             return response;
         }
 
-        // Post: api/<%= this.GetClassName(SourceTable) %>/list
+        // Post: api/User/list
         [HttpPost("list")]
-        public ServerResponse<List<<%= this.GetClassName(SourceTable) %>Model>> GetList(<%= this.GetClassName(SourceTable) %>GetListRequest request)
+        public ServerResponse<List<UserModel>> GetList(UserGetListRequest request)
         {
-            ServerResponse<List<<%= this.GetClassName(SourceTable) %>Model>> response = new ServerResponse<List<<%= this.GetClassName(SourceTable) %>Model>>();
+            ServerResponse<List<UserModel>> response = new ServerResponse<List<UserModel>>();
             try
             {
                 var model = dal.GetList(request);
@@ -72,9 +68,9 @@ namespace Server.Controllers
             return response;
         }
 
-        // Post: api/<%= this.GetClassName(SourceTable) %>/count
+        // Post: api/User/count
         [HttpPost("count")]
-        public ServerResponse<int> GetCount(<%= this.GetClassName(SourceTable) %>GetCountRequest request)
+        public ServerResponse<int> GetCount(UserGetCountRequest request)
         {
             ServerResponse<int> response = new ServerResponse<int>();
             try
@@ -92,15 +88,15 @@ namespace Server.Controllers
             return response;
         }
 
-        // POST: api/<%= this.GetClassName(SourceTable) %>/add
+        // POST: api/User/add
         [HttpPost("add")]
-        public ServerResponse<<%= this.GetClassName(SourceTable) %>AddResponse> Add(<%= this.GetClassName(SourceTable) %>Model request)
+        public ServerResponse<UserAddResponse> Add(UserModel request)
         {
-            ServerResponse<<%= this.GetClassName(SourceTable) %>AddResponse> response = new ServerResponse<<%= this.GetClassName(SourceTable) %>AddResponse>();
+            ServerResponse<UserAddResponse> response = new ServerResponse<UserAddResponse>();
             try
             {
                 var num = dal.Add(request);
-                response.Data = new <%= this.GetClassName(SourceTable) %>AddResponse { Id = request.Id, Num = num };
+                response.Data = new UserAddResponse { Id = request.Id, Num = num };
                 if (num == 1)
                 {
                     response.Code = ServerResponseType.成功;
@@ -119,15 +115,15 @@ namespace Server.Controllers
             return response;
         }
 
-        // POST: api/<%= this.GetClassName(SourceTable) %>/update
+        // POST: api/User/update
         [HttpPost("update")]
-        public ServerResponse<<%= this.GetClassName(SourceTable) %>UpdateResponse> Update(<%= this.GetClassName(SourceTable) %>Model request)
+        public ServerResponse<UserUpdateResponse> Update(UserModel request)
         {
-            ServerResponse<<%= this.GetClassName(SourceTable) %>UpdateResponse> response = new ServerResponse<<%= this.GetClassName(SourceTable) %>UpdateResponse>();
+            ServerResponse<UserUpdateResponse> response = new ServerResponse<UserUpdateResponse>();
             try
             {
                 var num = dal.Update(request);
-                response.Data = new <%= this.GetClassName(SourceTable) %>UpdateResponse { Id = request.Id, Num = num };
+                response.Data = new UserUpdateResponse { Id = request.Id, Num = num };
                 if (num == 1)
                 {
                     response.Code = ServerResponseType.成功;
@@ -146,15 +142,15 @@ namespace Server.Controllers
             return response;
         }
 
-        // POST: api/<%= this.GetClassName(SourceTable) %>/delete
+        // POST: api/User/delete
         [HttpPost("delete")]
-        public ServerResponse<<%= this.GetClassName(SourceTable) %>DeleteResponse> Delete(<%= this.GetClassName(SourceTable) %>Model request)
+        public ServerResponse<UserDeleteResponse> Delete(UserModel request)
         {
-            ServerResponse<<%= this.GetClassName(SourceTable) %>DeleteResponse> response = new ServerResponse<<%= this.GetClassName(SourceTable) %>DeleteResponse>();
+            ServerResponse<UserDeleteResponse> response = new ServerResponse<UserDeleteResponse>();
             try
             {
                 var num = dal.Delete(request);
-                response.Data = new <%= this.GetClassName(SourceTable) %>DeleteResponse { Id = request.Id, Num = num };
+                response.Data = new UserDeleteResponse { Id = request.Id, Num = num };
                 if (num == 1)
                 {
                     response.Code = ServerResponseType.成功;
