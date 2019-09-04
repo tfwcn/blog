@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Server\Args\Base\PageResponseBase.cs" />
     <Compile Include="Server\Args\Base\NumResponseBase.cs" />
     <Compile Include="Server\Args\Base\UpdateRequestBase.cs" />
     <Compile Include="Server\Args\Base\DeleteRequestBase.cs" />

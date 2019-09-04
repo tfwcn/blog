@@ -1,11 +1,11 @@
-﻿using DAL;
+﻿using Common;
+using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Model.Server;
 using Model.Server.Args;
 using Model.Server.Models;
 using System;
-using System.Collections.Generic;
 
 namespace Server.Controllers
 {
@@ -50,13 +50,16 @@ namespace Server.Controllers
 
         // Post: api/User/list
         [HttpPost("list")]
-        public ServerResponse<List<UserModel>> GetList(UserGetListRequest request)
+        public ServerResponse<UserGetListResponse> GetList(UserGetListRequest request)
         {
-            ServerResponse<List<UserModel>> response = new ServerResponse<List<UserModel>>();
+            ServerResponse<UserGetListResponse> response = new ServerResponse<UserGetListResponse>();
             try
             {
-                var model = dal.GetList(request);
-                response.Data = model;
+                //查数据
+                var list = dal.GetList(request);
+                //查总记录数
+                var count = dal.GetCount(JsonHelper.CloneObject<UserGetCountRequest>(request));
+                response.Data = new UserGetListResponse() { DataList = list, Count = count };
                 response.Code = ServerResponseType.成功;
             }
             catch (Exception ex)
@@ -122,7 +125,6 @@ namespace Server.Controllers
             ServerResponse<UserUpdateResponse> response = new ServerResponse<UserUpdateResponse>();
             try
             {
-                request.UpdateTime = DateTime.Now;
                 var num = dal.Update(request);
                 response.Data = new UserUpdateResponse { Id = request.Id, Num = num };
                 if (num == 1)

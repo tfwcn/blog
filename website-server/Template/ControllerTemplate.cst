@@ -2,14 +2,14 @@
 <%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
 <%@ Assembly Name="SchemaExplorer" %>
 <%@ Import NameSpace="SchemaExplorer" %>
+using Common;
 using DAL;
-using Model.Server.Models;
-using Model.Server.Args;
-using Model.Server;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Model.Server;
+using Model.Server.Args;
+using Model.Server.Models;
 using System;
-using System.Collections.Generic;
 
 namespace Server.Controllers
 {
@@ -54,13 +54,16 @@ namespace Server.Controllers
 
         // Post: api/<%= this.GetClassName(SourceTable) %>/list
         [HttpPost("list")]
-        public ServerResponse<List<<%= this.GetClassName(SourceTable) %>Model>> GetList(<%= this.GetClassName(SourceTable) %>GetListRequest request)
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>GetListResponse> GetList(<%= this.GetClassName(SourceTable) %>GetListRequest request)
         {
-            ServerResponse<List<<%= this.GetClassName(SourceTable) %>Model>> response = new ServerResponse<List<<%= this.GetClassName(SourceTable) %>Model>>();
+            ServerResponse<<%= this.GetClassName(SourceTable) %>GetListResponse> response = new ServerResponse<<%= this.GetClassName(SourceTable) %>GetListResponse>();
             try
             {
-                var model = dal.GetList(request);
-                response.Data = model;
+                //查数据
+                var list = dal.GetList(request);
+                //查总记录数
+                var count = dal.GetCount(JsonHelper.CloneObject<<%= this.GetClassName(SourceTable) %>GetCountRequest>(request));
+                response.Data = new <%= this.GetClassName(SourceTable) %>GetListResponse() { DataList = list, Count = count };
                 response.Code = ServerResponseType.成功;
             }
             catch (Exception ex)

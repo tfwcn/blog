@@ -18,7 +18,7 @@ class News extends React.Component {
           .then(response => {
             console.log(response);
             if(response.code===0){
-                this.props.actions.getNewsList(response.data);
+                this.props.actions.getNewsList(response.data.dataList);
             }
           })
           .catch(error => {

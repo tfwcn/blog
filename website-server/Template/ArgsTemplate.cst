@@ -3,6 +3,7 @@
 <%@ Assembly Name="SchemaExplorer" %>
 <%@ Import NameSpace="SchemaExplorer" %>
 using Model.Server.Args.Base;
+using Model.Server.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Server.Args
@@ -64,6 +65,13 @@ namespace Model.Server.Args
     /// 删除返回
     /// </summary>
     public class <%= this.GetClassName(SourceTable) %>DeleteResponse : NumResponseBase
+    {
+
+    }
+    /// <summary>
+    /// 分页查询返回
+    /// </summary>
+    public class <%= this.GetClassName(SourceTable) %>GetListResponse : PageResponseBase<<%= this.GetClassName(SourceTable) %>Model>
     {
 
     }

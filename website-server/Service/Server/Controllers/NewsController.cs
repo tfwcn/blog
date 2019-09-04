@@ -1,11 +1,11 @@
-﻿using DAL;
-using Model.Server.Models;
-using Model.Server.Args;
-using Model.Server;
+﻿using Common;
+using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Model.Server;
+using Model.Server.Args;
+using Model.Server.Models;
 using System;
-using System.Collections.Generic;
 
 namespace Server.Controllers
 {
@@ -50,13 +50,16 @@ namespace Server.Controllers
 
         // Post: api/News/list
         [HttpPost("list")]
-        public ServerResponse<List<NewsModel>> GetList(NewsGetListRequest request)
+        public ServerResponse<NewsGetListResponse> GetList(NewsGetListRequest request)
         {
-            ServerResponse<List<NewsModel>> response = new ServerResponse<List<NewsModel>>();
+            ServerResponse<NewsGetListResponse> response = new ServerResponse<NewsGetListResponse>();
             try
             {
-                var model = dal.GetList(request);
-                response.Data = model;
+                //查数据
+                var list = dal.GetList(request);
+                //查总记录数
+                var count = dal.GetCount(JsonHelper.CloneObject<NewsGetCountRequest>(request));
+                response.Data = new NewsGetListResponse() { DataList = list, Count = count };
                 response.Code = ServerResponseType.成功;
             }
             catch (Exception ex)

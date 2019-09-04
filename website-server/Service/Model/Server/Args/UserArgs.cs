@@ -1,4 +1,5 @@
 ﻿using Model.Server.Args.Base;
+using Model.Server.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Server.Args
@@ -69,6 +70,13 @@ namespace Model.Server.Args
     /// 删除返回
     /// </summary>
     public class UserDeleteResponse : NumResponseBase
+    {
+
+    }
+    /// <summary>
+    /// 分页查询返回
+    /// </summary>
+    public class UserGetListResponse : PageResponseBase<UserModel>
     {
 
     }

@@ -2,12 +2,9 @@
 <%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
 <%@ Assembly Name="SchemaExplorer" %>
 <%@ Import NameSpace="SchemaExplorer" %>
-using Common;
-using Model.Server.Models;
-using Model.Server.Args;
 using Model.Server;
-using System;
-using System.Collections.Generic;
+using Model.Server.Args;
+using Model.Server.Models;
 
 namespace DataManager.Server
 {
@@ -21,15 +18,9 @@ namespace DataManager.Server
             return Action<<%= this.GetClassName(SourceTable) %>Model>(request, "api/<%= this.GetClassName(SourceTable) %>/model");
         }
 
-        public ServerResponse<List<<%= this.GetClassName(SourceTable) %>Model>> GetList(<%= this.GetClassName(SourceTable) %>GetListRequest request, out int total)
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>GetListResponse> GetList(<%= this.GetClassName(SourceTable) %>GetListRequest request)
         {
-            total = 0;
-            var result = GetCount(JsonHelper.CloneObject<<%= this.GetClassName(SourceTable) %>GetCountRequest>(request));
-            if (result.Code == ServerResponseType.成功)
-            {
-                total = result.Data;
-            }
-            return Action<List<<%= this.GetClassName(SourceTable) %>Model>>(request, "api/<%= this.GetClassName(SourceTable) %>/list");
+            return Action<<%= this.GetClassName(SourceTable) %>GetListResponse>(request, "api/<%= this.GetClassName(SourceTable) %>/list");
         }
 
         public ServerResponse<int> GetCount(<%= this.GetClassName(SourceTable) %>GetCountRequest request)

@@ -1,8 +1,6 @@
-﻿using Common;
-using Model.Server;
+﻿using Model.Server;
 using Model.Server.Args;
 using Model.Server.Models;
-using System.Collections.Generic;
 
 namespace DataManager.Server
 {
@@ -16,15 +14,9 @@ namespace DataManager.Server
             return Action<UserModel>(request, "api/User/model");
         }
 
-        public ServerResponse<List<UserModel>> GetList(UserGetListRequest request, out int total)
+        public ServerResponse<UserGetListResponse> GetList(UserGetListRequest request)
         {
-            total = 0;
-            var result = GetCount(JsonHelper.CloneObject<UserGetCountRequest>(request));
-            if (result.Code == ServerResponseType.成功)
-            {
-                total = result.Data;
-            }
-            return Action<List<UserModel>>(request, "api/User/list");
+            return Action<UserGetListResponse>(request, "api/User/list");
         }
 
         public ServerResponse<int> GetCount(UserGetCountRequest request)
