@@ -34,7 +34,7 @@ namespace DAL
             List<DbParameter> paramenters = new List<DbParameter>();
             string sqlWhere = CreateWhereSql(request, paramenters);
             sqlWhere += " order by t_news.c_create_time desc ";
-            return base.GetModels(sqlWhere, paramenters, request.Row, request.Page);
+            return base.GetModels(sqlWhere, paramenters, request.Rows, request.Page);
         }
         /// <summary>
         /// 查询数量

@@ -8,7 +8,7 @@ namespace Model.Server.Args.Base
         [Display]
         public int? Page { get; set; }
         [Display]
-        public int? Row { get; set; }
+        public int? Rows { get; set; }
         /// <summary>
         /// 
         /// </summary>
