@@ -34,14 +34,14 @@ class News extends React.Component {
     }
     // 上一页
     upPage() {
-        if(this.props.news.page>1){
-            this.showNewsList(this.props.news.page-1,this.props.news.rows);
+        if (this.props.news.page > 1) {
+            this.showNewsList(this.props.news.page - 1, this.props.news.rows);
         }
     }
     // 下一页
     downPage() {
-        if(this.props.news.page<this.props.news.pageCount){
-            this.showNewsList(this.props.news.page+1,this.props.news.rows);
+        if (this.props.news.page < this.props.news.pageCount) {
+            this.showNewsList(this.props.news.page + 1, this.props.news.rows);
         }
     }
     // 渲染
@@ -69,9 +69,9 @@ class News extends React.Component {
                 <div className={style.title}>新闻</div>
                 {newsListElement}
                 <div className={style.page}>
-                    <span onClick={this.upPage}>上一页</span>
-                    {this.props.news.page + '/' + this.props.news.pageCount}
-                    <span onClick={this.downPage}>下一页</span>
+                    <span className={style.link} onClick={this.upPage}>上一页</span>
+                    {' ' + this.props.news.page + ' / ' + this.props.news.pageCount + ' '}
+                    <span className={style.link} onClick={this.downPage}>下一页</span>
                 </div>
             </div>
         );
