@@ -90,7 +90,9 @@
     <Compile Include="Server\Args\Base\PageRequestBase.cs" />
     <Compile Include="Server\Args\NewsArgs.cs" />
     <Compile Include="Server\Args\UserArgs.cs" />
+    <Compile Include="Server\Args\WebLoaderArgs.cs" />
     <Compile Include="Server\Models\NewsModel.cs" />
+    <Compile Include="Server\Models\WebLoaderModel.cs" />
     <Compile Include="Server\ServerResponse.cs" />
     <Compile Include="Server\Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

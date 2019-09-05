@@ -12,17 +12,6 @@
       line-height: 40px;
       font-size: 24px;
     }
-    .login{
-      float: right;
-      margin: 0 20px;
-      display: block;
-      height: 100%;
-      line-height: 40px;
-      cursor: header;
-      &:hover {
-        color: $main-link-font-color;
-      }
-    }
   }
   .item {
     margin: 20px;

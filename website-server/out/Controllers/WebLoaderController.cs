@@ -11,21 +11,21 @@ namespace Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class WebLoaderController : ControllerBase
     {
         private AppSettings Config;
-        private static UserDAL dal;
-        public UserController(IOptions<AppSettings> setting)
+        private static WebLoaderDAL dal;
+        public WebLoaderController(IOptions<AppSettings> setting)
         {
             Config = setting.Value;
             if (dal == null)
-                dal = new UserDAL(Config.ConnectionString);
+                dal = new WebLoaderDAL(Config.ConnectionString);
         }
-        // Post: api/User/model
+        // Post: api/WebLoader/model
         [HttpPost("model")]
-        public ServerResponse<UserModel> GetModel(UserGetModelRequest request)
+        public ServerResponse<WebLoaderModel> GetModel(WebLoaderGetModelRequest request)
         {
-            ServerResponse<UserModel> response = new ServerResponse<UserModel>();
+            ServerResponse<WebLoaderModel> response = new ServerResponse<WebLoaderModel>();
             try
             {
                 var model = dal.GetModel(request);
@@ -48,18 +48,18 @@ namespace Server.Controllers
             return response;
         }
 
-        // Post: api/User/list
+        // Post: api/WebLoader/list
         [HttpPost("list")]
-        public ServerResponse<UserGetListResponse> GetList(UserGetListRequest request)
+        public ServerResponse<WebLoaderGetListResponse> GetList(WebLoaderGetListRequest request)
         {
-            ServerResponse<UserGetListResponse> response = new ServerResponse<UserGetListResponse>();
+            ServerResponse<WebLoaderGetListResponse> response = new ServerResponse<WebLoaderGetListResponse>();
             try
             {
                 //查数据
                 var list = dal.GetList(request);
                 //查总记录数
-                var count = dal.GetCount(JsonHelper.CloneObject<UserGetCountRequest>(request));
-                response.Data = new UserGetListResponse() { DataList = list, Count = count };
+                var count = dal.GetCount(JsonHelper.CloneObject<WebLoaderGetCountRequest>(request));
+                response.Data = new WebLoaderGetListResponse() { DataList = list, Count = count };
                 response.Code = ServerResponseType.成功;
             }
             catch (Exception ex)
@@ -71,9 +71,9 @@ namespace Server.Controllers
             return response;
         }
 
-        // Post: api/User/count
+        // Post: api/WebLoader/count
         [HttpPost("count")]
-        public ServerResponse<int> GetCount(UserGetCountRequest request)
+        public ServerResponse<int> GetCount(WebLoaderGetCountRequest request)
         {
             ServerResponse<int> response = new ServerResponse<int>();
             try
@@ -91,15 +91,15 @@ namespace Server.Controllers
             return response;
         }
 
-        // POST: api/User/add
+        // POST: api/WebLoader/add
         [HttpPost("add")]
-        public ServerResponse<UserAddResponse> Add(UserModel request)
+        public ServerResponse<WebLoaderAddResponse> Add(WebLoaderModel request)
         {
-            ServerResponse<UserAddResponse> response = new ServerResponse<UserAddResponse>();
+            ServerResponse<WebLoaderAddResponse> response = new ServerResponse<WebLoaderAddResponse>();
             try
             {
                 var num = dal.Add(request);
-                response.Data = new UserAddResponse { Id = request.Id, Num = num };
+                response.Data = new WebLoaderAddResponse { Id = request.Id, Num = num };
                 if (num == 1)
                 {
                     response.Code = ServerResponseType.成功;
@@ -118,15 +118,15 @@ namespace Server.Controllers
             return response;
         }
 
-        // POST: api/User/update
+        // POST: api/WebLoader/update
         [HttpPost("update")]
-        public ServerResponse<UserUpdateResponse> Update(UserModel request)
+        public ServerResponse<WebLoaderUpdateResponse> Update(WebLoaderModel request)
         {
-            ServerResponse<UserUpdateResponse> response = new ServerResponse<UserUpdateResponse>();
+            ServerResponse<WebLoaderUpdateResponse> response = new ServerResponse<WebLoaderUpdateResponse>();
             try
             {
                 var num = dal.Update(request);
-                response.Data = new UserUpdateResponse { Id = request.Id, Num = num };
+                response.Data = new WebLoaderUpdateResponse { Id = request.Id, Num = num };
                 if (num == 1)
                 {
                     response.Code = ServerResponseType.成功;
@@ -145,15 +145,15 @@ namespace Server.Controllers
             return response;
         }
 
-        // POST: api/User/delete
+        // POST: api/WebLoader/delete
         [HttpPost("delete")]
-        public ServerResponse<UserDeleteResponse> Delete(UserModel request)
+        public ServerResponse<WebLoaderDeleteResponse> Delete(WebLoaderModel request)
         {
-            ServerResponse<UserDeleteResponse> response = new ServerResponse<UserDeleteResponse>();
+            ServerResponse<WebLoaderDeleteResponse> response = new ServerResponse<WebLoaderDeleteResponse>();
             try
             {
                 var num = dal.Delete(request);
-                response.Data = new UserDeleteResponse { Id = request.Id, Num = num };
+                response.Data = new WebLoaderDeleteResponse { Id = request.Id, Num = num };
                 if (num == 1)
                 {
                     response.Code = ServerResponseType.成功;

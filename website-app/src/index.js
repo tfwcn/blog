@@ -1,18 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { Provider } from 'react-redux';
+import { BrowserRouter, Route } from 'react-router-dom';
 import './styles/reset.scss';
 import './styles/index.scss';
 import Home from './views/home/components/index';
+import Login from './views/login/components/index';
 import * as serviceWorker from './serviceWorker';
-import store from './common/reducers'
+import store from './common/reducers';
 
 // 在root标签显示App组件
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
         </BrowserRouter>
     </Provider>,
     document.getElementById('root')

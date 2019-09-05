@@ -112,6 +112,7 @@
     <Compile Include="Server\Base\BaseManager.cs" />
     <Compile Include="Server\NewsManager.cs" />
     <Compile Include="Server\UserManager.cs" />
+    <Compile Include="Server\WebLoaderManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

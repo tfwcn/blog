@@ -1,10 +1,12 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import homeReducers from '../views/home/common/reducers';
+import loginReducers from '../views/login/common/reducers';
 
 // 整合所有reducer
 const reducers = {
     home: homeReducers,
+    login: loginReducers,
 };
 
 // 返回一个整合的reducer

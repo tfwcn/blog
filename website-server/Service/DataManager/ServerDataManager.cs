@@ -9,11 +9,13 @@ namespace DataManager
     {
         public UserManager User { get; set; }
         public NewsManager News { get; set; }
+        public WebLoaderManager WebLoader { get; set; }
 
         public ServerDataManager(string baseUrl)
         {
             User = new UserManager(baseUrl);
             News = new NewsManager(baseUrl);
+            WebLoader = new WebLoaderManager(baseUrl);
         }
     }
 }

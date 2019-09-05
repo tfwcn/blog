@@ -16,7 +16,6 @@ class News extends React.Component {
     // 加载新闻列表
     showNewsList(page, rows) {
         this.props.actions.showNewsList(null, 0, 'loading', null, page, rows);
-        console.log(this.props.news)
         postData('/api/News/list', { page: this.props.news.page, rows: this.props.news.rows })
             .then(response => {
                 console.log(response);

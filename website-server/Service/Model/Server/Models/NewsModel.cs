@@ -43,5 +43,10 @@ namespace Model.Server.Models
         /// </summary>
         [Column("c_link")]
         public string Link { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Column("c_remark")]
+        public string Remark { get; set; }
     }
 }

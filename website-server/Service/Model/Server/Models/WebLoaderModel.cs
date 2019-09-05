@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Server.Models
 {
-    [Table("t_news")]
-    public class NewsModel
+    [Table("t_web_loader")]
+    public class WebLoaderModel
     {
         /// <summary>
         /// 
@@ -16,13 +16,13 @@ namespace Model.Server.Models
         /// <summary>
         /// 
         /// </summary>
-        [Column("c_title")]
-        public string Title { get; set; }
+        [Column("c_javascript")]
+        public string Javascript { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [Column("c_content")]
-        public string Content { get; set; }
+        [Column("c_remark")]
+        public string Remark { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -41,12 +41,7 @@ namespace Model.Server.Models
         /// <summary>
         /// 
         /// </summary>
-        [Column("c_link")]
-        public string Link { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        [Column("c_remark")]
-        public string Remark { get; set; }
+        [Column("c_url")]
+        public string Url { get; set; }
     }
 }
