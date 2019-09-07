@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 ul {
   margin: 0;
   padding: 0;
@@ -11,4 +14,10 @@ li {
 }
 a {
   text-decoration: none;
+}
+input:focus {
+  outline: none;
+}
+button:focus {
+  outline: none;
 }

@@ -1,4 +1,5 @@
 ﻿
+using Common;
 using DataManager;
 using Model.Server;
 using Model.Server.Args;
@@ -40,20 +41,34 @@ namespace WebLoader
                                   try
                                   {
                                       cd.Navigate().GoToUrl(startUrl);
-                                      var resultScript = cd.ExecuteScript(tmpWebLoader.Javascript);
-                                      var elements = cd.FindElementById("pane-news").FindElements(OpenQA.Selenium.By.TagName("a"));
-                                      foreach (var e in elements)
+                                      //var resultScript = cd.ExecuteScript(tmpWebLoader.Javascript);
+                                      var resultScript = cd.ExecuteScript("let aList=document.querySelectorAll('#pane-news a');let tmplist=[];for(a in aList){ tmplist.push({Link: aList[a].href,Title:aList[a].innerText}); }return tmplist;");
+                                      var modelList = JsonHelper.CloneObject<List<NewsModel>>(resultScript);
+                                      foreach (var m in modelList)
                                       {
-                                          string link = e.GetProperty("href");
-                                          string title = e.Text;
-                                          Console.WriteLine(link + " " + title);
-                                          var result = serverDataManager.News.GetModel(new NewsGetModelRequest() { Link = link });
+                                          if (m.Link == null || m.Title == null || m.Title.Length < 4)
+                                              continue;
+                                          Console.WriteLine(m.Link + " " + m.Title);
+                                          var result = serverDataManager.News.GetModel(new NewsGetModelRequest() { Link = m.Link });
                                           if (result.Code == ServerResponseType.空数据)
                                           {
-                                              serverDataManager.News.Add(new Model.Server.Models.NewsModel() { Title = title, Link = link });
+                                              serverDataManager.News.Add(m);
                                               Console.WriteLine("插入新数据");
                                           }
                                       }
+                                      //var elements = cd.FindElementById("pane-news").FindElements(OpenQA.Selenium.By.TagName("a"));
+                                      //foreach (var e in elements)
+                                      //{
+                                      //    string link = e.GetProperty("href");
+                                      //    string title = e.Text;
+                                      //    Console.WriteLine(link + " " + title);
+                                      //    var result = serverDataManager.News.GetModel(new NewsGetModelRequest() { Link = link });
+                                      //    if (result.Code == ServerResponseType.空数据)
+                                      //    {
+                                      //        serverDataManager.News.Add(new Model.Server.Models.NewsModel() { Title = title, Link = link });
+                                      //        Console.WriteLine("插入新数据");
+                                      //    }
+                                      //}
                                       Thread.Sleep(1000 * 60 * 15);
                                   }
                                   catch (ThreadAbortException)

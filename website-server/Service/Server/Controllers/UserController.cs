@@ -171,6 +171,33 @@ namespace Server.Controllers
             }
             return response;
         }
+
+        // Post: api/User/login
+        [HttpPost("login")]
+        public ServerResponse<UserModel> Login(UserGetModelRequest request)
+        {
+            ServerResponse<UserModel> response = new ServerResponse<UserModel>();
+            try
+            {
+                var model = dal.GetModel(request);
+                if (model != null)
+                {
+                    response.Data = new UserModel() { Id = EncryptHelper.MD5Encrypt(model.Id) };
+                    response.Code = ServerResponseType.成功;
+                }
+                else
+                {
+                    response.Code = ServerResponseType.空数据;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Code = ServerResponseType.调用异常;
+                response.ErrorMsg = ex.ToString();
+                Log.LogHelper.WriteErrorLog(GetType(), ex);
+            }
+            return response;
+        }
     }
 }
 
