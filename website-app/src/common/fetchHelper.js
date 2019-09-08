@@ -12,6 +12,10 @@ export const postData = (url, data) => {
         mode: 'cors', // no-cors, cors, *same-origin
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer', // *client, no-referrer
-    })
-        .then(response => response.json()) // parses response to JSON
+    }).then(response => {
+        if (response.status === 200)
+            return response.json();
+        else
+            throw new Error('请求异常' + response.status);
+    }); // parses response to JSON
 }

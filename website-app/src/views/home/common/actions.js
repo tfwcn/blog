@@ -7,12 +7,12 @@ export const getMenuList = function (msg) {
     }
 }
 
-export const showNewsList = function (newsList, count, status, errorMsg, page, rows) {
+export const showNewsList = function (list, count, status, errorMsg, page, rows) {
     let pageCount = Math.ceil(count / rows);
     return {
         type: actionTypes.HOME_NEWS_SHOW,
         news: {
-            list: newsList,
+            list: list,
             count: count,
             status: status,
             errorMsg: errorMsg,

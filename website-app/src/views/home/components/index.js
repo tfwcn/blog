@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import News from './news';
+import User from './user';
 import style from '../styles/index.module.scss';
 
 const HomeIndex = () => {
@@ -9,10 +10,10 @@ const HomeIndex = () => {
         <div className={style.body}>
             <div className={style.header}>
                 <Link className={style.title} to='/'>TFW</Link>
-                <Link className={style.login} to='/login'>登录</Link>
+                <User />
             </div>
             <div className={style.item}>
-                <News/>
+                <News />
             </div>
         </div>
     );

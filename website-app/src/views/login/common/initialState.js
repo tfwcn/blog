@@ -4,5 +4,6 @@ const initialState = {
     loginName: '',
     password: '',
     isLoading: false,
+    message: '',
 };
 export default initialState;

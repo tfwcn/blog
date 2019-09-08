@@ -2,6 +2,7 @@
 
 .body {
   min-height: 100%;
+  width: 100%;
   .header {
     height: 40px;
     background: $sub-background-color;
@@ -30,11 +31,11 @@
         border-radius: 4px;
         background: $main-control-bg-color;
         color: $main-font-color;
-        &:focus{
+        &:focus {
           border: 1px solid $main-link-font-color;
         }
       }
-      .button{
+      .button {
         display: block;
         border: 1px none $main-border-color;
         margin: 20px 0 0 0;
@@ -45,9 +46,12 @@
         text-align: center;
         color: $main-font-color;
         font-size: 16px;
-        &:hover{
+        &:hover {
           opacity: 0.5;
         }
+      }
+      .message {
+        color: red;
       }
     }
   }

@@ -99,9 +99,9 @@ namespace Server.Controllers
             try
             {
                 var num = dal.Add(request);
-                response.Data = new WebLoaderAddResponse { Id = request.Id, Num = num };
                 if (num == 1)
                 {
+                    response.Data = new WebLoaderAddResponse { Id = request.Id, Num = num };
                     response.Code = ServerResponseType.成功;
                 }
                 else
@@ -125,10 +125,15 @@ namespace Server.Controllers
             ServerResponse<WebLoaderUpdateResponse> response = new ServerResponse<WebLoaderUpdateResponse>();
             try
             {
-                var num = dal.Update(request);
-                response.Data = new WebLoaderUpdateResponse { Id = request.Id, Num = num };
-                if (num == 1)
+                var tmpModel = dal.GetModel(new WebLoaderGetModelRequest() { Id = request.Id });
+                if (tmpModel != null)
                 {
+                    request.Id = tmpModel.Id;
+                    request.CreateTime = tmpModel.CreateTime;
+                    request.UpdateTime = tmpModel.UpdateTime;
+                    request.State = tmpModel.State;
+                    var num = dal.Update(request);
+                    response.Data = new WebLoaderUpdateResponse { Id = request.Id, Num = num };
                     response.Code = ServerResponseType.成功;
                 }
                 else
@@ -153,9 +158,9 @@ namespace Server.Controllers
             try
             {
                 var num = dal.Delete(request);
-                response.Data = new WebLoaderDeleteResponse { Id = request.Id, Num = num };
                 if (num == 1)
                 {
+                    response.Data = new WebLoaderDeleteResponse { Id = request.Id, Num = num };
                     response.Code = ServerResponseType.成功;
                 }
                 else

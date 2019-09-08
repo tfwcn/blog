@@ -41,8 +41,8 @@ namespace WebLoader
                                   try
                                   {
                                       cd.Navigate().GoToUrl(startUrl);
-                                      //var resultScript = cd.ExecuteScript(tmpWebLoader.Javascript);
-                                      var resultScript = cd.ExecuteScript("let aList=document.querySelectorAll('#pane-news a');let tmplist=[];for(a in aList){ tmplist.push({Link: aList[a].href,Title:aList[a].innerText}); }return tmplist;");
+                                      var resultScript = cd.ExecuteScript(tmpWebLoader.Javascript);
+                                      //var resultScript = cd.ExecuteScript("let aList=document.querySelectorAll('#pane-news a');let tmplist=[];for(a in aList){ tmplist.push({Link: aList[a].href,Title:aList[a].innerText}); }return tmplist;");
                                       var modelList = JsonHelper.CloneObject<List<NewsModel>>(resultScript);
                                       foreach (var m in modelList)
                                       {

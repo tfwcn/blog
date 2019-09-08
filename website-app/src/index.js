@@ -6,6 +6,7 @@ import './styles/reset.scss';
 import './styles/index.scss';
 import Home from './views/home/components/index';
 import Login from './views/login/components/index';
+import Manager from './views/manager/components/index';
 import * as serviceWorker from './serviceWorker';
 import store from './common/reducers';
 
@@ -15,6 +16,7 @@ ReactDOM.render(
         <BrowserRouter>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
+            <Route path="/manager" component={Manager} />
         </BrowserRouter>
     </Provider>,
     document.getElementById('root')

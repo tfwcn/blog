@@ -2,6 +2,7 @@
 
 .body {
   min-height: 100%;
+  width: 100%;
   .header {
     height: 40px;
     background: $sub-background-color;
@@ -11,17 +12,6 @@
       height: 100%;
       line-height: 40px;
       font-size: 24px;
-    }
-    .login{
-      float: right;
-      margin: 0 20px;
-      display: block;
-      height: 100%;
-      line-height: 40px;
-      cursor: header;
-      &:hover {
-        color: $main-link-font-color;
-      }
     }
   }
   .item {

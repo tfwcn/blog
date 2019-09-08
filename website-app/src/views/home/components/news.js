@@ -27,8 +27,8 @@ class News extends React.Component {
                 }
             })
             .catch(error => {
-                console.log(error);
-                this.props.actions.showNewsList(null, 0, 'error', error, this.props.news.page, this.props.news.rows);
+                console.error(error);
+                this.props.actions.showNewsList(null, 0, 'error', error.message, this.props.news.page, this.props.news.rows);
             });
     }
     // 上一页
