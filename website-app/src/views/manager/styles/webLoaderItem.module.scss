@@ -8,8 +8,13 @@
   margin: 20px 0 0 20px;
   border-radius: 5px;
   position: relative;
+  overflow: hidden;
   .line {
     margin: 10px 20px;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+    text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
     .text {
       padding: 8px 5px;
       display: block;
@@ -33,6 +38,7 @@
       background: $main-control-bg-color;
       color: $main-font-color;
       font-size: 14px;
+      white-space: pre;
       &:focus {
         border: 1px solid $main-link-font-color;
       }
@@ -58,6 +64,8 @@
   }
   .btnList {
     float: right;
+    height: 35px;
+    overflow: hidden;
     .icon {
       width: 20px;
       height: 20px;
@@ -96,6 +104,15 @@
 }
 .add {
   background: $main-control-add-bg-color;
+  @keyframes addAnimation {
+    0% {
+      width: 0px;
+    }
+    100% {
+      width: 350px;
+    }
+  }
+  animation: addAnimation 1s;
 }
 .edit {
   background: $main-control-edit-bg-color;
