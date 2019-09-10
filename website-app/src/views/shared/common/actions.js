@@ -1,8 +1,8 @@
 import actionTypes from './actionTypes';
 
-export const setValue = function (value) {
+export const setValue = function (values) {
     return {
-        type: actionTypes.CONTROL_SET_VALUE,
-        value: value,
+        type: actionTypes.SET_VALUE,
+        ...values,
     }
 }

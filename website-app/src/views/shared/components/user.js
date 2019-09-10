@@ -9,6 +9,8 @@ import style from '../styles/user.module.scss'
 class User extends React.Component {
     // 组件加载完成
     componentDidMount() {
+        this.props.actions.setValue({ userId: sessionStorage.getItem('access_token') })
+        console.log(this);
     }
     // 渲染
     render() {

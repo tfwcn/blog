@@ -7,7 +7,7 @@ function setValue(state, action) {
 // 执行对应的action
 export default function homeActions(state = initialState, action) {
     switch (action.type) {
-        case actionTypes.CONTROL_SET_VALUE:
+        case actionTypes.SET_VALUE:
             return setValue(state, action)
         default:
             return state

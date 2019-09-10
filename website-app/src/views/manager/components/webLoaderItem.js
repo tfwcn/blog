@@ -75,12 +75,26 @@ class ManagerWebLoaderItem extends React.Component {
             .then(response => {
                 console.log(response);
                 if (response.code === 0) {
-                    this.props.item.id = response.data.id;
-                    this.props.item.remark = this.state.remark;
-                    this.props.item.javascript = this.state.javascript;
-                    this.props.item.url = this.state.url;
-                    // 更新状态
-                    this.setState({ id: response.data.id, status: 'success', showType: 'show' });
+                    //更新旧值
+                    // this.props.item.id = response.data.id;
+                    // this.props.item.remark = this.state.remark;
+                    // this.props.item.javascript = this.state.javascript;
+                    // this.props.item.url = this.state.url;
+                    // // 更新状态
+                    // this.setState({ id: response.data.id, status: 'success', showType: 'show' });
+                    let tmpWebLoader = { ...this.props.webLoader };
+                    console.log(tmpWebLoader);
+                    tmpWebLoader.list.map((m) => {
+                        if (m.id === this.state.id) {
+
+                            m.id = response.data.id;
+                            m.remark = this.state.remark;
+                            m.javascript = this.state.javascript;
+                            m.url = this.state.url;
+                        }
+                        return m;
+                    });
+                    this.props.actions.setValue({ webLoader: tmpWebLoader });
                 } else {
                     // 失败
                     this.setState({ status: 'error', errorMsg: response.errorMsg });
@@ -133,7 +147,7 @@ class ManagerWebLoaderItem extends React.Component {
                     let tmpWebLoader = { ...this.props.webLoader };
                     console.log(tmpWebLoader);
                     tmpWebLoader.list.map((m, i) => {
-                        if (m.id === this.props.item.id)
+                        if (m.id === this.state.id)
                             tmpWebLoader.list.splice(i, 1);
                         return m;
                     });
