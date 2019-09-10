@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Server.Middlewares;
 using System.Text;
 
 namespace Server
@@ -42,6 +43,9 @@ namespace Server
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // 登录验证中间件
+            app.UseLoginCheck();
 
             app.UseMvc();
         }

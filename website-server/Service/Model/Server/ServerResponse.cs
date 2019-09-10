@@ -6,6 +6,7 @@
         调用异常 = -1,
         空数据 = -2,
         调用服务异常 = -3,
+        操作未授权 = -4,
     }
     public class ServerResponse<T>
     {

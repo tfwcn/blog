@@ -11,6 +11,7 @@ class ManagerWebLoaderItem extends React.Component {
     // 构造函数
     constructor(props) {
         super(props);
+        console.log(this);
         // 局部state
         this.state = {
             showType: this.props.showType,
@@ -47,11 +48,11 @@ class ManagerWebLoaderItem extends React.Component {
     //编辑取消
     editCancel() {
         this.setState({
-            showType: this.props.showType,
             id: this.props.item.id,
             remark: this.props.item.remark,
             javascript: this.props.item.javascript,
             url: this.props.item.url,
+            showType: 'show',
         });
     }
     //编辑
@@ -74,6 +75,10 @@ class ManagerWebLoaderItem extends React.Component {
             .then(response => {
                 console.log(response);
                 if (response.code === 0) {
+                    this.props.item.id = response.data.id;
+                    this.props.item.remark = this.state.remark;
+                    this.props.item.javascript = this.state.javascript;
+                    this.props.item.url = this.state.url;
                     // 更新状态
                     this.setState({ id: response.data.id, status: 'success', showType: 'show' });
                 } else {
@@ -151,6 +156,7 @@ class ManagerWebLoaderItem extends React.Component {
         if (this.state.showType === 'add' || this.state.showType === 'edit') {
             btnList = (
                 <div className={style.btnList}>
+                    <span className={style.message}>{this.state.errorMsg}</span>
                     {/* 保存 */}
                     <span title="保存">
                         <svg onClick={this.state.showType === 'add' ? this.addSave : this.editSave} className={style.icon} t="1567927843131" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4171" width="200" height="200"><path d="M512 1024A512 512 0 1 1 512 0a512 512 0 0 1 0 1024z m3.008-92.992a416 416 0 1 0 0-832 416 416 0 0 0 0 832zM448 605.12L746.688 320 832 401.472 448 768 192 523.648l85.312-81.472L448 605.12z" fill="#ffffff" p-id="4172"></path></svg>
@@ -161,19 +167,18 @@ class ManagerWebLoaderItem extends React.Component {
                     </span>
                 </div>
             );
-
             return (
                 <li className={style.item + ' ' + (this.state.showType === 'add' ? style.add : style.edit)}>
                     {btnList}
                     <div className={style.line}>链接</div>
-                    <div className={style.line}><input className={style.text} spellcheck="false" type="text" value={this.state.url} onChange={(e) => { this.setState({ url: e.target.value }) }} /></div>
+                    <div className={style.line}><input className={style.text} spellCheck="false" type="text" value={this.state.url} onChange={(e) => { this.setState({ url: e.target.value }); }} /></div>
                     <div className={style.line}>描述</div>
-                    <div className={style.line}><input className={style.text} spellcheck="false" type="text" value={this.state.remark} onChange={(e) => { this.setState({ remark: e.target.value }) }} /></div>
+                    <div className={style.line}><input className={style.text} spellCheck="false" type="text" value={this.state.remark} onChange={(e) => { this.setState({ remark: e.target.value }); }} /></div>
                     <div className={style.line}>JS脚本</div>
-                    <div className={style.line}><textarea className={style.textarea} spellcheck="false" type="text" value={this.state.javascript} onChange={(e) => { this.setState({ javascript: e.target.value }) }} /></div>
+                    <div className={style.line}><textarea className={style.textarea} spellCheck="false" type="text" value={this.state.javascript} onChange={(e) => { this.setState({ javascript: e.target.value }); }} /></div>
                 </li>
             );
-        } else if (this.props.showType === 'show') {
+        } else if (this.state.showType === 'show') {
             btnList = (
                 <div className={style.btnList}>
                     {/* 修改 */}

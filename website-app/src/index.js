@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './styles/reset.scss';
 import './styles/index.scss';
-import Home from './views/home/components/index';
-import Login from './views/login/components/index';
-import Manager from './views/manager/components/index';
+import Login from '@/views/login/components/index';
+import Home from '@/views/home/components/index';
+import Manager from '@/views/manager/components/index';
 import * as serviceWorker from './serviceWorker';
 import store from './common/reducers';
 
@@ -14,9 +14,11 @@ import store from './common/reducers';
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/login" component={Login} />
-            <Route path="/manager" component={Manager} />
+            <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/manager" component={Manager} />
+                <Route exact path="/" component={Home} />
+            </Switch>
         </BrowserRouter>
     </Provider>,
     document.getElementById('root')
@@ -26,6 +28,6 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 // 客户端渲染
-// serviceWorker.unregister();
+serviceWorker.unregister();
 // 同构，服务端渲染，加载更快
-serviceWorker.register();
+// serviceWorker.register();

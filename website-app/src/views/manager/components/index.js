@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Route } from "react-router-dom";
 import style from '../styles/index.module.scss';
+import LayoutMain from '../../shared/components/layoutMain';
 import ManagerWebLoader from './webLoader';
 
 class ManagerIndex extends React.Component {
@@ -17,10 +18,7 @@ class ManagerIndex extends React.Component {
     // 渲染
     render() {
         return (
-            <div className={style.body}>
-                <div className={style.header}>
-                    <Link className={style.title} to='/'>TFW</Link>
-                </div>
+            <LayoutMain>
                 <div className={style.main}>
                     <div className={style.left}>
                         <div className={style.title}>菜单</div>
@@ -35,7 +33,7 @@ class ManagerIndex extends React.Component {
                         <Route path={`${this.props.match.url}/webLoader`} component={ManagerWebLoader} />
                     </div>
                 </div>
-            </div>
+            </LayoutMain>
         );
     }
 }

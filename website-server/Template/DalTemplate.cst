@@ -80,11 +80,7 @@ namespace DAL
         /// <returns></returns>
         public override int Delete(<%= this.GetClassName(SourceTable) %>Model model)
         {
-            var tmpModel = GetModel(new <%= this.GetClassName(SourceTable) %>GetModelRequest() { Id = model.Id });
-            if (tmpModel == null)
-                return 0;
-            tmpModel.State = 1;
-            return Update(tmpModel);
+            return base.Delete(model);
         }
     }
 }

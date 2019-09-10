@@ -3,14 +3,14 @@ import { createLogger } from 'redux-logger';
 import homeReducers from '../views/home/common/reducers';
 import loginReducers from '../views/login/common/reducers';
 import managerReducers from '../views/manager/common/reducers';
-import controlReducers from '../views/control/common/reducers';
+import sharedReducers from '../views/shared/common/reducers';
 
 // 整合所有reducer
 const reducers = {
     home: homeReducers,
     login: loginReducers,
     manager: managerReducers,
-    control: controlReducers,
+    shared: sharedReducers,
 };
 
 // 返回一个整合的reducer

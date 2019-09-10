@@ -58,9 +58,6 @@
         opacity: 0.5;
       }
     }
-    .message {
-      color: red;
-    }
   }
   .btnList {
     float: right;
@@ -71,6 +68,9 @@
       height: 20px;
       margin: 10px 10px 0 0;
       cursor: pointer;
+    }
+    .message {
+      color: red;
     }
   }
   .loading {

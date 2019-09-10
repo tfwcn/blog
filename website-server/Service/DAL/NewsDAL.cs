@@ -77,11 +77,12 @@ namespace DAL
         /// <returns></returns>
         public override int Delete(NewsModel model)
         {
-            var tmpModel = GetModel(new NewsGetModelRequest() { Id = model.Id });
-            if (tmpModel == null)
-                return 0;
-            tmpModel.State = 1;
-            return Update(tmpModel);
+            //var tmpModel = GetModel(new NewsGetModelRequest() { Id = model.Id });
+            //if (tmpModel == null)
+            //    return 0;
+            //tmpModel.State = 1;
+            //return Update(tmpModel);
+            return base.Delete(model);
         }
     }
 }

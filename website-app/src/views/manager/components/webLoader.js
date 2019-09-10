@@ -77,7 +77,7 @@ class ManagerWebLoader extends React.Component {
     add() {
         let tmpWebLoader = { ...this.props.webLoader };
         console.log(tmpWebLoader);
-        tmpWebLoader.list.splice(0, 0, { id: tmpWebLoader.newId++, remark: '', javascript: '' });
+        tmpWebLoader.list.splice(0, 0, { id: tmpWebLoader.newId++, remark: '', javascript: '', url: '' });
         this.props.actions.setValue({ webLoader: tmpWebLoader });
     }
 

@@ -17,7 +17,9 @@ class User extends React.Component {
                 <Link className={style.user} to='/login'>登录</Link>
             );
         } else {
-            return (<div className={style.user}>欢迎</div>);
+            return (
+                <Link className={style.user} to='/manager'>欢迎</Link>
+            );
         }
     }
 }

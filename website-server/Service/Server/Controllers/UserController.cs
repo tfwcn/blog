@@ -182,7 +182,17 @@ namespace Server.Controllers
                 var model = dal.GetModel(request);
                 if (model != null)
                 {
-                    response.Data = new UserModel() { Id = EncryptHelper.MD5Encrypt(model.Id) };
+                    string tmpId = EncryptHelper.Encrypt("tfw-token-key", model.Id);
+                    //保存token
+                    if (CommonData.TokenList.ContainsKey(tmpId))
+                    {
+                        CommonData.TokenList[tmpId] = model;
+                    }
+                    else
+                    {
+                        CommonData.TokenList.Add(tmpId, model);
+                    }
+                    response.Data = new UserModel() { Id = tmpId };
                     response.Code = ServerResponseType.成功;
                 }
                 else
