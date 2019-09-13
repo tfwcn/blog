@@ -1,4 +1,4 @@
-import actionTypes from './actionTypes';
+import actionTypes from '@/common/actionTypes';
 import initialState from './initialState';
 
 function getMenuList(state, action) {

@@ -7,10 +7,10 @@ import sharedReducers from '../views/shared/common/reducers';
 
 // 整合所有reducer
 const reducers = {
-    home: homeReducers,
-    login: loginReducers,
-    manager: managerReducers,
-    shared: sharedReducers,
+  home: homeReducers,
+  login: loginReducers,
+  manager: managerReducers,
+  shared: sharedReducers,
 };
 
 // 返回一个整合的reducer
@@ -24,7 +24,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 // 创建store
 const store = createStore(appReducers,
-    applyMiddleware(...middleware)
+  applyMiddleware(...middleware)
 );
 
 export default store;

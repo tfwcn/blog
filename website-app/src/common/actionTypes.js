@@ -1,16 +1,12 @@
 // 全部actionType
-import home from '../views/home/common/actionTypes';
-import login from '../views/login/common/actionTypes';
-import manager from '../views/manager/common/actionTypes';
-import shared from '../views/shared/common/actionTypes';
 const actionTypes={
-    // 首页
-    home:home,
-    // 登录
-    login:login,
-    // 管理后台
-    manager:manager,
-    // 控件
-    shared:shared,
+    // 查询菜单
+    HOME_MENU_SELECT:'HOME_MENU_SELECT',
+    // 显示新闻
+    HOME_NEWS_SHOW:'HOME_NEWS_SHOW',
+    // 登录用户
+    LOGIN_USER:'LOGIN_USER',
+    // 设置值
+    SET_VALUE:'SET_VALUE',
 };
 export default actionTypes;

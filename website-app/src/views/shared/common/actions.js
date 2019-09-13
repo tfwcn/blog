@@ -1,4 +1,4 @@
-import actionTypes from './actionTypes';
+import actionTypes from '@/common/actionTypes';
 
 export const setValue = function (values) {
     return {

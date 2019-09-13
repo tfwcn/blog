@@ -21,10 +21,10 @@ namespace Server.Middlewares
         public async Task InvokeAsync(HttpContext context)
         {
             if ((context.Request.Path.Value.EndsWith("/add")
-                || context.Request.Path.Value.EndsWith("/update")
-                || context.Request.Path.Value.EndsWith("/delete")
-                || context.Request.Path.Value.Contains("/manager"))
-                && context.Request.Method.ToLower() == "post")
+                    || context.Request.Path.Value.EndsWith("/update")
+                    || context.Request.Path.Value.EndsWith("/delete")
+                    || context.Request.Path.Value.Contains("/manager"))
+                    && context.Request.Method.ToLower() == "post")
             {
                 string token = context.Request.Headers["Access-Token"];
                 if (token == null || !CommonData.TokenList.ContainsKey(token))
@@ -32,8 +32,10 @@ namespace Server.Middlewares
                     ServerResponse<object> response = new ServerResponse<object>();
                     response.Code = ServerResponseType.操作未授权;
                     response.ErrorMsg = "操作未授权";
-                    Log.LogHelper.WriteErrorLog(GetType(), context.Request.ToString());
+                    Log.LogHelper.WriteErrorLog(GetType(), "操作未授权:" + context.Request.ToString());
+                    context.Response.StatusCode = 401;
                     await context.Response.WriteAsync(JsonHelper.SerializeObject(response));
+                    return;
                 }
             }
             // 继续执行下一步

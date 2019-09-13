@@ -49,6 +49,15 @@ namespace Model.Server.Args
     {
 
     }
+
+    /// <summary>
+    /// 查询单条记录
+    /// </summary>
+    [Table("t_user")]
+    public class UserCheckRequest : DeleteRequestBase
+    {
+        public string Token { get; set; }
+    }
     #endregion
 
     #region Response

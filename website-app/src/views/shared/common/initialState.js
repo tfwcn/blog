@@ -1,5 +1,5 @@
 // 初始化state
 const initialState = {
-    value: null,
+    userId: null,
 };
 export default initialState;

@@ -1,5 +1,4 @@
 export const postData = (url, data) => {
-    console.log(sessionStorage);
     // Default options are marked with *
     return fetch(url, {
         body: JSON.stringify(data), // must match 'Content-Type' header
@@ -15,8 +14,12 @@ export const postData = (url, data) => {
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer', // *client, no-referrer
     }).then(response => {
+        console.log(response);
         if (response.status === 200)
             return response.json();
+        else if (response.status === 401){
+            throw new Error('未授权');
+        }
         else
             throw new Error('请求异常' + response.status);
     }); // parses response to JSON

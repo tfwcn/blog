@@ -32,7 +32,7 @@ User.propTypes = {
 /* istanbul ignore next */
 function mapStateToProps(state) {
     return {
-        userId: state.login.userId,
+        userId: state.shared.userId,
     };
 }
 

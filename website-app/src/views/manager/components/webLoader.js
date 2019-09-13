@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../common/actions'
+import * as sharedActions from '@/views/shared/common/actions'
 import style from '../styles/webLoader.module.scss';
 import { postData } from '@/common/fetchHelper';
 import ManagerWebLoaderItem from "./webLoaderItem";
@@ -120,7 +121,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ ...actions }, dispatch),
+        actions: bindActionCreators({ ...actions, ...sharedActions }, dispatch),
     };
 }
 
