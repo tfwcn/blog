@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../common/actions'
-import * as sharedActions from '@/views/shared/common/actions'
 import style from '../styles/webLoaderItem.module.scss';
 import { postData } from '@/common/fetchHelper';
 
@@ -44,7 +43,7 @@ class ManagerWebLoaderItem extends React.Component {
             return m;
         });
         // tmpWebLoader.list.remove(this.props.item);
-        this.props.actions.setValue({ webLoader: tmpWebLoader });
+        this.props.actions.webLoaderShow({ webLoader: tmpWebLoader });
     }
     //编辑取消
     editCancel() {
@@ -95,7 +94,7 @@ class ManagerWebLoaderItem extends React.Component {
                         }
                         return m;
                     });
-                    this.props.actions.setValue({ webLoader: tmpWebLoader });
+                    this.props.actions.webLoaderShow({ webLoader: tmpWebLoader });
                 } else {
                     // 失败
                     this.setState({ status: 'error', errorMsg: response.errorMsg });
@@ -152,7 +151,7 @@ class ManagerWebLoaderItem extends React.Component {
                             tmpWebLoader.list.splice(i, 1);
                         return m;
                     });
-                    this.props.actions.setValue({ webLoader: tmpWebLoader });
+                    this.props.actions.webLoaderShow({ webLoader: tmpWebLoader });
                 } else {
                     // 失败
                     this.setState({ status: 'error', errorMsg: response.errorMsg });
@@ -246,7 +245,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ ...actions, ...sharedActions }, dispatch),
+        actions: bindActionCreators({ ...actions }, dispatch),
     };
 }
 

@@ -21,6 +21,7 @@ class ManagerIndex extends React.Component {
     componentDidMount() {
         postData('/api/User/check', { token: this.props.userId })
             .catch(error => {
+                console.log(error);
                 this.props.actions.setValue({ userId: null });
                 this.props.history.push('/login');
             });

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../common/actions'
-import * as sharedActions from '@/views/shared/common/actions'
 import style from '../styles/webLoader.module.scss';
 import { postData } from '@/common/fetchHelper';
 import ManagerWebLoaderItem from "./webLoaderItem";
@@ -33,7 +32,7 @@ class ManagerWebLoader extends React.Component {
             rows: rows,
             pageCount: 0,
         };
-        this.props.actions.setValue({ webLoader: tmpWebLoader });
+        this.props.actions.webLoaderShow({ webLoader: tmpWebLoader });
         postData('/api/WebLoader/list', { page: this.props.webLoader.page, rows: this.props.webLoader.rows })
             .then(response => {
                 console.log(response);
@@ -47,7 +46,7 @@ class ManagerWebLoader extends React.Component {
                         errorMsg: null,
                         pageCount: Math.ceil(count / this.props.webLoader.rows),
                     };
-                    this.props.actions.setValue({ webLoader: tmpWebLoader });
+                    this.props.actions.webLoaderShow({ webLoader: tmpWebLoader });
                 } else {
                     let tmpWebLoader = {
                         ...this.props.webLoader,
@@ -57,7 +56,7 @@ class ManagerWebLoader extends React.Component {
                         errorMsg: response.errorMsg,
                         pageCount: 0,
                     };
-                    this.props.actions.setValue({ webLoader: tmpWebLoader });
+                    this.props.actions.webLoaderShow({ webLoader: tmpWebLoader });
                 }
             })
             .catch(error => {
@@ -70,7 +69,7 @@ class ManagerWebLoader extends React.Component {
                     errorMsg: error.message,
                     pageCount: 0,
                 };
-                this.props.actions.setValue({ webLoader: tmpWebLoader });
+                this.props.actions.webLoaderShow({ webLoader: tmpWebLoader });
             });
     }
 
@@ -79,7 +78,7 @@ class ManagerWebLoader extends React.Component {
         let tmpWebLoader = { ...this.props.webLoader };
         console.log(tmpWebLoader);
         tmpWebLoader.list.splice(0, 0, { id: tmpWebLoader.newId++, remark: '', javascript: '', url: '' });
-        this.props.actions.setValue({ webLoader: tmpWebLoader });
+        this.props.actions.webLoaderShow({ webLoader: tmpWebLoader });
     }
 
     // 渲染
@@ -121,7 +120,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ ...actions, ...sharedActions }, dispatch),
+        actions: bindActionCreators({ ...actions }, dispatch),
     };
 }
 

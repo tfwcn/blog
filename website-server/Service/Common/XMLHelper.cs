@@ -10,7 +10,7 @@ namespace Common
     public class XmlHelper
     {
         /// <summary>
-        /// 修改XML 2017-6-29 韩永健
+        /// 修改XML
         /// </summary>
         /// <param name="path">文件名路径，包括文件名</param>
         /// <param name="tagName">标签名</param>
@@ -47,7 +47,7 @@ namespace Common
             }
         }
         /// <summary>
-        /// 读取XML 2017-6-29 韩永健
+        /// 读取XML
         /// </summary>
         /// <param name="path">文件名路径，包括文件名</param>
         /// <param name="tagName">标签名</param>
@@ -68,7 +68,7 @@ namespace Common
             return "";
         }
         /// <summary>
-        /// 获取或创建标签 2017-6-29 韩永健
+        /// 获取或创建标签
         /// </summary>
         /// <param name="tagName">标签名</param>
         public static XmlNodeList GetElementsByTagName(XmlDocument doc, XmlElement root, string tagName, object value)

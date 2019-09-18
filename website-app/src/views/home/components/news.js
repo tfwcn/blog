@@ -1,12 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actions from '../common/actions'
 import style from '../styles/news.module.scss'
 import { postData } from '@/common/fetchHelper'
 
 class News extends React.Component {
+    // 构造函数
+    constructor(props) {
+        super(props);
+        this.state = {
+            news: {
+                // 数据
+                list: [],
+                // 总记录数
+                count: 0,
+                status: 'loading',
+                errorMsg: null,
+                // 当前页
+                page: 1,
+                // 总记录数
+                rows: 10,
+                // 总页数
+                pageCount: 1,
+            },
+        }
+    }
     // 组件加载完成
     componentDidMount() {
         this.upPage = this.upPage.bind(this);
@@ -15,52 +31,94 @@ class News extends React.Component {
     }
     // 加载新闻列表
     showNewsList(page, rows) {
-        this.props.actions.showNewsList(null, 0, 'loading', null, page, rows);
-        postData('/api/News/list', { page: this.props.news.page, rows: this.props.news.rows })
+        this.setState({
+            news: {
+                ...this.state.news,
+                list: [],
+                count: 0,
+                status: 'loading',
+                errorMsg: null,
+                page: page,
+                rows: rows,
+                pageCount: Math.ceil(0 / rows),
+            }
+        });
+        // this.props.actions.showNewsList(null, 0, 'loading', null, page, rows);
+        postData('/api/News/list', { page: page, rows: rows })
             .then(response => {
                 console.log(response);
                 if (response.code === 0) {
                     let count = response.data.count > 100 ? 100 : response.data.count;
-                    this.props.actions.showNewsList(response.data.dataList, count, 'success', null, this.props.news.page, this.props.news.rows);
+                    this.setState({
+                        news: {
+                            ...this.state.news,
+                            list: response.data.dataList,
+                            count: count,
+                            status: 'success',
+                            errorMsg: null,
+                            pageCount: Math.ceil(count / this.state.news.rows),
+                        }
+                    });
+                    // this.props.actions.showNewsList(response.data.dataList, count, 'success', null, this.props.news.page, this.props.news.rows);
                 } else {
-                    this.props.actions.showNewsList(null, 0, 'error', response.errorMsg, this.props.news.page, this.props.news.rows);
+                    this.setState({
+                        news: {
+                            ...this.state.news,
+                            list: [],
+                            count: 0,
+                            status: 'error',
+                            errorMsg: response.errorMsg,
+                            pageCount: Math.ceil(0 / this.state.news.rows),
+                        }
+                    });
+                    // this.props.actions.showNewsList(null, 0, 'error', response.errorMsg, this.props.news.page, this.props.news.rows);
                 }
             })
             .catch(error => {
                 console.error(error);
-                this.props.actions.showNewsList(null, 0, 'error', error.message, this.props.news.page, this.props.news.rows);
+                this.setState({
+                    news: {
+                        ...this.state.news,
+                        list: [],
+                        count: 0,
+                        status: 'error',
+                        errorMsg: error.message,
+                        pageCount: Math.ceil(0 / this.state.news.rows),
+                    }
+                });
+                // this.props.actions.showNewsList(null, 0, 'error', error.message, this.props.news.page, this.props.news.rows);
             });
     }
     // 上一页
     upPage() {
-        if (this.props.news.page > 1) {
-            this.showNewsList(this.props.news.page - 1, this.props.news.rows);
+        if (this.state.news.page > 1) {
+            this.showNewsList(this.state.news.page - 1, this.state.news.rows);
         }
     }
     // 下一页
     downPage() {
-        if (this.props.news.page < this.props.news.pageCount) {
-            this.showNewsList(this.props.news.page + 1, this.props.news.rows);
+        if (this.state.news.page < this.state.news.pageCount) {
+            this.showNewsList(this.state.news.page + 1, this.state.news.rows);
         }
     }
     // 渲染
     render() {
         // 新闻列表
         let newsListElement = "";
-        if (this.props.news.status === 'success') {
+        if (this.state.news.status === 'success') {
             newsListElement = (
                 <ul>
-                    {this.props.news.list.map(m => (
+                    {this.state.news.list.map(m => (
                         <li key={m.id}><span className={style.dot}></span><a href={m.link} target="_blank" rel="noopener noreferrer">{m.title}</a></li>
                     ))}
                 </ul>
             );
         }
-        else if (this.props.news.status === 'loading') {
+        else if (this.state.news.status === 'loading') {
             newsListElement = (<div className={style.loading}>加载中</div>);
         }
-        else if (this.props.news.status === 'error') {
-            newsListElement = (<div className={style.loading}>{this.props.news.errorMsg}</div>);
+        else if (this.state.news.status === 'error') {
+            newsListElement = (<div className={style.loading}>{this.state.news.errorMsg}</div>);
         }
         // 分页
         return (
@@ -69,32 +127,12 @@ class News extends React.Component {
                 {newsListElement}
                 <div className={style.page}>
                     <span className={style.link} onClick={this.upPage}>上一页</span>
-                    {' ' + this.props.news.page + ' / ' + this.props.news.pageCount + ' '}
+                    {' ' + this.state.news.page + ' / ' + this.state.news.pageCount + ' '}
                     <span className={style.link} onClick={this.downPage}>下一页</span>
                 </div>
             </div>
         );
     }
 }
-News.propTypes = {
-    news: PropTypes.object,
-};
 
-/* istanbul ignore next */
-function mapStateToProps(state) {
-    return {
-        news: state.home.news,
-    };
-}
-
-/* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators({ ...actions }, dispatch),
-    };
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(News);
+export default News;

@@ -6,6 +6,8 @@ using Model.Server;
 using Model.Server.Args;
 using Model.Server.Models;
 using System;
+using System.IO;
+using Encrypt;
 
 namespace Server.Controllers
 {
@@ -15,16 +17,40 @@ namespace Server.Controllers
     {
         private AppSettings Config;
         private static UserDAL dal;
-        private static RSAHelper res;
-        private static string privateKey = @"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0CphbdXDbX31ZIQWUmcvcvAX+yZYxs0g0E70ANLTMoJPQaLTj7rrrvmlMEtwt4AFVVBABFC5vOsZgSo840svEO77R4J9Z3gIQekAKiwKIEznL5tva78K8Tl9rR61iEExu4HQEpY/Udh3zowKlOf9Xw9cAU53rOHYbjXmeK+MZgNWYKv0uWJSdWdK0Ci0puRB3KDgtG4pzBen/fPSgmkLSSnl66y25YQ/WUHGM2u2PBKDAv24Ir95q2kwYgk7P/cuH5OOxpNg2q5h5dtSJXTHEysL5au4jLIfXsrSwdhwqo2vtdlnxfa7pe8NvuOkJefxlDIZkT8wsk7ASH2xBC64OwIDAQAB";
-        private static string publicKey = @"MIIEpAIBAAKCAQEA0CphbdXDbX31ZIQWUmcvcvAX+yZYxs0g0E70ANLTMoJPQaLTj7rrrvmlMEtwt4AFVVBABFC5vOsZgSo840svEO77R4J9Z3gIQekAKiwKIEznL5tva78K8Tl9rR61iEExu4HQEpY/Udh3zowKlOf9Xw9cAU53rOHYbjXmeK+MZgNWYKv0uWJSdWdK0Ci0puRB3KDgtG4pzBen/fPSgmkLSSnl66y25YQ/WUHGM2u2PBKDAv24Ir95q2kwYgk7P/cuH5OOxpNg2q5h5dtSJXTHEysL5au4jLIfXsrSwdhwqo2vtdlnxfa7pe8NvuOkJefxlDIZkT8wsk7ASH2xBC64OwIDAQABAoIBAHciOh5E/5JzSvSaz7ebTEGIfQEEYjxse0IcXXL3NV2rzDYxPMj+XhIG1+46zqiGQQchZXHSzWn8Vt1gUfZ3OdmEHBVB7glAXeFyuuBn0efIe2r4lxzf+iAyGeXxNE1lmlPIqE9q45QwwehYp1mvJ4e2353zzXQI0PfKKzuYpE5gwwhpHnc0TJ/KZLZEpUPX2tkyWSvQTWKQjbGMwTtyIP9se++GntpHBFVSpNbvgyfksgHZ1gOyJrq8AJwHKTN2Rd6IxU0wjF00PUPI3roKtk1JNSpGQvOb6kZ2FGlMmT+ecoe0nLGfs1kAWNr6Nxz2j7dk4bxbm2z1sFxO74NzXBkCgYEA/ypEgirl80QleuSMMVjr5FWLH+6D0FgHIyXKUr3Gi8maKG3tDZW+H6TZG/rKi1WgExsSX0+kS/srlorRIzoNvUhCs9Nx5xPlp2CKltoKZovdmS6+QsTs1rOVopzeB1oTPDpggHBDGnb80qjOI8wzgYr0xq2sCVMxmg7ocXzX6a0CgYEA0Ni+uYEcEtRNS7+6fkObwPIsjdyElNsNpMeZw79lsAXnA5hBNGnvwSu0BeHc3mDAky0Diz18UIapg87hSzPUc1As7zGxfpjPmvr/c4vyVidou6I+ZN/u9eNKItUUfooz5x+3sc02LBpGMOFNgMr3tf1mdaRpCSiSRVeH4qAoNocCgYEA8fpdeavA4g+wE3kF0g5ntePByghhDIVOT3CZDBpYXVxUSx7j/UwSPuQP2E7fIX+UDEpSA/z86+lHjr4aUvPM78HFL8/HZsIhubb99szTrCfbgFcpqxwhFgK8Vre4fvRW5Xje5y6PFFveqs/WnXAbMDBcrMUqLrWshlK48FbaUwkCgYAZEdubMwdmrzt0G1jMrVr2B1wXz1/O6pixrhAkMkaHob3AbbduDkVsf82FYz57J0wWnrGtNj1FAVU58EyVFWysRvSN5f4zfy50oSqm+Sam9uYYl/o7a7IorBcLJV7nbbmbRfBsFIErPCAu3+zIyBSCMR/qgUjmg4tDbaVvK+CH4wKBgQDVE/ry4Sl7XsI0lecqziTNEsoSwsKcOZsWP+vEk9FmPunWn287m60V6XfmEsqz5iJn1yEwVLPXAt7MV+RNh9t8KcNw4DdJxF9YOeZpVO/Q9tgWldFsO4GspRVXtW4eC63akEtUOiEZUon5VXQ+UpBDAUlmEUJDZxfwjWi6gi0j5A==";
+        private static Encrypt.RSAHelper res;
+        private static string privateKey = @"";
+        private static string publicKey = @"";
         public UserController(IOptions<AppSettings> setting)
         {
             Config = setting.Value;
             if (dal == null)
                 dal = new UserDAL(Config.ConnectionString);
             if (res == null)
-                res = new RSAHelper(RSAHelper.RSAType.RSA2, System.Text.Encoding.UTF8, privateKey, publicKey);
+            {
+                using (StreamReader streamReader = new StreamReader("public.pem"))
+                {
+                    publicKey = "";
+                    string tmpKey = streamReader.ReadToEnd();
+                    tmpKey = tmpKey.Replace("\r", "");
+                    foreach (var item in tmpKey.Split("\n"))
+                    {
+                        if (item != "-----BEGIN RSA PUBLIC KEY-----" && item != "-----END RSA PUBLIC KEY-----")
+                            publicKey += item;
+                    }
+                }
+                using (StreamReader streamReader = new StreamReader("private.pem"))
+                {
+                    privateKey = "";
+                    string tmpKey = streamReader.ReadToEnd();
+                    tmpKey = tmpKey.Replace("\r", "");
+                    foreach (var item in tmpKey.Split("\n"))
+                    {
+                        if (item != "-----BEGIN RSA PRIVATE KEY-----" && item != "-----END RSA PRIVATE KEY-----")
+                            privateKey += item;
+                    }
+                }
+                res = new Encrypt.RSAHelper(privateKey, publicKey);
+            }
         }
         // Post: api/User/model
         [HttpPost("model")]
@@ -216,18 +242,21 @@ namespace Server.Controllers
 
         // Post: api/User/check
         [HttpPost("check")]
-        public StatusCodeResult Check(UserCheckRequest request)
+        public ActionResult Check(UserCheckRequest request)
         {
-            StatusCodeResult response;
+            ActionResult response;
             try
             {
                 if (request.Token != null)
                 {
-                    string tmpId = res.Decrypt(request.Token);
+                    //string tmpId = res.Decrypt(request.Token);
+                    string tmpId = request.Token;
                     //保存token
                     if (CommonData.TokenList.ContainsKey(tmpId))
                     {
-                        response = new StatusCodeResult(200);
+                        ServerResponse<object> responseObj = new ServerResponse<object>();
+                        responseObj.Code = ServerResponseType.成功;
+                        response = new JsonResult(responseObj);
                     }
                     else
                     {

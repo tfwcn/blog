@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+此文件由 Web 项目的发布/打包过程使用。可以通过编辑此 MSBuild 文件
+自定义此过程的行为。为了解与此相关的更多内容，请访问 https://go.microsoft.com/fwlink/?LinkID=208121。 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>E:\MyFiles\git\blog\website-server\Service\Server\bin\x64\Debug\netcoreapp2.2\publish\</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="appsettings.Development.json">
+      <publishTime>05/15/2019 13:33:40</publishTime>
+    </File>
+    <File Include="appsettings.json">
+      <publishTime>09/03/2019 20:27:29</publishTime>
+    </File>
+    <File Include="Common.dll">
+      <publishTime>09/03/2019 20:29:51</publishTime>
+    </File>
+    <File Include="Common.dll.config">
+      <publishTime>05/21/2019 13:20:33</publishTime>
+    </File>
+    <File Include="Common.pdb">
+      <publishTime>09/03/2019 20:29:51</publishTime>
+    </File>
+    <File Include="DAL.dll">
+      <publishTime>09/03/2019 20:29:51</publishTime>
+    </File>
+    <File Include="DAL.pdb">
+      <publishTime>09/03/2019 20:29:51</publishTime>
+    </File>
+    <File Include="DBTransactionHelper.dll">
+      <publishTime>09/03/2019 20:29:49</publishTime>
+    </File>
+    <File Include="DBTransactionHelper.pdb">
+      <publishTime>09/03/2019 20:29:50</publishTime>
+    </File>
+    <File Include="dotnet-aspnet-codegenerator-design.dll">
+      <publishTime>03/02/2019 19:52:30</publishTime>
+    </File>
+    <File Include="Log.dll">
+      <publishTime>09/03/2019 20:29:50</publishTime>
+    </File>
+    <File Include="Log.dll.config">
+      <publishTime>05/15/2019 13:33:40</publishTime>
+    </File>
+    <File Include="Log.pdb">
+      <publishTime>09/03/2019 20:29:50</publishTime>
+    </File>
+    <File Include="log4net.dll">
+      <publishTime>03/08/2017 19:26:22</publishTime>
+    </File>
+    <File Include="log4net.xml">
+      <publishTime>03/08/2017 19:26:22</publishTime>
+    </File>
+    <File Include="Microsoft.CodeAnalysis.CSharp.Workspaces.dll">
+      <publishTime>10/20/2018 11:21:51</publishTime>
+    </File>
+    <File Include="Microsoft.CodeAnalysis.Workspaces.dll">
+      <publishTime>10/20/2018 11:21:51</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll">
+      <publishTime>03/02/2019 19:51:56</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Core.dll">
+      <publishTime>03/02/2019 19:52:00</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.dll">
+      <publishTime>03/02/2019 19:52:04</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll">
+      <publishTime>03/02/2019 19:52:02</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll">
+      <publishTime>03/02/2019 19:51:58</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll">
+      <publishTime>03/02/2019 19:51:56</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll">
+      <publishTime>03/02/2019 19:52:04</publishTime>
+    </File>
+    <File Include="Microsoft.Win32.SystemEvents.dll">
+      <publishTime>05/15/2018 13:29:34</publishTime>
+    </File>
+    <File Include="Model.dll">
+      <publishTime>09/03/2019 20:29:50</publishTime>
+    </File>
+    <File Include="Model.pdb">
+      <publishTime>09/03/2019 20:29:50</publishTime>
+    </File>
+    <File Include="Newtonsoft.Json.dll">
+      <publishTime>04/22/2019 01:06:16</publishTime>
+    </File>
+    <File Include="Npgsql.dll">
+      <publishTime>05/21/2019 05:26:38</publishTime>
+    </File>
+    <File Include="NuGet.Frameworks.dll">
+      <publishTime>10/20/2018 11:21:24</publishTime>
+    </File>
+    <File Include="runtimes/unix/lib/netcoreapp2.0/System.Drawing.Common.dll">
+      <publishTime>09/18/2018 19:38:14</publishTime>
+    </File>
+    <File Include="runtimes/win/lib/netcoreapp2.0/Microsoft.Win32.SystemEvents.dll">
+      <publishTime>05/15/2018 13:29:34</publishTime>
+    </File>
+    <File Include="runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll">
+      <publishTime>09/18/2018 19:38:14</publishTime>
+    </File>
+    <File Include="runtimes/win/lib/netcoreapp2.0/System.Text.Encoding.CodePages.dll">
+      <publishTime>11/29/2018 15:39:20</publishTime>
+    </File>
+    <File Include="runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll">
+      <publishTime>05/15/2018 13:29:44</publishTime>
+    </File>
+    <File Include="Server.deps.json">
+      <publishTime>09/03/2019 20:29:58</publishTime>
+    </File>
+    <File Include="Server.dll">
+      <publishTime>09/03/2019 20:29:54</publishTime>
+    </File>
+    <File Include="Server.pdb">
+      <publishTime>09/03/2019 20:29:54</publishTime>
+    </File>
+    <File Include="Server.runtimeconfig.json">
+      <publishTime>09/03/2019 20:29:58</publishTime>
+    </File>
+    <File Include="start_x64.bat">
+      <publishTime>09/01/2019 19:08:27</publishTime>
+    </File>
+    <File Include="start_x86.bat">
+      <publishTime>09/01/2019 19:08:27</publishTime>
+    </File>
+    <File Include="System.Composition.AttributedModel.dll">
+      <publishTime>10/20/2018 11:21:29</publishTime>
+    </File>
+    <File Include="System.Composition.Convention.dll">
+      <publishTime>10/20/2018 11:21:29</publishTime>
+    </File>
+    <File Include="System.Composition.Hosting.dll">
+      <publishTime>10/20/2018 11:21:29</publishTime>
+    </File>
+    <File Include="System.Composition.Runtime.dll">
+      <publishTime>10/20/2018 11:21:29</publishTime>
+    </File>
+    <File Include="System.Composition.TypedParts.dll">
+      <publishTime>10/20/2018 11:21:29</publishTime>
+    </File>
+    <File Include="System.Configuration.ConfigurationManager.dll">
+      <publishTime>05/15/2018 13:29:38</publishTime>
+    </File>
+    <File Include="System.Drawing.Common.dll">
+      <publishTime>09/18/2018 19:38:14</publishTime>
+    </File>
+    <File Include="System.Runtime.CompilerServices.Unsafe.dll">
+      <publishTime>09/18/2018 19:38:10</publishTime>
+    </File>
+    <File Include="System.Security.Cryptography.ProtectedData.dll">
+      <publishTime>05/15/2018 13:29:44</publishTime>
+    </File>
+    <File Include="System.Text.Encoding.CodePages.dll">
+      <publishTime>11/29/2018 15:39:20</publishTime>
+    </File>
+    <File Include="web.config">
+      <publishTime>09/03/2019 20:29:58</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

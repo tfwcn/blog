@@ -414,7 +414,7 @@ namespace Common
             }
         }
         /// <summary>
-        /// 锁定边缘，缩放图片 2017-7-12 韩永健
+        /// 锁定边缘，缩放图片
         /// </summary>
         public static Bitmap MakeZoom(Bitmap img, int width, int height, int left, int top, int right, int bottom)
         {

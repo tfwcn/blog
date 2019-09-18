@@ -2,6 +2,6 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ShowAllFiles>false</ShowAllFiles>
-    <_LastSelectedProfileId>E:\Files\Git\Mini\blog\website-server\Service\WebLoader\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+    <_LastSelectedProfileId>E:\MyFiles\git\blog\website-server\Service\WebLoader\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
 </Project>

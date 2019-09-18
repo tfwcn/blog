@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\DAL\DAL.csproj" />
+    <ProjectReference Include="..\Encrypt\Encrypt.csproj" />
     <ProjectReference Include="..\Log\Log.csproj" />
   </ItemGroup>
 
@@ -40,6 +41,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="private.pem">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="public.pem">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="start_x86.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

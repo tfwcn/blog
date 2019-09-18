@@ -26,16 +26,19 @@ namespace Server.Middlewares
                     || context.Request.Path.Value.Contains("/manager"))
                     && context.Request.Method.ToLower() == "post")
             {
-                string token = context.Request.Headers["Access-Token"];
-                if (token == null || !CommonData.TokenList.ContainsKey(token))
+                if (context.Request.Host.Host != "localhost" && context.Request.Host.Host != "192.168.1.163" && context.Request.Host.Host != "127.0.0.1")
                 {
-                    ServerResponse<object> response = new ServerResponse<object>();
-                    response.Code = ServerResponseType.操作未授权;
-                    response.ErrorMsg = "操作未授权";
-                    Log.LogHelper.WriteErrorLog(GetType(), "操作未授权:" + context.Request.ToString());
-                    context.Response.StatusCode = 401;
-                    await context.Response.WriteAsync(JsonHelper.SerializeObject(response));
-                    return;
+                    string token = context.Request.Headers["Access-Token"];
+                    if (token == null || !CommonData.TokenList.ContainsKey(token))
+                    {
+                        ServerResponse<object> response = new ServerResponse<object>();
+                        response.Code = ServerResponseType.操作未授权;
+                        response.ErrorMsg = "操作未授权";
+                        Log.LogHelper.WriteErrorLog(GetType(), "操作未授权:" + context.Request.ToString());
+                        context.Response.StatusCode = 401;
+                        await context.Response.WriteAsync(JsonHelper.SerializeObject(response));
+                        return;
+                    }
                 }
             }
             // 继续执行下一步
