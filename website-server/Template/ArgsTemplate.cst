@@ -1,0 +1,79 @@
+﻿<%@ Template Language="C#" TargetLanguage="Text" Src="TemplateHelper.cs" Inherits="TemplateHelper" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="SchemaExplorer" %>
+using Model.Server.Args.Base;
+using Model.Server.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Model.Server.Args
+{
+    #region Request
+    /// <summary>
+    /// 查询单条记录
+    /// </summary>
+    [Table("<%= SourceTable.Name %>")]
+    public class <%= this.GetClassName(SourceTable) %>GetListRequest : PageRequestBase
+    {
+
+    }
+
+    /// <summary>
+    /// 查询单条记录
+    /// </summary>
+    [Table("<%= SourceTable.Name %>")]
+    public class <%= this.GetClassName(SourceTable) %>GetModelRequest : GetRequestBase
+    {
+    
+    }
+
+    /// <summary>
+    /// 查询单条记录
+    /// </summary>
+    [Table("<%= SourceTable.Name %>")]
+    public class <%= this.GetClassName(SourceTable) %>GetCountRequest : CountRequestBase
+    {
+
+    }
+
+    /// <summary>
+    /// 查询单条记录
+    /// </summary>
+    [Table("<%= SourceTable.Name %>")]
+    public class <%= this.GetClassName(SourceTable) %>DeleteRequest : DeleteRequestBase
+    {
+
+    }
+    #endregion
+
+    #region Response
+    /// <summary>
+    /// 新增返回
+    /// </summary>
+    public class <%= this.GetClassName(SourceTable) %>AddResponse : NumResponseBase
+    {
+
+    }
+    /// <summary>
+    /// 更新返回
+    /// </summary>
+    public class <%= this.GetClassName(SourceTable) %>UpdateResponse : NumResponseBase
+    {
+
+    }
+    /// <summary>
+    /// 删除返回
+    /// </summary>
+    public class <%= this.GetClassName(SourceTable) %>DeleteResponse : NumResponseBase
+    {
+
+    }
+    /// <summary>
+    /// 分页查询返回
+    /// </summary>
+    public class <%= this.GetClassName(SourceTable) %>GetListResponse : PageResponseBase<<%= this.GetClassName(SourceTable) %>Model>
+    {
+
+    }
+    #endregion
+}

@@ -1,0 +1,13 @@
+@import "../../../styles/common.scss";
+
+.user{
+  float: right;
+  margin: 0 20px;
+  display: block;
+  height: 100%;
+  line-height: 40px;
+  cursor: pointer;
+  &:hover {
+    color: $main-link-font-color;
+  }
+}

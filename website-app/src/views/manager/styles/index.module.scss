@@ -1,0 +1,50 @@
+@import "../../../styles/common.scss";
+
+.main {
+  flex: 1;
+  margin: 20px;
+  display: flex;
+  flex-flow: row;
+  .left {
+    width: 280px;
+    border-radius: 10px;
+    background: $sub-background-color;
+    overflow: hidden;
+    float: left;
+    .title {
+      font-weight: bold;
+      padding: 10px 20px;
+      border-width: 0 0 1px 0;
+      border-color: $main-border-color;
+      border-style: solid;
+    }
+    ul {
+      margin: 0 20px;
+      li {
+        .dot {
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          border-radius: 3px;
+          background: $main-border-color;
+          vertical-align: middle;
+        }
+        a {
+          display: inline-block;
+          padding: 8px;
+          vertical-align: middle;
+          &:hover {
+            color: $main-link-font-color;
+          }
+        }
+      }
+    }
+  }
+  .right {
+    flex: 1;
+    margin: 0 0 0 10px;
+    border-radius: 10px;
+    background: $sub-background-color;
+    overflow: hidden;
+  }
+}

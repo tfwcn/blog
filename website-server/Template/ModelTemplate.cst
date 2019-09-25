@@ -1,0 +1,25 @@
+﻿<%@ Template Language="C#" TargetLanguage="Text" Src="TemplateHelper.cs" Inherits="TemplateHelper" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="SchemaExplorer" %>
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Model.Server.Models
+{
+    [Table("<%= SourceTable.Name %>")]
+    public class <%= this.GetClassName(SourceTable) %>Model
+    {
+        <% foreach (ColumnSchema col in this.SourceTable.Columns) { %>
+        /// <summary>
+        /// <%= col.Description %>
+        /// </summary>
+        <% if (col.Name=="c_id") { %>
+        [Key]
+        <% } %>
+        [Column("<%= col.Name %>")]
+        public <%= this.GetSystemType(col) %> <%= this.GetPropName(col) %> { get; set; }
+        <% } %>
+    }
+}

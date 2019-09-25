@@ -1,0 +1,119 @@
+@import "../../../styles/common.scss";
+
+// 显示/新增/编辑框
+.item {
+  width: 350px;
+  height: 500px;
+  background: $main-control-bg-color;
+  margin: 20px 0 0 20px;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  .line {
+    margin: 10px 20px;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+    text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+    .text {
+      padding: 8px 5px;
+      display: block;
+      width: 100%;
+      border: 1px solid $main-border-color;
+      border-radius: 4px;
+      background: $main-control-bg-color;
+      color: $main-font-color;
+      font-size: 14px;
+      &:focus {
+        border: 1px solid $main-link-font-color;
+      }
+    }
+    .textarea {
+      padding: 8px 5px;
+      display: block;
+      width: 100%;
+      height: 280px;
+      border: 1px solid $main-border-color;
+      border-radius: 4px;
+      background: $main-control-bg-color;
+      color: $main-font-color;
+      font-size: 14px;
+      white-space: pre;
+      &:focus {
+        border: 1px solid $main-link-font-color;
+      }
+    }
+    .button {
+      display: block;
+      border: 1px none $main-border-color;
+      margin: 20px 0 0 0;
+      padding: 8px 5px;
+      width: 100%;
+      border-radius: 4px;
+      background: $main-border-color;
+      text-align: center;
+      color: $main-font-color;
+      font-size: 16px;
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+  .btnList {
+    float: right;
+    height: 35px;
+    overflow: hidden;
+    .icon {
+      width: 20px;
+      height: 20px;
+      margin: 10px 10px 0 0;
+      cursor: pointer;
+    }
+    .message {
+      color: red;
+    }
+  }
+  .loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    // 垂直居中
+    align-items: center;
+    // 水平居中
+    justify-content: center;
+    background: $main-control-bg-color;
+    .icon {
+      @keyframes loadingAnimation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      animation: loadingAnimation 2s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+.add {
+  background: $main-control-add-bg-color;
+  @keyframes addAnimation {
+    0% {
+      width: 0px;
+    }
+    100% {
+      width: 350px;
+    }
+  }
+  animation: addAnimation 1s;
+}
+.edit {
+  background: $main-control-edit-bg-color;
+}

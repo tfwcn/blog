@@ -1,0 +1,49 @@
+﻿<%@ Template Language="C#" TargetLanguage="Text" Src="TemplateHelper.cs" Inherits="TemplateHelper" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="SchemaExplorer" %>
+using Model.Server;
+using Model.Server.Args;
+using Model.Server.Models;
+
+namespace DataManager.Server
+{
+    public class <%= this.GetClassName(SourceTable) %>Manager : Base.BaseManager
+    {
+        public <%= this.GetClassName(SourceTable) %>Manager(string baseUrl) : base(baseUrl)
+        {
+        }
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>Model> GetModel(<%= this.GetClassName(SourceTable) %>GetModelRequest request)
+        {
+            return Action<<%= this.GetClassName(SourceTable) %>Model>(request, "api/<%= this.GetClassName(SourceTable) %>/model");
+        }
+
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>GetListResponse> GetList(<%= this.GetClassName(SourceTable) %>GetListRequest request)
+        {
+            return Action<<%= this.GetClassName(SourceTable) %>GetListResponse>(request, "api/<%= this.GetClassName(SourceTable) %>/list");
+        }
+
+        public ServerResponse<int> GetCount(<%= this.GetClassName(SourceTable) %>GetCountRequest request)
+        {
+            return Action<int>(request, "api/<%= this.GetClassName(SourceTable) %>/count");
+        }
+
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>AddResponse> Add(<%= this.GetClassName(SourceTable) %>Model request)
+        {
+            var result = Action<<%= this.GetClassName(SourceTable) %>AddResponse>(request, "api/<%= this.GetClassName(SourceTable) %>/add");
+            if (result.Code == ServerResponseType.成功)
+                request.Id = result.Data.Id;
+            return result;
+        }
+
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>UpdateResponse> Update(<%= this.GetClassName(SourceTable) %>Model request)
+        {
+            return Action<<%= this.GetClassName(SourceTable) %>UpdateResponse>(request, "api/<%= this.GetClassName(SourceTable) %>/update");
+        }
+
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>DeleteResponse> Delete(<%= this.GetClassName(SourceTable) %>Model request)
+        {
+            return Action<<%= this.GetClassName(SourceTable) %>DeleteResponse>(request, "api/<%= this.GetClassName(SourceTable) %>/delete");
+        }
+    }
+}

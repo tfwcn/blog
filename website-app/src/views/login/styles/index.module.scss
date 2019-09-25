@@ -1,0 +1,43 @@
+@import "../../../styles/common.scss";
+
+.item {
+  width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background: $sub-background-color;
+  overflow: hidden;
+  .line {
+    margin: 10px 50px;
+    .text {
+      padding: 8px 5px;
+      display: block;
+      width: 100%;
+      border: 1px solid $main-border-color;
+      border-radius: 4px;
+      background: $main-control-bg-color;
+      color: $main-font-color;
+      &:focus {
+        border: 1px solid $main-link-font-color;
+      }
+    }
+    .button {
+      display: block;
+      border: 1px none $main-border-color;
+      margin: 20px 0 0 0;
+      padding: 8px 5px;
+      width: 100%;
+      border-radius: 4px;
+      background: $main-border-color;
+      text-align: center;
+      color: $main-font-color;
+      font-size: 16px;
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+    .message {
+      color: red;
+    }
+  }
+}

@@ -1,0 +1,185 @@
+﻿<%@ Template Language="C#" TargetLanguage="Text" Src="TemplateHelper.cs" Inherits="TemplateHelper" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="内容" Description="表" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="SchemaExplorer" %>
+using Common;
+using DAL;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Model.Server;
+using Model.Server.Args;
+using Model.Server.Models;
+using System;
+
+namespace Server.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class <%= this.GetClassName(SourceTable) %>Controller : ControllerBase
+    {
+        private AppSettings Config;
+        private static <%= this.GetClassName(SourceTable) %>DAL dal;
+        public <%= this.GetClassName(SourceTable) %>Controller(IOptions<AppSettings> setting)
+        {
+            Config = setting.Value;
+            if (dal == null)
+                dal = new <%= this.GetClassName(SourceTable) %>DAL(Config.ConnectionString);
+        }
+        // Post: api/<%= this.GetClassName(SourceTable) %>/model
+        [HttpPost("model")]
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>Model> GetModel(<%= this.GetClassName(SourceTable) %>GetModelRequest request)
+        {
+            ServerResponse<<%= this.GetClassName(SourceTable) %>Model> response = new ServerResponse<<%= this.GetClassName(SourceTable) %>Model>();
+            try
+            {
+                var model = dal.GetModel(request);
+                response.Data = model;
+                if (model != null)
+                {
+                    response.Code = ServerResponseType.成功;
+                }
+                else
+                {
+                    response.Code = ServerResponseType.空数据;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Code = ServerResponseType.调用异常;
+                response.ErrorMsg = ex.ToString();
+                Log.LogHelper.WriteErrorLog(GetType(), ex);
+            }
+            return response;
+        }
+
+        // Post: api/<%= this.GetClassName(SourceTable) %>/list
+        [HttpPost("list")]
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>GetListResponse> GetList(<%= this.GetClassName(SourceTable) %>GetListRequest request)
+        {
+            ServerResponse<<%= this.GetClassName(SourceTable) %>GetListResponse> response = new ServerResponse<<%= this.GetClassName(SourceTable) %>GetListResponse>();
+            try
+            {
+                //查数据
+                var list = dal.GetList(request);
+                //查总记录数
+                var count = dal.GetCount(JsonHelper.CloneObject<<%= this.GetClassName(SourceTable) %>GetCountRequest>(request));
+                response.Data = new <%= this.GetClassName(SourceTable) %>GetListResponse() { DataList = list, Count = count };
+                response.Code = ServerResponseType.成功;
+            }
+            catch (Exception ex)
+            {
+                response.Code = ServerResponseType.调用异常;
+                response.ErrorMsg = ex.ToString();
+                Log.LogHelper.WriteErrorLog(GetType(), ex);
+            }
+            return response;
+        }
+
+        // Post: api/<%= this.GetClassName(SourceTable) %>/count
+        [HttpPost("count")]
+        public ServerResponse<int> GetCount(<%= this.GetClassName(SourceTable) %>GetCountRequest request)
+        {
+            ServerResponse<int> response = new ServerResponse<int>();
+            try
+            {
+                var model = dal.GetCount(request);
+                response.Data = model;
+                response.Code = ServerResponseType.成功;
+            }
+            catch (Exception ex)
+            {
+                response.Code = ServerResponseType.调用异常;
+                response.ErrorMsg = ex.ToString();
+                Log.LogHelper.WriteErrorLog(GetType(), ex);
+            }
+            return response;
+        }
+
+        // POST: api/<%= this.GetClassName(SourceTable) %>/add
+        [HttpPost("add")]
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>AddResponse> Add(<%= this.GetClassName(SourceTable) %>Model request)
+        {
+            ServerResponse<<%= this.GetClassName(SourceTable) %>AddResponse> response = new ServerResponse<<%= this.GetClassName(SourceTable) %>AddResponse>();
+            try
+            {
+                var num = dal.Add(request);
+                response.Data = new <%= this.GetClassName(SourceTable) %>AddResponse { Id = request.Id, Num = num };
+                if (num == 1)
+                {
+                    response.Code = ServerResponseType.成功;
+                }
+                else
+                {
+                    response.Code = ServerResponseType.空数据;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Code = ServerResponseType.调用异常;
+                response.ErrorMsg = ex.ToString();
+                Log.LogHelper.WriteErrorLog(GetType(), ex);
+            }
+            return response;
+        }
+
+        // POST: api/<%= this.GetClassName(SourceTable) %>/update
+        [HttpPost("update")]
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>UpdateResponse> Update(<%= this.GetClassName(SourceTable) %>Model request)
+        {
+            ServerResponse<<%= this.GetClassName(SourceTable) %>UpdateResponse> response = new ServerResponse<<%= this.GetClassName(SourceTable) %>UpdateResponse>();
+            try
+            {
+                var tmpModel = dal.GetModel(new <%= this.GetClassName(SourceTable) %>GetModelRequest() { Id = request.Id });
+                if (tmpModel != null)
+                {
+                    request.Id = tmpModel.Id;
+                    request.CreateTime = tmpModel.CreateTime;
+                    request.UpdateTime = tmpModel.UpdateTime;
+                    request.State = tmpModel.State;
+                    var num = dal.Update(request);
+                    response.Data = new <%= this.GetClassName(SourceTable) %>UpdateResponse { Id = request.Id, Num = num };
+                    response.Code = ServerResponseType.成功;
+                }
+                else
+                {
+                    response.Code = ServerResponseType.空数据;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Code = ServerResponseType.调用异常;
+                response.ErrorMsg = ex.ToString();
+                Log.LogHelper.WriteErrorLog(GetType(), ex);
+            }
+            return response;
+        }
+
+        // POST: api/<%= this.GetClassName(SourceTable) %>/delete
+        [HttpPost("delete")]
+        public ServerResponse<<%= this.GetClassName(SourceTable) %>DeleteResponse> Delete(<%= this.GetClassName(SourceTable) %>Model request)
+        {
+            ServerResponse<<%= this.GetClassName(SourceTable) %>DeleteResponse> response = new ServerResponse<<%= this.GetClassName(SourceTable) %>DeleteResponse>();
+            try
+            {
+                var num = dal.Delete(request);
+                response.Data = new <%= this.GetClassName(SourceTable) %>DeleteResponse { Id = request.Id, Num = num };
+                if (num == 1)
+                {
+                    response.Code = ServerResponseType.成功;
+                }
+                else
+                {
+                    response.Code = ServerResponseType.空数据;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Code = ServerResponseType.调用异常;
+                response.ErrorMsg = ex.ToString();
+                Log.LogHelper.WriteErrorLog(GetType(), ex);
+            }
+            return response;
+        }
+    }
+}
+
